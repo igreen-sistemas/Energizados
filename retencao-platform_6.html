@@ -1,0 +1,4186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energizados — Plataforma de Retenção</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --green: #22c55e;
+    --green-light: #dcfce7;
+    --green-mid: #86efac;
+    --green-dark: #16a34a;
+    --green-xlight: #f0fdf4;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --gold: #f59e0b;
+    --silver: #94a3b8;
+    --bronze: #d97706;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --red: #ef4444;
+    --orange: #f97316;
+    --sidebar-w: 72px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 10px 10px -5px rgba(0,0,0,0.02);
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-800);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--white);
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 8px;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+
+  .sidebar-logo {
+    width: 40px; height: 40px;
+    background: var(--green);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(34,197,94,0.3);
+  }
+  .sidebar-logo svg { width: 22px; height: 22px; fill: white; }
+
+  .nav-item {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--gray-400);
+    position: relative;
+    border: none; background: transparent;
+  }
+  .nav-item:hover { background: var(--gray-100); color: var(--gray-600); }
+  .nav-item.active { background: var(--green-light); color: var(--green-dark); }
+  .nav-item i { font-size: 18px; }
+
+  .nav-tooltip {
+    position: absolute;
+    left: calc(100% + 12px);
+    background: var(--gray-900);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: all 0.15s ease;
+    z-index: 999;
+  }
+  .nav-tooltip::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%; transform: translateY(-50%);
+    border: 5px solid transparent;
+    border-right-color: var(--gray-900);
+  }
+  .nav-item:hover .nav-tooltip { opacity: 1; transform: translateX(0); }
+
+  .sidebar-spacer { flex: 1; }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 28px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .topbar-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+  .topbar-sub {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-left: 4px;
+  }
+
+  .topbar-spacer { flex: 1; }
+
+  /* Mode Toggle */
+  .mode-toggle {
+    display: flex;
+    background: var(--gray-100);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+  }
+  .mode-btn {
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+    color: var(--gray-500);
+  }
+  .mode-btn.active {
+    background: var(--white);
+    color: var(--gray-800);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .topbar-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: white;
+    cursor: pointer;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    gap: 0;
+    min-height: 0;
+  }
+
+  /* ── PAGE ── */
+  .page { display: none; width: 100%; }
+  .page.active { display: flex; }
+
+  /* ── HOME PAGE ── */
+  #page-home {
+    flex-direction: row;
+    overflow: hidden;
+  }
+
+  .home-left {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 24px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 0;
+  }
+  .home-left::-webkit-scrollbar { width: 4px; }
+  .home-left::-webkit-scrollbar-track { background: transparent; }
+  .home-left::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .home-right {
+    width: 300px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-left: 1px solid var(--gray-200);
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .home-right::-webkit-scrollbar { width: 4px; }
+  .home-right::-webkit-scrollbar-track { background: transparent; }
+  .home-right::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  /* ── STATS ROW ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 16px;
+    transition: box-shadow 0.2s;
+  }
+  .stat-card:hover { box-shadow: var(--shadow); }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-400);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-delta {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+  .stat-delta.up { color: var(--green-dark); }
+  .stat-delta.neutral { color: var(--gray-400); }
+
+  /* ── REGISTER CARD ── */
+  .register-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-header {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-header i { color: var(--green); }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-500);
+    letter-spacing: 0.02em;
+  }
+
+  .form-input {
+    height: 40px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--gray-800);
+    background: var(--gray-50);
+    outline: none;
+    transition: all 0.15s ease;
+  }
+  .form-input:focus {
+    border-color: var(--green);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+  }
+  .form-input::placeholder { color: var(--gray-300); }
+
+  .btn-register {
+    height: 40px;
+    padding: 0 20px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(34,197,94,0.3);
+  }
+  .btn-register:hover {
+    background: var(--green-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34,197,94,0.4);
+  }
+  .btn-register:active { transform: translateY(0); }
+
+  /* ── GAME ARENA ── */
+  .game-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .game-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .game-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .live-badge {
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .live-dot {
+    width: 5px; height: 5px;
+    background: #dc2626;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .meta-info {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-family: var(--mono);
+  }
+
+  /* DAILY RACE */
+  .race-arena {
+    padding: 20px;
+    background: var(--green-xlight);
+  }
+
+  .race-track {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .race-lane {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+
+  .lane-info {
+    width: 120px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .lane-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .lane-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-700);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+  }
+
+  .track-bar-wrap {
+    flex: 1;
+    height: 36px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 18px;
+    overflow: visible;
+    position: relative;
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .track-bar {
+    height: 100%;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 36px;
+    position: relative;
+  }
+
+  .rocket-emoji {
+    font-size: 18px;
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    animation: float 2s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-52%) translateX(1px); }
+  }
+
+  .lane-score {
+    width: 36px;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-700);
+    text-align: right;
+    font-family: var(--mono);
+  }
+
+  .finish-line {
+    position: absolute;
+    right: 0; top: -4px; bottom: -4px;
+    width: 3px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--gray-800) 0px, var(--gray-800) 4px,
+      white 4px, white 8px
+    );
+    border-radius: 2px;
+  }
+
+  .goal-label {
+    position: absolute;
+    right: -2px;
+    top: -20px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-500);
+    white-space: nowrap;
+  }
+
+  /* WEEKLY MAP */
+  .weekly-map {
+    padding: 20px;
+  }
+
+  .week-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .week-player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .week-info {
+    width: 120px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .week-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .week-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-700);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 85px;
+  }
+
+  .days-track {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .day-cell {
+    height: 28px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    position: relative;
+    cursor: default;
+  }
+
+  .day-label-row {
+    display: flex;
+    gap: 3px;
+    margin-left: 132px;
+    margin-bottom: 4px;
+  }
+  .day-label {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--gray-400);
+    text-align: center;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .week-total {
+    width: 36px;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-700);
+    text-align: right;
+    font-family: var(--mono);
+  }
+
+  /* WEEKLY CHART */
+  .chart-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .chart-wrap { height: 180px; position: relative; }
+
+  /* ── RANKING SIDEBAR ── */
+  .rank-header {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rank-subtitle {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+  }
+
+  .rank-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .rank-item {
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rank-item.rank-1 {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-color: #fcd34d;
+  }
+  .rank-item.rank-2 {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-color: #e2e8f0;
+  }
+  .rank-item.rank-3 {
+    background: linear-gradient(135deg, #fff7ed, #ffedd5);
+    border-color: #fdba74;
+  }
+
+  .rank-pos {
+    width: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-400);
+    text-align: center;
+    flex-shrink: 0;
+    font-family: var(--mono);
+  }
+  .rank-1 .rank-pos { color: var(--gold); }
+  .rank-2 .rank-pos { color: var(--silver); }
+  .rank-3 .rank-pos { color: var(--bronze); }
+
+  .rank-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .rank-details { flex: 1; min-width: 0; }
+
+  .rank-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-800);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .rank-meta {
+    font-size: 11px;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 1px;
+  }
+
+  .streak-badge {
+    background: #fef3c7;
+    color: #92400e;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 20px;
+  }
+
+  .rank-count {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gray-800);
+    font-family: var(--mono);
+    flex-shrink: 0;
+  }
+  .rank-1 .rank-count { color: var(--gold); }
+
+  .rank-medal { font-size: 16px; flex-shrink: 0; }
+
+  /* Shimmer on new entry */
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+
+  .rank-item.just-updated::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: shimmer 0.8s ease-out;
+  }
+
+  /* ── SETTINGS PAGE ── */
+  #page-settings {
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 32px 40px;
+  }
+
+  .settings-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .settings-sub {
+    font-size: 14px;
+    color: var(--gray-400);
+    margin-bottom: 28px;
+  }
+
+  .settings-section {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+
+  .settings-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .settings-row:last-child { border-bottom: none; }
+
+  .settings-row-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+  .settings-row-sub {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .toggle {
+    width: 44px; height: 24px;
+    background: var(--gray-200);
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--green); }
+  .toggle::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 18px; height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  .toggle.on::after { transform: translateX(20px); }
+
+  .settings-input {
+    height: 36px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 0 12px;
+    font-size: 14px;
+    font-family: var(--font);
+    color: var(--gray-800);
+    outline: none;
+    transition: all 0.15s;
+    min-width: 180px;
+  }
+  .settings-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+
+  .btn-save {
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-save:hover { background: var(--green-dark); }
+
+  .collaborator-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .collab-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+  }
+
+  .collab-avatar-sm {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; color: white;
+  }
+
+  .collab-name-sm {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-700);
+  }
+
+  .btn-remove {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--gray-300);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    font-size: 14px;
+  }
+  .btn-remove:hover { background: #fee2e2; color: var(--red); }
+
+  .add-collab-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .btn-add {
+    background: transparent;
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .btn-add:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-xlight); }
+
+  /* ── TOAST ── */
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+  }
+
+  .toast {
+    background: var(--gray-900);
+    color: white;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: var(--shadow-xl);
+    animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 260px;
+    pointer-events: auto;
+  }
+  .toast.success { background: var(--green-dark); }
+  .toast.error { background: #dc2626; }
+  .toast i { font-size: 16px; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100%); }
+  }
+
+  /* ── CONFETTI ── */
+  .confetti-piece {
+    position: fixed;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: confettiFall 2.5s ease-out forwards;
+    pointer-events: none;
+    z-index: 9998;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── LEADER GLOW ── */
+  .leader-glow {
+    box-shadow: 0 0 0 2px var(--gold), 0 4px 16px rgba(245,158,11,0.25);
+    animation: leaderPulse 2s ease-in-out infinite;
+  }
+  @keyframes leaderPulse {
+    0%, 100% { box-shadow: 0 0 0 2px var(--gold), 0 4px 16px rgba(245,158,11,0.25); }
+    50% { box-shadow: 0 0 0 3px var(--gold), 0 6px 24px rgba(245,158,11,0.35); }
+  }
+
+  /* ── PROGRESS META ── */
+  .meta-bar {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; min-width: 80px; }
+  .meta-item-label { font-size: 11px; font-weight: 500; color: var(--gray-400); letter-spacing: 0.04em; text-transform: uppercase; }
+  .meta-item-value { font-size: 18px; font-weight: 700; color: var(--gray-800); font-family: var(--mono); }
+  .meta-item-value.green { color: var(--green-dark); }
+
+  .meta-progress-wrap { flex: 1; }
+  .meta-progress-label { font-size: 11px; color: var(--gray-400); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .meta-progress-bar { height: 8px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .meta-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), #4ade80);
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .meta-divider { width: 1px; height: 40px; background: var(--gray-200); flex-shrink: 0; }
+
+  /* ── HISTORY TABLE ── */
+  .history-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .history-table { width: 100%; border-collapse: collapse; }
+  .history-table th {
+    background: var(--gray-50);
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .history-table td {
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--gray-700);
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .history-table tr:last-child td { border-bottom: none; }
+  .history-table tr:hover td { background: var(--gray-50); }
+
+  .history-new { animation: highlight 2s ease-out; }
+  @keyframes highlight {
+    0% { background: rgba(34,197,94,0.12); }
+    100% { background: transparent; }
+  }
+
+  .badge-collab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+    color: white;
+  }
+
+  .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: white; opacity: 0.7; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1100px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .home-right { width: 260px; }
+  }
+  @media (max-width: 720px) {
+    .home-right { display: none; }
+    .form-row { grid-template-columns: 1fr 1fr; }
+    .form-row .btn-register { grid-column: span 2; }
+  }
+
+  /* ══════════════════════════════════════════
+     SCRIPTS DE ATENDIMENTO PAGE
+  ══════════════════════════════════════════ */
+  #page-scripts {
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .scripts-layout {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* LEFT PANEL - filters */
+  .scripts-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .scripts-sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .scripts-sidebar-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .scripts-search {
+    position: relative;
+  }
+
+  .scripts-search input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-800);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .scripts-search input:focus {
+    border-color: var(--green);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+  }
+  .scripts-search i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--gray-400);
+    pointer-events: none;
+  }
+
+  .scripts-filters {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 8px;
+  }
+  .scripts-filters::-webkit-scrollbar { width: 3px; }
+  .scripts-filters::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+
+  .filter-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 8px 8px 4px;
+  }
+
+  .filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--gray-600);
+    transition: all 0.15s;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1px;
+  }
+  .filter-chip:hover { background: var(--gray-100); }
+  .filter-chip.active { background: var(--green-xlight); color: var(--green-dark); font-weight: 500; }
+  .filter-chip i { font-size: 13px; width: 16px; text-align: center; }
+  .filter-chip .count {
+    margin-left: auto;
+    font-size: 11px;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    padding: 1px 6px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .filter-chip.active .count { background: var(--green-mid); color: var(--green-dark); }
+
+  .scripts-sidebar-footer {
+    padding: 12px 8px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .btn-admin {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px dashed var(--gray-300);
+    background: transparent;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-500);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font);
+  }
+  .btn-admin:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-xlight); }
+
+  /* MAIN SCRIPTS AREA */
+  .scripts-main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 28px;
+    min-width: 0;
+  }
+  .scripts-main::-webkit-scrollbar { width: 4px; }
+  .scripts-main::-webkit-scrollbar-track { background: transparent; }
+  .scripts-main::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .scripts-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .scripts-page-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--gray-900);
+    flex: 1;
+  }
+  .scripts-page-sub { font-size: 13px; color: var(--gray-400); font-weight: 400; margin-left: 6px; }
+
+  .scripts-count-badge {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-500);
+    background: var(--gray-100);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .scripts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* SCRIPT CARD */
+  .script-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .script-card:hover { box-shadow: var(--shadow); border-color: var(--gray-300); }
+  .script-card.expanded { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.08), var(--shadow); }
+
+  .script-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .script-card-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .script-card-info { flex: 1; min-width: 0; }
+  .script-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+    line-height: 1.3;
+  }
+  .script-card-meta {
+    font-size: 12px;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .script-card-badges {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .cat-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  .script-fav-btn {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--gray-300);
+    transition: all 0.15s;
+  }
+  .script-fav-btn:hover { background: var(--gray-100); color: var(--gold); }
+  .script-fav-btn.active { color: var(--gold); }
+
+  .script-expand-btn {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    color: var(--gray-400);
+    transition: all 0.2s;
+  }
+  .script-card.expanded .script-expand-btn { transform: rotate(180deg); color: var(--green-dark); }
+
+  /* SCRIPT BODY */
+  .script-card-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .script-card.expanded .script-card-body {
+    max-height: 2000px;
+  }
+
+  .script-card-content {
+    border-top: 1px solid var(--gray-100);
+    padding: 20px 20px 20px 70px;
+  }
+
+  .script-section {
+    margin-bottom: 16px;
+  }
+  .script-section:last-child { margin-bottom: 0; }
+
+  .script-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .script-phrase {
+    background: var(--gray-50);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.6;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  .script-phrase:last-child { margin-bottom: 0; }
+
+  .script-copy-btn {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--gray-400);
+    transition: all 0.15s;
+    opacity: 0;
+  }
+  .script-phrase:hover .script-copy-btn { opacity: 1; }
+  .script-copy-btn:hover { background: var(--gray-200); color: var(--gray-700); }
+
+  .script-note {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #92400e;
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .script-note i { color: #f59e0b; margin-top: 1px; flex-shrink: 0; }
+
+  .script-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px 16px 70px;
+    border-top: 1px solid var(--gray-100);
+  }
+
+  .btn-edit-script {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .btn-edit-script:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-xlight); }
+
+  /* EMPTY STATE */
+  .scripts-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray-400);
+  }
+  .scripts-empty i { font-size: 40px; margin-bottom: 12px; display: block; }
+  .scripts-empty p { font-size: 14px; }
+
+  /* ── ADMIN MODAL ── */
+  .admin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .admin-modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .admin-modal {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    width: 680px;
+    max-width: 95vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    overflow: hidden;
+  }
+  .admin-modal-overlay.open .admin-modal { transform: translateY(0) scale(1); }
+
+  .admin-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--gray-100);
+    flex-shrink: 0;
+  }
+  .admin-modal-title { font-size: 15px; font-weight: 600; color: var(--gray-900); flex: 1; }
+
+  .admin-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+  }
+  .admin-modal-body::-webkit-scrollbar { width: 4px; }
+  .admin-modal-body::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .admin-modal-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--gray-100);
+    flex-shrink: 0;
+  }
+
+  .admin-field { margin-bottom: 16px; }
+  .admin-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .admin-input, .admin-select, .admin-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    color: var(--gray-800);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
+  }
+  .admin-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+  .admin-phrases-list { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .admin-phrase-row { display: flex; gap: 6px; }
+  .admin-phrase-row input { flex: 1; padding: 8px 10px; border: 1px solid var(--gray-200); border-radius: 8px; font-size: 13px; font-family: var(--font); outline: none; }
+  .admin-phrase-row input:focus { border-color: var(--green); box-shadow: 0 0 0 2px rgba(34,197,94,0.1); }
+  .btn-remove-phrase { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--gray-200); background: var(--white); cursor: pointer; color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.15s; }
+  .btn-remove-phrase:hover { background: #fee2e2; border-color: var(--red); }
+  .btn-add-phrase { display: flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 8px; border: 1px dashed var(--gray-300); background: transparent; font-size: 12px; color: var(--gray-500); cursor: pointer; font-family: var(--font); transition: all 0.15s; margin-top: 6px; }
+  .btn-add-phrase:hover { border-color: var(--green); color: var(--green-dark); }
+
+  .admin-script-list { display: flex; flex-direction: column; gap: 6px; }
+  .admin-script-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    background: var(--gray-50);
+    cursor: grab;
+    transition: all 0.15s;
+  }
+  .admin-script-row:hover { background: var(--white); box-shadow: var(--shadow-sm); }
+  .admin-script-row-title { flex: 1; font-size: 13px; font-weight: 500; color: var(--gray-700); }
+  .btn-edit-row, .btn-del-row {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .btn-edit-row { background: var(--gray-100); color: var(--gray-600); }
+  .btn-edit-row:hover { background: var(--green-light); color: var(--green-dark); }
+  .btn-del-row { background: var(--gray-100); color: var(--gray-400); }
+  .btn-del-row:hover { background: #fee2e2; color: var(--red); }
+
+  .btn-primary { padding: 9px 18px; border-radius: 9px; border: none; background: var(--green); color: white; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+  .btn-primary:hover { background: var(--green-dark); }
+  .btn-secondary { padding: 9px 18px; border-radius: 9px; border: 1px solid var(--gray-200); background: var(--white); color: var(--gray-600); font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .btn-secondary:hover { border-color: var(--gray-300); background: var(--gray-50); }
+  .btn-danger { padding: 9px 18px; border-radius: 9px; border: none; background: #fee2e2; color: var(--red); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.15s; margin-right: auto; }
+  .btn-danger:hover { background: #fecaca; }
+
+  /* PASSWORD GATE */
+  .pwd-gate { text-align: center; padding: 24px 0; }
+  .pwd-gate i { font-size: 32px; color: var(--green); margin-bottom: 12px; display: block; }
+  .pwd-gate p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; }
+  .pwd-gate input { width: 100%; max-width: 260px; padding: 10px 14px; border: 1px solid var(--gray-200); border-radius: 10px; font-size: 14px; font-family: var(--font); outline: none; text-align: center; letter-spacing: 0.1em; }
+  .pwd-gate input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+  .pwd-gate-err { font-size: 12px; color: var(--red); margin-top: 6px; display: none; }
+
+  .admin-tabs { display: flex; gap: 4px; margin-bottom: 20px; background: var(--gray-100); padding: 4px; border-radius: 10px; }
+  .admin-tab { flex: 1; padding: 7px 12px; border-radius: 8px; border: none; background: transparent; font-size: 13px; font-weight: 500; color: var(--gray-500); cursor: pointer; font-family: var(--font); transition: all 0.15s; }
+  .admin-tab.active { background: var(--white); color: var(--gray-800); box-shadow: var(--shadow-sm); }
+
+  .admin-tab-panel { display: none; }
+  .admin-tab-panel.active { display: block; }
+
+  .color-swatches { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .color-swatch { width: 28px; height: 28px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; }
+  .color-swatch.selected { border-color: var(--gray-800); transform: scale(1.1); }
+
+  /* ── ALIGNMENT POPUP ── */
+  .align-popup-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .align-popup-overlay.open { opacity: 1; pointer-events: all; }
+
+  .align-popup {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    width: 520px; max-width: 95vw;
+    box-shadow: var(--shadow-xl);
+    transform: translateY(16px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    overflow: hidden;
+  }
+  .align-popup-overlay.open .align-popup { transform: translateY(0) scale(1); }
+
+  .align-popup-banner {
+    background: linear-gradient(135deg, var(--green-dark), #15803d);
+    padding: 20px 24px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .align-popup-badge {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: white; flex-shrink: 0;
+  }
+  .align-popup-banner-text { flex: 1; }
+  .align-popup-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 3px; }
+  .align-popup-date { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .align-popup-unread {
+    background: #ef4444; color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 3px 8px; border-radius: 20px;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  .align-popup-body { padding: 20px 24px; }
+  .align-popup-message {
+    font-size: 14px; color: var(--gray-700);
+    line-height: 1.7;
+    background: var(--gray-50);
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    white-space: pre-wrap;
+  }
+  .align-popup-author {
+    font-size: 12px; color: var(--gray-400);
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .align-confirm-check {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: #f0fdf4; border: 1px solid var(--green-mid);
+    border-radius: 10px; padding: 12px 14px;
+    cursor: pointer; margin-bottom: 16px;
+  }
+  .align-confirm-check input[type=checkbox] { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--green); cursor: pointer; flex-shrink: 0; }
+  .align-confirm-check label { font-size: 13px; color: var(--gray-700); cursor: pointer; line-height: 1.5; }
+
+  .btn-confirm-read {
+    width: 100%; padding: 12px;
+    border-radius: 10px; border: none;
+    background: var(--green); color: white;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: var(--font);
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    opacity: 0.4; pointer-events: none;
+  }
+  .btn-confirm-read.ready { opacity: 1; pointer-events: all; }
+  .btn-confirm-read.ready:hover { background: var(--green-dark); }
+
+  /* alignment indicator on home */
+  .align-indicator {
+    display: flex; align-items: center; gap: 8px;
+    background: #fef3c7; border: 1px solid #fde68a;
+    border-radius: 10px; padding: 10px 14px;
+    font-size: 13px; color: #92400e; cursor: pointer;
+    transition: all 0.2s; margin-bottom: 4px;
+  }
+  .align-indicator:hover { background: #fde68a; }
+  .align-indicator i { color: #f59e0b; }
+  .align-indicator .align-ind-badge {
+    margin-left: auto; background: #f59e0b; color: white;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 7px; border-radius: 20px;
+  }
+
+  /* ── SETTINGS LOCK ── */
+  .settings-lock-screen {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 300px; text-align: center; padding: 40px;
+  }
+  .settings-lock-icon {
+    width: 64px; height: 64px; border-radius: 20px;
+    background: var(--green-xlight);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--green-dark);
+    margin-bottom: 16px;
+  }
+  .settings-lock-title { font-size: 17px; font-weight: 600; color: var(--gray-900); margin-bottom: 6px; }
+  .settings-lock-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+  .settings-pwd-row { display: flex; gap: 8px; max-width: 300px; width: 100%; }
+  .settings-pwd-row input {
+    flex: 1; padding: 10px 14px;
+    border: 1px solid var(--gray-200); border-radius: 10px;
+    font-size: 14px; font-family: var(--font); outline: none;
+    text-align: center; letter-spacing: 0.08em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .settings-pwd-row input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+  .settings-unlock-btn {
+    padding: 10px 18px; border-radius: 10px; border: none;
+    background: var(--green); color: white;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    font-family: var(--font); transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .settings-unlock-btn:hover { background: var(--green-dark); }
+  .settings-lock-err { font-size: 12px; color: var(--red); margin-top: 8px; display: none; }
+
+  /* ── LINKS SECTION ── */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+  .link-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+    text-decoration: none; color: inherit;
+    transition: all 0.2s; cursor: pointer;
+  }
+  .link-card:hover { box-shadow: var(--shadow); border-color: var(--green); transform: translateY(-1px); }
+  .link-card-icon {
+    width: 36px; height: 36px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .link-card-info { flex: 1; min-width: 0; }
+  .link-card-title { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .link-card-desc { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
+  .link-card-type { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px; }
+
+  .links-empty-state { text-align: center; padding: 40px 20px; color: var(--gray-400); }
+  .links-empty-state i { font-size: 32px; display: block; margin-bottom: 10px; }
+  .links-empty-state p { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+    </svg>
+  </div>
+
+  <button class="nav-item active" data-page="home" onclick="switchPage('home', this)">
+    <i class="fa-solid fa-house"></i>
+    <span class="nav-tooltip">Home</span>
+  </button>
+
+  <button class="nav-item" data-page="scripts" onclick="switchPage('scripts', this)">
+    <i class="fa-solid fa-book-open"></i>
+    <span class="nav-tooltip">Scripts de Atendimento</span>
+  </button>
+
+  <button class="nav-item" data-page="settings" onclick="switchPage('settings', this)">
+    <i class="fa-solid fa-gear"></i>
+    <span class="nav-tooltip">Configurações</span>
+  </button>
+
+  <div class="sidebar-spacer"></div>
+
+  <button class="nav-item">
+    <i class="fa-solid fa-circle-question"></i>
+    <span class="nav-tooltip">Ajuda</span>
+  </button>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div>
+      <span class="topbar-title">Energizados</span>
+      <span class="topbar-sub">Plataforma de Retenção</span>
+    </div>
+    <div class="topbar-spacer"></div>
+
+    <div class="mode-toggle" id="modeToggle">
+      <button class="mode-btn active" id="btnDaily" onclick="switchMode('daily')">
+        <i class="fa-solid fa-bolt" style="font-size:11px; margin-right:4px"></i>Diário
+      </button>
+      <button class="mode-btn" id="btnWeekly" onclick="switchMode('weekly')">
+        <i class="fa-solid fa-calendar-week" style="font-size:11px; margin-right:4px"></i>Semanal
+      </button>
+    </div>
+
+    <div class="topbar-avatar" id="userAvatar" title="Usuário">AD</div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <!-- LEFT PANEL -->
+      <div class="home-left" id="homeLeft">
+
+        <!-- ALIGNMENT INDICATOR -->
+        <div class="align-indicator" id="homeAlignIndicator" style="display:none"></div>
+
+        <!-- STATS -->
+        <div class="stats-row" id="statsRow"></div>
+
+        <!-- META BAR -->
+        <div class="meta-bar" id="metaBar"></div>
+
+        <!-- REGISTER -->
+        <div class="register-card">
+          <div class="card-header">
+            <i class="fa-solid fa-plus-circle"></i>
+            Registrar Retenção
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Colaborador</label>
+              <select class="form-input" id="inputCollab" style="cursor:pointer">
+                <option value="">Selecione...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Código do Cliente</label>
+              <input class="form-input" id="inputClient" type="text" placeholder="ex: CLI-00234" maxlength="20">
+            </div>
+            <button class="btn-register" onclick="registerRetention()">
+              <i class="fa-solid fa-rocket"></i>
+              Registrar
+            </button>
+          </div>
+        </div>
+
+        <!-- GAME AREA (Daily/Weekly) -->
+        <div id="gameArea"></div>
+
+        <!-- HISTORY -->
+        <div class="history-card" id="historyCard"></div>
+
+      </div>
+
+      <!-- RIGHT PANEL - RANKING -->
+      <aside class="home-right">
+        <div class="rank-header">
+          <span>Ranking</span>
+          <span class="rank-subtitle" id="rankSubtitle">Hoje</span>
+        </div>
+        <div class="rank-list" id="rankList"></div>
+      </aside>
+    </div>
+
+    <!-- SETTINGS PAGE -->
+    <!-- ══════════════════════════════════════
+         SCRIPTS DE ATENDIMENTO PAGE
+    ══════════════════════════════════════ -->
+    <div class="page" id="page-scripts">
+      <div class="scripts-layout">
+
+        <!-- Left sidebar filters -->
+        <div class="scripts-sidebar">
+          <div class="scripts-sidebar-header">
+            <div class="scripts-sidebar-title">Base de Conhecimento</div>
+            <div class="scripts-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="scriptsSearchInput" placeholder="Buscar script..." oninput="filterScripts()">
+            </div>
+          </div>
+
+          <div class="scripts-filters" id="scriptsCategoryFilters">
+            <!-- rendered by JS -->
+          </div>
+
+          <div class="scripts-sidebar-footer">
+            <button class="btn-admin" onclick="openAdminModal()">
+              <i class="fa-solid fa-shield-halved"></i>
+              Modo Administrador
+            </button>
+          </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="scripts-main">
+          <div class="scripts-topbar">
+            <div>
+              <span class="scripts-page-title">Scripts de Atendimento</span>
+              <span class="scripts-page-sub">Argumentações e roteiros operacionais</span>
+            </div>
+            <div class="scripts-count-badge" id="scriptsCountBadge">0 scripts</div>
+          </div>
+
+          <div class="scripts-grid" id="scriptsGrid">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ADMIN MODAL -->
+    <div class="admin-modal-overlay" id="adminModalOverlay">
+      <div class="admin-modal">
+        <div class="admin-modal-header">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--green-xlight);display:flex;align-items:center;justify-content:center;color:var(--green-dark);font-size:14px;">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="admin-modal-title" id="adminModalTitle">Modo Administrador</div>
+          <button onclick="closeAdminModal()" style="width:28px;height:28px;border-radius:8px;border:none;background:var(--gray-100);cursor:pointer;color:var(--gray-500);font-size:13px;display:flex;align-items:center;justify-content:center;">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="admin-modal-body" id="adminModalBody">
+          <!-- rendered by JS -->
+        </div>
+        <div class="admin-modal-footer" id="adminModalFooter">
+          <!-- rendered by JS -->
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-settings">
+      <div id="settingsLockScreen">
+        <!-- rendered by JS -->
+      </div>
+      <div id="settingsContent" style="display:none; max-width:700px; width:100%">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="settings-title">Configurações</div>
+          <button onclick="lockSettings()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:9px;border:1px solid var(--gray-200);background:var(--white);font-size:12px;font-weight:500;color:var(--gray-500);cursor:pointer;font-family:var(--font);transition:all 0.15s" onmouseover="this.style.borderColor='var(--red)';this.style.color='var(--red)'" onmouseout="this.style.borderColor='var(--gray-200)';this.style.color='var(--gray-500)'">
+            <i class="fa-solid fa-lock"></i> Bloquear
+          </button>
+        </div>
+        <div class="settings-sub">Gerencie colaboradores, metas e preferências da plataforma.</div>
+
+        <!-- Alinhamentos -->
+        <div class="settings-section">
+          <div class="settings-section-title">
+            <i class="fa-solid fa-bell-concierge"></i> Alinhamentos
+          </div>
+          <div id="alignmentsList" style="margin-bottom:12px"></div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <input class="settings-input" id="newAlignTitle" placeholder="Título do alinhamento (ex: Novo procedimento de mudança de endereço)">
+            <textarea class="settings-input" id="newAlignMsg" placeholder="Mensagem para a equipe..." style="resize:vertical;min-height:80px;line-height:1.5"></textarea>
+            <input class="settings-input" id="newAlignAuthor" placeholder="Assinado por (ex: Gestão iGreen)">
+            <button class="btn-save" onclick="addAlignment()" style="align-self:flex-start">
+              <i class="fa-solid fa-plus" style="margin-right:6px"></i>Publicar Alinhamento
+            </button>
+          </div>
+        </div>
+
+        <!-- Colaboradores -->
+        <div class="settings-section">
+          <div class="settings-section-title">
+            <i class="fa-solid fa-users"></i> Colaboradores
+          </div>
+          <div class="collaborator-list" id="collabList"></div>
+          <div class="add-collab-row">
+            <input class="settings-input" id="newCollabName" placeholder="Nome do colaborador" style="flex:1">
+            <button class="btn-add" onclick="addCollaborator()">
+              <i class="fa-solid fa-plus" style="margin-right:5px"></i>Adicionar
+            </button>
+          </div>
+        </div>
+
+        <!-- Metas -->
+        <div class="settings-section">
+          <div class="settings-section-title">
+            <i class="fa-solid fa-bullseye"></i> Metas
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Meta diária de retenções</div>
+              <div class="settings-row-sub">Número de retenções por dia para a equipe</div>
+            </div>
+            <input class="settings-input" id="dailyGoal" type="number" min="1" max="999" style="width:100px">
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Meta por colaborador (dia)</div>
+              <div class="settings-row-sub">Objetivo individual diário</div>
+            </div>
+            <input class="settings-input" id="individualGoal" type="number" min="1" max="99" style="width:100px">
+          </div>
+          <div style="margin-top:16px">
+            <button class="btn-save" onclick="saveSettings()">
+              <i class="fa-solid fa-floppy-disk" style="margin-right:6px"></i>Salvar configurações
+            </button>
+          </div>
+        </div>
+
+        <!-- Notificações -->
+        <div class="settings-section">
+          <div class="settings-section-title">
+            <i class="fa-solid fa-bell"></i> Notificações
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Animação ao registrar</div>
+              <div class="settings-row-sub">Confetti ao atingir metas</div>
+            </div>
+            <button class="toggle on" id="toggleAnimations" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Som ao registrar</div>
+              <div class="settings-row-sub">Feedback sonoro (em breve)</div>
+            </div>
+            <button class="toggle" id="toggleSound" onclick="this.classList.toggle('on')"></button>
+          </div>
+        </div>
+
+        <!-- Dados -->
+        <div class="settings-section">
+          <div class="settings-section-title">
+            <i class="fa-solid fa-database"></i> Dados
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Limpar dados do dia</div>
+              <div class="settings-row-sub">Remove todas as retenções registradas hoje</div>
+            </div>
+            <button onclick="clearDayData()" style="background:transparent;border:1px solid #fca5a5;color:#dc2626;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font)">
+              <i class="fa-solid fa-trash" style="margin-right:5px"></i>Limpar
+            </button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-row-label">Limpar todos os dados</div>
+              <div class="settings-row-sub">Reseta completamente a plataforma</div>
+            </div>
+            <button onclick="clearAllData()" style="background:#dc2626;border:none;color:white;border-radius:8px;padding:6px 14px;font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font)">
+              <i class="fa-solid fa-triangle-exclamation" style="margin-right:5px"></i>Reset total
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</main>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ALIGNMENT POPUP -->
+<div class="align-popup-overlay" id="alignPopupOverlay">
+  <div class="align-popup" id="alignPopupBox">
+    <!-- rendered by JS -->
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+const COLORS = ['#22c55e','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#06b6d4','#ec4899','#f97316'];
+
+let state = loadState();
+
+function defaultState() {
+  return {
+    collaborators: [
+      { id:1, name:'Ana Lima', color:'#22c55e' },
+      { id:2, name:'Bruno Costa', color:'#3b82f6' },
+      { id:3, name:'Carla Souza', color:'#8b5cf6' },
+      { id:4, name:'Diego Melo', color:'#f59e0b' },
+    ],
+    retentions: [],
+    settings: { dailyGoal: 20, individualGoal: 5 },
+    nextId: 5,
+    nextRetId: 1
+  };
+}
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('retainx_v2');
+    if (s) return JSON.parse(s);
+  } catch(e) {}
+  return defaultState();
+}
+
+function saveState() {
+  localStorage.setItem('retainx_v2', JSON.stringify(state));
+}
+
+// ═══════════════════════════════════════════
+// DATE HELPERS
+// ═══════════════════════════════════════════
+function todayStr() {
+  return new Date().toISOString().slice(0,10);
+}
+function weekKey(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  const day = d.getDay();
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
+  return monday.toISOString().slice(0,10);
+}
+function currentWeekKey() {
+  return weekKey(todayStr());
+}
+function getWeekDays() {
+  const wk = currentWeekKey();
+  const base = new Date(wk + 'T12:00:00');
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(base);
+    d.setDate(base.getDate() + i);
+    days.push(d.toISOString().slice(0,10));
+  }
+  return days;
+}
+
+// ═══════════════════════════════════════════
+// COMPUTED
+// ═══════════════════════════════════════════
+function getRetentionsByCollab(dateFilter) {
+  const map = {};
+  state.collaborators.forEach(c => { map[c.id] = 0; });
+  state.retentions
+    .filter(r => !dateFilter || r.date === dateFilter)
+    .forEach(r => {
+      if (map[r.collabId] !== undefined) map[r.collabId]++;
+    });
+  return map;
+}
+
+function getWeeklyByCollab() {
+  const map = {};
+  state.collaborators.forEach(c => { map[c.id] = 0; });
+  const wk = currentWeekKey();
+  state.retentions
+    .filter(r => weekKey(r.date) === wk)
+    .forEach(r => {
+      if (map[r.collabId] !== undefined) map[r.collabId]++;
+    });
+  return map;
+}
+
+function getWeeklyByCollabAndDay() {
+  const weekDays = getWeekDays();
+  const result = {};
+  state.collaborators.forEach(c => {
+    result[c.id] = {};
+    weekDays.forEach(d => { result[c.id][d] = 0; });
+  });
+  state.retentions
+    .filter(r => weekDays.includes(r.date))
+    .forEach(r => {
+      if (result[r.collabId] && result[r.collabId][r.date] !== undefined)
+        result[r.collabId][r.date]++;
+    });
+  return result;
+}
+
+function getRankedCollabs(mode) {
+  const counts = mode === 'weekly' ? getWeeklyByCollab() : getRetentionsByCollab(todayStr());
+  const today = todayStr();
+  const yesterday = new Date(today + 'T12:00:00');
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yStr = yesterday.toISOString().slice(0,10);
+  const yCount = getRetentionsByCollab(yStr);
+
+  return state.collaborators
+    .map(c => {
+      const count = counts[c.id] || 0;
+      const yc = yCount[c.id] || 0;
+      const streak = getStreak(c.id);
+      return { ...c, count, yc, streak };
+    })
+    .sort((a, b) => b.count - a.count);
+}
+
+function getStreak(collabId) {
+  let d = new Date(todayStr() + 'T12:00:00');
+  let streak = 0;
+  for (let i = 0; i < 30; i++) {
+    const ds = d.toISOString().slice(0,10);
+    const cnt = state.retentions.filter(r => r.collabId === collabId && r.date === ds).length;
+    if (cnt > 0) { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+// ═══════════════════════════════════════════
+// MODE
+// ═══════════════════════════════════════════
+let currentMode = 'daily';
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('btnDaily').classList.toggle('active', mode === 'daily');
+  document.getElementById('btnWeekly').classList.toggle('active', mode === 'weekly');
+  document.getElementById('rankSubtitle').textContent = mode === 'daily' ? 'Hoje' : 'Esta semana';
+  renderAll();
+}
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+let currentPage = 'home';
+
+let settingsUnlocked = false;
+
+function switchPage(page, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  btn.classList.add('active');
+  currentPage = page;
+  if (page === 'settings') renderSettingsPage();
+  if (page === 'scripts') initScriptsPage();
+}
+
+function renderSettingsPage() {
+  if (settingsUnlocked) {
+    showSettingsContent();
+  } else {
+    showSettingsLock();
+  }
+}
+
+function showSettingsLock() {
+  document.getElementById('settingsLockScreen').style.display = 'flex';
+  document.getElementById('settingsLockScreen').style.flexDirection = 'column';
+  document.getElementById('settingsContent').style.display = 'none';
+  document.getElementById('settingsLockScreen').innerHTML = `
+    <div class="settings-lock-screen">
+      <div class="settings-lock-icon"><i class="fa-solid fa-lock"></i></div>
+      <div class="settings-lock-title">Área Restrita</div>
+      <div class="settings-lock-sub">Digite a senha de administrador para acessar as configurações.</div>
+      <div class="settings-pwd-row">
+        <input type="password" id="settingsPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkSettingsPwd()">
+        <button class="settings-unlock-btn" onclick="checkSettingsPwd()">
+          <i class="fa-solid fa-unlock"></i> Entrar
+        </button>
+      </div>
+      <div class="settings-lock-err" id="settingsLockErr">Senha incorreta. Tente novamente.</div>
+    </div>`;
+  setTimeout(() => { const i = document.getElementById('settingsPwdInput'); if(i) i.focus(); }, 100);
+}
+
+function checkSettingsPwd() {
+  const val = document.getElementById('settingsPwdInput')?.value;
+  if (val === ADMIN_PASSWORD) {
+    settingsUnlocked = true;
+    showSettingsContent();
+  } else {
+    const err = document.getElementById('settingsLockErr');
+    if (err) err.style.display = 'block';
+    const inp = document.getElementById('settingsPwdInput');
+    if (inp) { inp.value = ''; inp.focus(); }
+  }
+}
+
+function showSettingsContent() {
+  document.getElementById('settingsLockScreen').style.display = 'none';
+  document.getElementById('settingsContent').style.display = 'block';
+  renderSettings();
+  renderAlignmentsList();
+}
+
+function lockSettings() {
+  settingsUnlocked = false;
+  showSettingsLock();
+}
+
+// ═══════════════════════════════════════════
+// REGISTER RETENTION
+// ═══════════════════════════════════════════
+function registerRetention() {
+  const collabSel = document.getElementById('inputCollab');
+  const clientIn = document.getElementById('inputClient');
+  const collabId = parseInt(collabSel.value);
+  const clientCode = clientIn.value.trim();
+
+  if (!collabId) { showToast('Selecione um colaborador', 'error'); return; }
+  if (!clientCode) { showToast('Informe o código do cliente', 'error'); return; }
+
+  const collab = state.collaborators.find(c => c.id === collabId);
+  const todayCount = getRetentionsByCollab(todayStr())[collabId] || 0;
+
+  state.retentions.push({
+    id: state.nextRetId++,
+    collabId,
+    clientCode,
+    date: todayStr(),
+    time: new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }),
+    timestamp: Date.now()
+  });
+  saveState();
+
+  clientIn.value = '';
+
+  // celebrar?
+  const newCount = todayCount + 1;
+  const goal = state.settings.individualGoal;
+  if (newCount === goal) {
+    triggerConfetti();
+    showToast(`🎉 ${collab.name} atingiu a meta diária!`, 'success');
+  } else {
+    showToast(`✓ Retenção registrada para ${collab.name}`, 'success');
+  }
+
+  renderAll();
+}
+
+// ═══════════════════════════════════════════
+// RENDER ALL
+// ═══════════════════════════════════════════
+function renderAll() {
+  renderStats();
+  renderMetaBar();
+  renderGameArea();
+  renderRanking();
+  renderHistory();
+  renderCollabSelect();
+}
+
+// ═══════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════
+function renderStats() {
+  const todayCounts = getRetentionsByCollab(todayStr());
+  const totalToday = Object.values(todayCounts).reduce((a,b) => a+b, 0);
+  const weeklyCounts = getWeeklyByCollab();
+  const totalWeek = Object.values(weeklyCounts).reduce((a,b) => a+b, 0);
+  const ranked = getRankedCollabs('daily');
+  const leader = ranked[0];
+  const goal = state.settings.dailyGoal;
+  const pct = goal > 0 ? Math.min(100, Math.round(totalToday/goal*100)) : 0;
+
+  const html = [
+    { label:'Retenções Hoje', value: totalToday, icon:'fa-shield-halved', color:'#22c55e', delta: `${pct}% da meta diária` },
+    { label:'Total na Semana', value: totalWeek, icon:'fa-chart-line', color:'#3b82f6', delta: 'acumulado' },
+    { label:'Meta Diária', value: goal, icon:'fa-bullseye', color:'#8b5cf6', delta: `${totalToday}/${goal} retenções` },
+    { label:'Líder Hoje', value: leader ? leader.count : 0, icon:'fa-crown', color:'#f59e0b', delta: leader ? leader.name : '—' },
+  ].map(s => `
+    <div class="stat-card">
+      <div class="stat-label">
+        <i class="fa-solid ${s.icon}" style="color:${s.color}; font-size:13px"></i>
+        ${s.label}
+      </div>
+      <div class="stat-value">${s.value}</div>
+      <div class="stat-delta ${s.delta.includes('%') ? 'up' : 'neutral'}">${s.delta}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('statsRow').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// META BAR
+// ═══════════════════════════════════════════
+function renderMetaBar() {
+  const todayCounts = getRetentionsByCollab(todayStr());
+  const totalToday = Object.values(todayCounts).reduce((a,b)=>a+b,0);
+  const goal = state.settings.dailyGoal;
+  const pct = goal > 0 ? Math.min(100, Math.round(totalToday/goal*100)) : 0;
+  const remaining = Math.max(0, goal - totalToday);
+  const ranked = getRankedCollabs('daily');
+  const leader = ranked[0];
+
+  document.getElementById('metaBar').innerHTML = `
+    <div class="meta-item">
+      <span class="meta-item-label">Hoje</span>
+      <span class="meta-item-value green">${totalToday}</span>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <span class="meta-item-label">Restam</span>
+      <span class="meta-item-value">${remaining}</span>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-progress-wrap">
+      <div class="meta-progress-label">
+        <span>Progresso da meta diária</span>
+        <span style="font-weight:600; color:var(--gray-700)">${pct}%</span>
+      </div>
+      <div class="meta-progress-bar">
+        <div class="meta-progress-fill" style="width:${pct}%"></div>
+      </div>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      <span class="meta-item-label">Líder</span>
+      <span class="meta-item-value" style="font-size:13px; font-weight:600; color:var(--gray-700)">
+        ${leader ? leader.name.split(' ')[0] : '—'}
+      </span>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════
+// GAME AREA
+// ═══════════════════════════════════════════
+function renderGameArea() {
+  const container = document.getElementById('gameArea');
+  if (currentMode === 'daily') {
+    renderDailyRace(container);
+  } else {
+    renderWeeklyMap(container);
+  }
+}
+
+function renderDailyRace(container) {
+  const counts = getRetentionsByCollab(todayStr());
+  const goal = state.settings.individualGoal;
+  const maxCount = Math.max(goal, ...Object.values(counts));
+
+  const lanes = state.collaborators.map(c => ({
+    ...c,
+    count: counts[c.id] || 0
+  })).sort((a,b) => b.count - a.count);
+
+  const rockets = ['🚀','🛸','✈️','🏎️','⚡','🌟','💫','🔥'];
+
+  const lanesHtml = lanes.map((c, i) => {
+    const pct = maxCount > 0 ? Math.max(5, (c.count / maxCount) * 88) : 5;
+    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    return `
+      <div class="race-lane" id="lane-${c.id}">
+        <div class="lane-info">
+          <div class="lane-avatar" style="background:${c.color}">${initials}</div>
+          <div class="lane-name">${c.name.split(' ')[0]}</div>
+        </div>
+        <div class="track-bar-wrap">
+          <div class="track-bar" style="width:${pct}%; background:${c.color}20; border:1.5px solid ${c.color}40">
+          </div>
+          <span class="rocket-emoji" style="left:calc(${pct}% - 8px)">${rockets[i % rockets.length]}</span>
+          <div class="finish-line"></div>
+          <span class="goal-label">META: ${goal}</span>
+        </div>
+        <div class="lane-score">${c.count}</div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="game-card">
+      <div class="game-header">
+        <div class="game-title">
+          <i class="fa-solid fa-flag-checkered" style="color:var(--green)"></i>
+          Corrida do Dia
+        </div>
+        <div style="display:flex; align-items:center; gap:10px">
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            AO VIVO
+          </div>
+          <span class="meta-info">Meta: ${state.settings.individualGoal} retenções/pessoa</span>
+        </div>
+      </div>
+      <div class="race-arena">
+        <div class="race-track">${lanesHtml}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWeeklyMap(container) {
+  const weekDays = getWeekDays();
+  const dayData = getWeeklyByCollabAndDay();
+  const dayCounts = getWeeklyByCollab();
+  const labels = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  const today = todayStr();
+
+  const dayLabelHtml = labels.map((l, i) => {
+    const isToday = weekDays[i] === today;
+    return `<div class="day-label" style="flex:1; color:${isToday ? 'var(--green-dark)' : ''}; font-weight:${isToday?'700':'500'}">${l}</div>`;
+  }).join('');
+
+  const playersHtml = state.collaborators.map(c => {
+    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    const total = dayCounts[c.id] || 0;
+    const maxDay = Math.max(1, ...weekDays.map(d => dayData[c.id][d] || 0));
+
+    const cellsHtml = weekDays.map(d => {
+      const cnt = dayData[c.id][d] || 0;
+      const isToday = d === today;
+      const isFuture = d > today;
+      const intensity = cnt === 0 ? 0 : Math.max(0.2, cnt / maxDay);
+
+      let bg, border;
+      if (isFuture) { bg = 'var(--gray-100)'; border = 'var(--gray-200)'; }
+      else if (cnt === 0) { bg = 'var(--gray-100)'; border = 'var(--gray-200)'; }
+      else {
+        const alpha = Math.round(intensity * 255).toString(16).padStart(2,'0');
+        bg = c.color + alpha;
+        border = c.color;
+      }
+
+      return `<div class="day-cell" style="flex:1; background:${bg}; border:1px solid ${border}; outline:${isToday ? `2px solid ${c.color}` : 'none'}; outline-offset:1px" title="${labels[weekDays.indexOf(d)]}: ${cnt} retenções">
+        ${cnt > 0 ? `<span style="text-shadow:0 1px 2px rgba(0,0,0,0.3)">${cnt}</span>` : ''}
+      </div>`;
+    }).join('');
+
+    return `
+      <div class="week-player">
+        <div class="week-info">
+          <div class="week-avatar" style="background:${c.color}">${initials}</div>
+          <div class="week-name">${c.name.split(' ')[0]}</div>
+        </div>
+        <div class="days-track">${cellsHtml}</div>
+        <div class="week-total">${total}</div>
+      </div>
+    `;
+  }).join('');
+
+  // Chart data
+  const chartLabels = labels;
+  const datasets = state.collaborators.map(c => ({
+    label: c.name.split(' ')[0],
+    data: weekDays.map(d => dayData[c.id][d] || 0),
+    borderColor: c.color,
+    backgroundColor: c.color + '22',
+    borderWidth: 2,
+    pointRadius: 4,
+    pointHoverRadius: 6,
+    tension: 0.4,
+    fill: false
+  }));
+
+  const chartId = 'weeklyChart_' + Date.now();
+
+  container.innerHTML = `
+    <div class="game-card">
+      <div class="game-header">
+        <div class="game-title">
+          <i class="fa-solid fa-map" style="color:var(--purple)"></i>
+          Mapa Semanal — Calor de Performance
+        </div>
+        <span class="meta-info">Semana atual</span>
+      </div>
+      <div class="weekly-map">
+        <div class="day-label-row">${dayLabelHtml}</div>
+        <div class="week-grid">${playersHtml}</div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="card-header">
+        <i class="fa-solid fa-chart-area" style="color:var(--blue)"></i>
+        Evolução Diária da Semana
+      </div>
+      <div class="chart-wrap">
+        <canvas id="${chartId}"></canvas>
+      </div>
+    </div>
+  `;
+
+  // Render chart after DOM update
+  setTimeout(() => {
+    const ctx = document.getElementById(chartId);
+    if (!ctx) return;
+    if (window._weekChart) { try { window._weekChart.destroy(); } catch(e){} }
+    window._weekChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: chartLabels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { family: 'DM Sans', size: 11 }, boxWidth: 12, padding: 16 }
+          },
+          tooltip: {
+            backgroundColor: '#1f2937',
+            titleFont: { family: 'DM Sans', size: 12, weight: '600' },
+            bodyFont: { family: 'DM Sans', size: 11 },
+            padding: 10,
+            cornerRadius: 8
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: '#f3f4f6' },
+            ticks: { font: { family: 'DM Sans', size: 11 }, color: '#9ca3af' }
+          },
+          y: {
+            grid: { color: '#f3f4f6' },
+            ticks: { font: { family: 'DM Mono', size: 11 }, color: '#9ca3af', stepSize: 1 },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }, 50);
+}
+
+// ═══════════════════════════════════════════
+// RANKING
+// ═══════════════════════════════════════════
+const MEDALS = ['🥇','🥈','🥉'];
+
+function renderRanking() {
+  const ranked = getRankedCollabs(currentMode);
+  const medals = ['🥇','🥈','🥉'];
+  const html = ranked.map((c, i) => {
+    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    const medalHtml = i < 3 ? `<span class="rank-medal">${medals[i]}</span>` : '';
+    const streakHtml = c.streak > 1 ? `<span class="streak-badge">🔥 ${c.streak}d</span>` : '';
+    const delta = c.count - c.yc;
+    const deltaHtml = delta !== 0 ? `<span style="color:${delta>0?'var(--green-dark)':'var(--red)'}; font-size:10px; font-weight:600">${delta>0?'▲':'▼'}${Math.abs(delta)}</span>` : '';
+    const isLeader = i === 0 && c.count > 0;
+
+    return `
+      <div class="rank-item rank-${i+1} ${isLeader ? 'leader-glow' : ''}" id="rank-item-${c.id}">
+        <div class="rank-pos">${i+1}</div>
+        <div class="rank-avatar" style="background:${c.color}">${initials}</div>
+        <div class="rank-details">
+          <div class="rank-name">${c.name}</div>
+          <div class="rank-meta">
+            ${streakHtml}
+            ${deltaHtml}
+          </div>
+        </div>
+        <div class="rank-count">${c.count}</div>
+        ${medalHtml}
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('rankList').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════
+// HISTORY
+// ═══════════════════════════════════════════
+function renderHistory() {
+  const today = todayStr();
+  const recs = [...state.retentions]
+    .filter(r => r.date === today)
+    .sort((a,b) => b.timestamp - a.timestamp)
+    .slice(0, 12);
+
+  if (recs.length === 0) {
+    document.getElementById('historyCard').innerHTML = `
+      <div style="padding:24px; text-align:center; color:var(--gray-300)">
+        <i class="fa-solid fa-inbox" style="font-size:28px; display:block; margin-bottom:8px"></i>
+        <span style="font-size:13px">Nenhuma retenção registrada hoje</span>
+      </div>
+    `;
+    return;
+  }
+
+  const rows = recs.map((r, i) => {
+    const c = state.collaborators.find(x => x.id === r.collabId);
+    if (!c) return '';
+    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    const isNew = i === 0 && (Date.now() - r.timestamp) < 3000;
+    return `
+      <tr class="${isNew ? 'history-new' : ''}">
+        <td><span class="badge-collab" style="background:${c.color}">
+          <span class="badge-dot"></span>${c.name.split(' ')[0]}
+        </span></td>
+        <td><span style="font-family:var(--mono); font-size:12px; background:var(--gray-100); padding:3px 8px; border-radius:6px">${r.clientCode}</span></td>
+        <td style="color:var(--gray-400); font-size:12px; font-family:var(--mono)">${r.time}</td>
+        <td><span style="color:var(--green-dark); font-size:12px; font-weight:500">✓ Retido</span></td>
+      </tr>
+    `;
+  }).join('');
+
+  document.getElementById('historyCard').innerHTML = `
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Colaborador</th>
+          <th>Código</th>
+          <th>Horário</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+// ═══════════════════════════════════════════
+// COLLAB SELECT
+// ═══════════════════════════════════════════
+function renderCollabSelect() {
+  const sel = document.getElementById('inputCollab');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">Selecione...</option>' +
+    state.collaborators.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  if (prev) sel.value = prev;
+}
+
+// ═══════════════════════════════════════════
+// SETTINGS
+// ═══════════════════════════════════════════
+function renderSettings() {
+  const dg = document.getElementById('dailyGoal');
+  const ig = document.getElementById('individualGoal');
+  if (dg) dg.value = state.settings.dailyGoal;
+  if (ig) ig.value = state.settings.individualGoal;
+  renderCollabListSettings();
+}
+
+function renderCollabListSettings() {
+  document.getElementById('collabList').innerHTML = state.collaborators.map((c, i) => {
+    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+    return `
+      <div class="collab-item">
+        <div class="collab-avatar-sm" style="background:${c.color}">${initials}</div>
+        <span class="collab-name-sm">${c.name}</span>
+        <div style="width:12px; height:12px; border-radius:50%; background:${c.color}; border:2px solid var(--gray-200)"></div>
+        <button class="btn-remove" onclick="removeCollaborator(${c.id})" title="Remover">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function addCollaborator() {
+  const inp = document.getElementById('newCollabName');
+  const name = inp.value.trim();
+  if (!name) { showToast('Digite o nome do colaborador', 'error'); return; }
+  if (state.collaborators.find(c => c.name.toLowerCase() === name.toLowerCase())) {
+    showToast('Colaborador já existe', 'error'); return;
+  }
+  const color = COLORS[state.collaborators.length % COLORS.length];
+  state.collaborators.push({ id: state.nextId++, name, color });
+  inp.value = '';
+  saveState();
+  renderCollabListSettings();
+  renderCollabSelect();
+  showToast(`${name} adicionado com sucesso`, 'success');
+}
+
+function removeCollaborator(id) {
+  state.collaborators = state.collaborators.filter(c => c.id !== id);
+  saveState();
+  renderCollabListSettings();
+  renderCollabSelect();
+  renderAll();
+}
+
+function saveSettings() {
+  const dg = parseInt(document.getElementById('dailyGoal').value);
+  const ig = parseInt(document.getElementById('individualGoal').value);
+  if (isNaN(dg) || dg < 1) { showToast('Meta diária inválida', 'error'); return; }
+  if (isNaN(ig) || ig < 1) { showToast('Meta individual inválida', 'error'); return; }
+  state.settings.dailyGoal = dg;
+  state.settings.individualGoal = ig;
+  saveState();
+  showToast('Configurações salvas com sucesso', 'success');
+  renderAll();
+}
+
+function clearDayData() {
+  if (!confirm('Limpar todas as retenções de hoje?')) return;
+  const today = todayStr();
+  state.retentions = state.retentions.filter(r => r.date !== today);
+  saveState();
+  renderAll();
+  showToast('Dados do dia removidos', 'success');
+}
+
+function clearAllData() {
+  if (!confirm('ATENÇÃO: Isso irá remover TODOS os dados. Continuar?')) return;
+  const fresh = defaultState();
+  state.retentions = [];
+  state.settings = fresh.settings;
+  saveState();
+  renderAll();
+  showToast('Todos os dados removidos', 'success');
+}
+
+// ═══════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════
+function showToast(msg, type = 'success') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-circle-exclamation' : 'fa-info-circle';
+  toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'fadeOut 0.3s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// ═══════════════════════════════════════════
+// CONFETTI
+// ═══════════════════════════════════════════
+function triggerConfetti() {
+  const colors = ['#22c55e','#3b82f6','#f59e0b','#8b5cf6','#ef4444','#06b6d4'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.top = '-20px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.width = (4 + Math.random() * 8) + 'px';
+      piece.style.height = (4 + Math.random() * 8) + 'px';
+      piece.style.transform = `rotate(${Math.random()*360}deg)`;
+      piece.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      piece.style.animationDelay = (Math.random() * 0.5) + 's';
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 3500);
+    }, i * 20);
+  }
+}
+
+// ═══════════════════════════════════════════
+// AUTO RESET CHECK (daily)
+// ═══════════════════════════════════════════
+function checkDayReset() {
+  const lastCheck = localStorage.getItem('retainx_lastday');
+  const today = todayStr();
+  if (lastCheck && lastCheck !== today) {
+    // new day — data already separate by date, just refresh UI
+  }
+  localStorage.setItem('retainx_lastday', today);
+}
+
+// ═══════════════════════════════════════════
+// DEMO DATA (first run)
+// ═══════════════════════════════════════════
+function seedDemoData() {
+  if (state.retentions.length > 0) return;
+  const today = todayStr();
+  const base = new Date(today + 'T12:00:00');
+
+  // Add some historical data this week
+  const weekDays = getWeekDays();
+  const collabs = state.collaborators;
+  let id = state.nextRetId;
+
+  weekDays.slice(0, 5).forEach((d, di) => {
+    if (d > today) return;
+    collabs.forEach(c => {
+      const cnt = Math.floor(Math.random() * 5) + (di === 4 ? 2 : 1);
+      for (let i = 0; i < cnt; i++) {
+        state.retentions.push({
+          id: id++,
+          collabId: c.id,
+          clientCode: 'CLI-' + String(Math.floor(Math.random()*90000)+10000),
+          date: d,
+          time: `${8+Math.floor(Math.random()*9)}:${String(Math.floor(Math.random()*60)).padStart(2,'0')}`,
+          timestamp: new Date(d).getTime() + Math.random() * 86400000
+        });
+      }
+    });
+  });
+  state.nextRetId = id;
+  saveState();
+}
+
+// ═══════════════════════════════════════════
+// SCRIPTS DE ATENDIMENTO — DATA & LOGIC
+// ═══════════════════════════════════════════
+
+const ADMIN_PASSWORD = 'igreen2026';
+
+const CATEGORY_META = {
+  'Objeção de Desconto':   { icon: 'fa-solid fa-percent',        color: '#3b82f6', bg: '#eff6ff', text: '#1d4ed8' },
+  'Mudança de Endereço':   { icon: 'fa-solid fa-location-dot',   color: '#8b5cf6', bg: '#f5f3ff', text: '#6d28d9' },
+  'Concorrência':          { icon: 'fa-solid fa-bolt',           color: '#f97316', bg: '#fff7ed', text: '#c2410c' },
+  'Faturamento':           { icon: 'fa-solid fa-file-invoice',   color: '#06b6d4', bg: '#ecfeff', text: '#0e7490' },
+  'Insatisfação':          { icon: 'fa-solid fa-face-frown',     color: '#ef4444', bg: '#fef2f2', text: '#b91c1c' },
+  'Situação Especial':     { icon: 'fa-solid fa-circle-info',    color: '#f59e0b', bg: '#fffbeb', text: '#b45309' },
+  'Atrito':                { icon: 'fa-solid fa-triangle-exclamation', color: '#dc2626', bg: '#fff1f2', text: '#9f1239' },
+  'Técnico / Injeção':     { icon: 'fa-solid fa-solar-panel',    color: '#22c55e', bg: '#f0fdf4', text: '#15803d' },
+  'Geral':                 { icon: 'fa-solid fa-headset',        color: '#6b7280', bg: '#f9fafb', text: '#374151' },
+};
+
+const DEFAULT_SCRIPTS = [
+  {
+    id: 1,
+    title: '1. Argumentações Obrigatórias',
+    category: 'Geral',
+    note: 'Argumentos que devem ser usados em TODOS os atendimentos de retenção.',
+    sections: [
+      {
+        label: 'Club de Benefícios',
+        icon: 'fa-solid fa-star',
+        color: '#f59e0b',
+        phrases: [
+          'Além do desconto na conta, você ainda tem acesso ao nosso Club de Benefícios, que gera uma economia média de aproximadamente R$40 por mês só utilizando os descontos disponíveis.',
+          'Somando isso com a economia da iGreen na energia, o valor faz bastante diferença no fim do mês.'
+        ]
+      },
+      {
+        label: 'Cashback / Indicações',
+        icon: 'fa-solid fa-coins',
+        color: '#22c55e',
+        phrases: [
+          'Imagina não pagar mais conta de energia? Aqui você pode ter até 100% de desconto, sabia?',
+          'Com as indicações você recebe comissão a cada fatura paga por suas indicações.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: '2. Quando o Cliente Fala que o Desconto é Pouco',
+    category: 'Objeção de Desconto',
+    note: 'Use argumentos que recontextualizam o valor ao longo do tempo e combinam com os benefícios do Club.',
+    sections: [
+      {
+        label: 'Frases de Retenção',
+        icon: 'fa-solid fa-comments',
+        color: '#3b82f6',
+        phrases: [
+          'Entendo você! Mas quando fez o cadastro esse desconto chamou sua atenção, né? O que mudou de lá pra cá?',
+          'Hoje qualquer economia faz diferença, principalmente porque ela vem sem você precisar mudar nada no seu consumo e ainda ajuda nosso planeta.',
+          'Às vezes olhando só o percentual parece pouco, mas no acumulado faz bastante diferença. Você já economizou cerca de R$ X por mês, isso dá quase R$ Y no ano.',
+          'Pensa que é um valor que você teria pago e ficou no seu bolso sem precisar fazer investimento nenhum.',
+          'Esses R$ Y no ano praticamente pagam uma conta de internet, mercado ou até combustível.',
+          'É aquele desconto que parece pequeno no mês, mas quando soma 12 meses você sente a diferença.',
+          'E o mais interessante nem é só o desconto da energia. Utilizando o Club, muitos clientes conseguem economizar mais uns R$ 30 a R$ 40 por mês em benefícios e parceiros.',
+          'Somando o desconto do boleto + os benefícios do Club, sua economia mensal pode chegar próximo de R$ X.',
+          'Cancelar faria você voltar a pagar 100% da conta sem nenhum benefício adicional. Minha ideia é justamente evitar que você perca essa economia.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: '3. Cliente Alega que Está Saindo no Prejuízo',
+    category: 'Objeção de Desconto',
+    note: 'Reforce que o próprio contrato garante vantagem ao cliente. Ofereça verificar os valores juntos.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-shield-check',
+        color: '#22c55e',
+        phrases: [
+          'Pode ficar tranquilo(a), porque o próprio contrato garante que o serviço precisa trazer vantagem pra você, nunca prejuízo.',
+          'Inclusive, se tiver qualquer dúvida sobre os valores, a gente consegue conferir tudo junto agora. E caso seja identificado algum pagamento acima do correto, o ressarcimento é feito via Pix.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: '4. Mudança de Endereço',
+    category: 'Mudança de Endereço',
+    note: 'Siga o fluxo: verificar se nova unidade está no nome do cliente → transferir benefício → abrir ticket ou agendar retorno em 31 dias.',
+    sections: [
+      {
+        label: 'Abordagem Inicial',
+        icon: 'fa-solid fa-house-chimney',
+        color: '#8b5cf6',
+        phrases: [
+          'Entendo sua mudança! Antes de cancelar, deixa eu verificar uma coisa rapidinho: se a nova casa estiver no seu nome, conseguimos transferir o desconto para você continuar economizando. Você já possui o número da UC da nova casa ou alguma fatura do endereço?',
+          'O processo de transferência é muito simples e você não perde o benefício que já conquistou.',
+          'Muitos clientes acabam cancelando na mudança e depois retornam porque percebem a diferença no valor da conta sem o desconto.'
+        ]
+      },
+      {
+        label: 'Se Houver Possibilidade de Aumento de Desconto',
+        icon: 'fa-solid fa-arrow-trend-up',
+        color: '#22c55e',
+        phrases: [
+          'Que ótimo! Verifiquei aqui e consegui liberar um aumento no seu desconto caso você queira transferir o benefício. Assim você continua economizando normalmente no novo endereço.'
+        ]
+      },
+      {
+        label: 'Procedimento Interno',
+        icon: 'fa-solid fa-clipboard-list',
+        color: '#6b7280',
+        phrases: [
+          'Verificar se a nova unidade já está ativa no nome do cliente e se já possui fatura emitida.',
+          'Caso tenha fatura com consumo apto: abrir ticket para novo cadastro.',
+          'Caso não tenha fatura: inserir na planilha de acompanhamento e agendar retorno para 31 dias.',
+          'Apenas Cemig - Comerc: há possibilidade de cadastro sem fatura.',
+          'Após o cadastro ser assinado e validado, registrar retenção nesse novo cadastro.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: '5. Cliente Deseja Ir para Outra Fornecedora',
+    category: 'Concorrência',
+    note: 'Sondagem: verificar se o desconto da concorrente é realmente fixo e pesquisar reputação no Reclame Aqui.',
+    sections: [
+      {
+        label: 'Diferenciais iGreen',
+        icon: 'fa-solid fa-trophy',
+        color: '#f97316',
+        phrases: [
+          'Com a iGreen, você tem a segurança de estar com uma das empresas referência no mercado de energia solar, trazendo não só economia na conta, mas também muito mais benefícios e tranquilidade no dia a dia.',
+          'Hoje a iGreen é reconhecida justamente porque nosso foco é realmente resolver a vida dos clientes e entregar um atendimento de qualidade. Tanto que conquistamos o selo RA1000 no Reclame Aqui.',
+          'Entendo você buscar um desconto maior, isso é totalmente válido. Mas muitas vezes olhar só o percentual pode acabar não trazendo a melhor vantagem no final. Aqui na iGreen, além da economia na conta, você tem suporte de verdade e o Clube de Descontos com economia média de R$40, além de cashback por indicações.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: '6. Cliente Já Está com 2 Fornecedoras',
+    category: 'Concorrência',
+    note: 'Use os argumentos de concorrência + explique como funciona o sistema de duas fornecedoras.',
+    sections: [
+      {
+        label: 'Explicação do Funcionamento',
+        icon: 'fa-solid fa-bolt',
+        color: '#f97316',
+        phrases: [
+          'Quando você possui duas empresas de energia solar: uma é utilizada para o consumo mensal normal, cobrindo a energia que você realmente utiliza.',
+          'A outra empresa gera crédito, que fica disponível para abater faturas futuras. Esse crédito não pode ser usado imediatamente, e você não sabe qual empresa está acumulando-o.',
+          'Ambas fornecem energia, mas a utilização efetiva é apenas de uma delas. A outra apenas acumula crédito, enquanto você continua pagando pelo mesmo consumo.',
+          'Em um momento ou outro você utilizará esse crédito gerado sem receber nenhuma cobrança. Podemos analisar até mesmo a possibilidade de arquivar seus boletos. (Chamar a gestão para análise)'
+        ]
+      }
+    ]
+  },
+  {
+    id: 7,
+    title: '7. Mora de Aluguel e Vai Mudar de Casa',
+    category: 'Mudança de Endereço',
+    note: 'Seguir procedimento padrão de mudança. Se o proprietário não autorizar, usar saldo acumulado como argumento.',
+    sections: [
+      {
+        label: 'Argumentos de Retenção',
+        icon: 'fa-solid fa-key',
+        color: '#8b5cf6',
+        phrases: [
+          'Orientar o cliente a conversar com o proprietário, explicando que o desconto na energia gera economia mensal e que os créditos/benefícios estão atrelados ao CPF do titular.',
+          'Manter a conta no próprio nome também traz mais segurança para ambas as partes, já que qualquer débito ficaria vinculado diretamente ao titular responsável.',
+          'A continuidade no mesmo CPF facilita a manutenção dos descontos e evita perda de benefícios já acumulados.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: '8. Não Concorda em Receber Dois Boletos',
+    category: 'Faturamento',
+    note: 'Se o cliente insistir no cancelamento por isso, analisar transferência para fornecedora parceira com unificação disponível na região.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-file-invoice-dollar',
+        color: '#06b6d4',
+        phrases: [
+          'Olha, estamos trabalhando para trazer essa possibilidade para a sua região, porém a distribuidora acaba dificultando bastante esse processo. Afinal, eles não têm interesse que você deixe de consumir a energia tradicional.',
+          'Mas pode ficar tranquilo que seguimos tentando viabilizar essa unificação para você e, assim que houver disponibilidade, faremos o procedimento.',
+          'Enquanto isso, para facilitar sua rotina e evitar preocupação com duas contas, você pode cadastrar a fatura da distribuidora ou da iGreen em débito automático.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 9,
+    title: '9. Proprietário Faleceu',
+    category: 'Situação Especial',
+    note: 'Solicitar atestado de óbito. Verificar saldo acumulado e se há alguém no imóvel para continuar usando o benefício.',
+    sections: [
+      {
+        label: 'Procedimento',
+        icon: 'fa-solid fa-file-contract',
+        color: '#f59e0b',
+        phrases: [
+          'Solicitar o atestado de óbito para seguir com a tratativa do caso.',
+          'Confirmar se a unidade já foi cancelada ou se houve alteração de titularidade junto à distribuidora.',
+          'Verificar se a fornecedora vinculada possui saldo de energia/créditos acumulados.',
+          'Caso existam créditos, identificar se há alguém residindo no imóvel para continuar utilizando a energia com desconto até que os créditos sejam consumidos integralmente antes da troca de TT.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 10,
+    title: '10. Sócios Não Concordam em Manter o Desconto',
+    category: 'Situação Especial',
+    note: 'Sugerir contato direto com os demais sócios para explicar o funcionamento.',
+    sections: [
+      {
+        label: 'Abordagem',
+        icon: 'fa-solid fa-handshake',
+        color: '#f59e0b',
+        phrases: [
+          'Caso o cliente já compreenda os benefícios da iGreen, sugerir que permita um contato direto com os demais sócios para que a equipe possa explicar melhor o funcionamento do desconto.',
+          'Muitas vezes a resistência acontece por falta de informação sobre a economia gerada e os benefícios disponíveis.',
+          'A intenção é apresentar os detalhes de forma transparente, para que todos consigam avaliar a vantagem financeira antes de tomar a decisão de cancelamento.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 11,
+    title: '11. Cancelamento por Placas Solares',
+    category: 'Técnico / Injeção',
+    note: 'Aplicar sondagem para entender se o cliente realmente tem o projeto em andamento.',
+    sections: [
+      {
+        label: 'Sondagem',
+        icon: 'fa-solid fa-solar-panel',
+        color: '#22c55e',
+        phrases: [
+          'Quantas placas solares serão instaladas?',
+          'Qual será a potência/voltagem do sistema?',
+          'O contrato da instalação já foi assinado?',
+          'Foi realizado orçamento conosco anteriormente?',
+          'Qual a previsão de finalização do projeto?',
+          'Qual é o consumo médio atual do cliente?',
+          'A vistoria da distribuidora já foi realizada?'
+        ]
+      },
+      {
+        label: 'Se o Cliente Ficou em Dúvida na Sondagem',
+        icon: 'fa-solid fa-comments',
+        color: '#3b82f6',
+        phrases: [
+          'Sr., eu senti que talvez não seja nem pela instalação em si, porque o senhor ficou um pouco em dúvida agora. Então eu queria entender de verdade o que está pesando nessa decisão, porque hoje o senhor está abrindo mão de benefícios importantes com a gente, como economia na conta, suporte e o iGreen Club.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 12,
+    title: '12. Atraso de Injeção',
+    category: 'Técnico / Injeção',
+    note: 'Deixar claro que o atraso é responsabilidade da distribuidora, não da iGreen.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-clock-rotate-left',
+        color: '#22c55e',
+        phrases: [
+          'Entendo sua preocupação com o atraso, mas isso acontece por parte da distribuidora e não da iGreen. Enquanto aguarda, você continua tendo vantagens no iGreen Club, então não fica no prejuízo nesse período.',
+          'Cancelar agora acaba não compensando, porque para entrar em outra fornecedora você pode enfrentar praticamente todo o processo de novo, levando até uns 180 dias para normalizar os créditos. Aí você perde tempo, benefícios e ainda continua aguardando do mesmo jeito.',
+          'O melhor cenário hoje é manter ativo para já aproveitar quando a distribuidora liberar.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 13,
+    title: '13. Atraso de Faturamento',
+    category: 'Faturamento',
+    note: 'O atraso ocorre porque a distribuidora não enviou a leitura. O cliente não terá prejuízo.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-hourglass-half',
+        color: '#06b6d4',
+        phrases: [
+          'O atraso aconteceu porque a distribuidora ainda não enviou a leitura necessária para a emissão do boleto. Como a cobrança é feita em cima do seu consumo real, dependemos dessa informação para gerar o valor correto.',
+          'Mas pode ficar tranquilo(a), porque você não terá nenhum prejuízo com isso. Vou abrir um chamado solicitando prioridade na emissão e, enquanto isso, o ideal é apenas reservar o valor da conta.',
+          'Assim que o boleto for liberado, ele já virá com o desconto aplicado normalmente, sem multa, sem juros e mantendo toda a sua economia.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 14,
+    title: '14. Erro no Faturamento',
+    category: 'Faturamento',
+    note: 'O erro vem da leitura da distribuidora. O cliente tem direito à releitura. Se já pagou, recebe ressarcimento.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-file-circle-exclamation',
+        color: '#06b6d4',
+        phrases: [
+          'Nós emitimos o boleto com base nas informações enviadas pela própria distribuidora. Como você informou que a leitura pode estar incorreta, a solução é entrar em contato com a distribuidora e solicitar uma releitura, porque isso é um direito seu.',
+          'Se for identificado que realmente houve erro na leitura, o nosso boleto também será corrigido normalmente.',
+          'Caso já tenha realizado o pagamento, a diferença é ressarcida. Caso ainda não tenha pago, o valor será ajustado antes.',
+          'Mesmo sem a iGreen, esse problema aconteceria da mesma forma, porque o erro vem diretamente da leitura feita pela distribuidora, não da nossa cobrança.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 15,
+    title: '15. Injeção Incompleta',
+    category: 'Técnico / Injeção',
+    note: 'Verificar se é inadimplência, condições climáticas, ou manutenção. Solicitar prioridade na regularização.',
+    sections: [
+      {
+        label: 'Causas e Scripts',
+        icon: 'fa-solid fa-solar-panel',
+        color: '#22c55e',
+        phrases: [
+          'INADIMPLÊNCIA: No seu caso os créditos deixaram de ser compensados por conta dos boletos em aberto. Para continuar recebendo normalmente os benefícios e descontos, é importante manter os pagamentos em dia. Assim que regularizar, consigo solicitar prioridade para normalização da sua unidade.',
+          'COMPENSAÇÃO PARCIAL: Mesmo quando a compensação não cobre 100% do consumo, você ainda recebe um desconto proporcional. Ou seja, não houve prejuízo, porque essa parte compensada saiu mais barata do que sairia direto pela distribuidora.',
+          'CLIMA/MANUTENÇÃO: Isso pode acontecer em períodos de chuva forte próximos da usina ou em momentos de manutenção. Isso também aconteceria mesmo com placas solares instaladas na própria casa. Vou solicitar prioridade na regularização.',
+          'De qualquer forma, você não está tendo prejuízo com a iGreen. Além da economia proporcional, ainda continua tendo acesso ao iGreen Club e todos os benefícios da plataforma.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 16,
+    title: '16. Não Concorda com a TT de Fornecedora',
+    category: 'Técnico / Injeção',
+    note: 'Explicar que esse modelo é mais estável e evita problemas de saldo acumulado.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-plug-circle-check',
+        color: '#22c55e',
+        phrases: [
+          'Mas o que exatamente te impede hoje? Você não terá nenhum prejuízo pelo fato dessa energia estar vinculada ao nosso nome. Na verdade, esse modelo acaba sendo até mais vantajoso para você.',
+          'Em muitos casos, quando a energia fica vinculada diretamente ao nome do cliente, pode ocorrer o que chamamos de saldo acumulado, gerando possíveis transtornos futuros. Por isso esse formato traz mais estabilidade.',
+          'Além disso, a própria distribuidora costuma dificultar bastante a coleta e validação das leituras quando tudo fica diretamente no nome do cliente, o que pode atrasar ainda mais a compensação dos créditos.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 17,
+    title: '17. Insatisfação com Atendimento da Distribuidora',
+    category: 'Insatisfação',
+    note: 'Reforçar que a iGreen acompanha tudo junto à distribuidora e o cliente não precisa resolver sozinho.',
+    sections: [
+      {
+        label: 'Script — Troca de Titularidade',
+        icon: 'fa-solid fa-building',
+        color: '#ef4444',
+        phrases: [
+          'Como a usina está vinculada no nome da iGreen, algumas informações realmente não ficam visíveis diretamente para você no sistema da distribuidora. Mas fica tranquilo(a), porque nossa equipe acompanha tudo.',
+          'Seu caso continua sendo acompanhado normalmente por nós junto à distribuidora, para garantir que tudo seja ajustado corretamente. Nosso objetivo é justamente facilitar para você, acompanhando todo o processo até a finalização, sem que você precise resolver isso sozinho(a).'
+        ]
+      }
+    ]
+  },
+  {
+    id: 18,
+    title: '18. Insatisfação com Atendimento da iGreen / Licenciado',
+    category: 'Insatisfação',
+    note: 'Pedir desculpas genuínas, levar para gestão e garantir que não vai se repetir.',
+    sections: [
+      {
+        label: 'Atendimento Insatisfatório',
+        icon: 'fa-solid fa-heart-crack',
+        color: '#ef4444',
+        phrases: [
+          'Peço desculpas pelo ocorrido. Realmente não é essa experiência que queremos passar, porque sabemos que o motivo da iGreen existir são nossos clientes, e nosso foco é sempre oferecer o melhor atendimento possível.',
+          'Pode deixar que vou levar toda essa situação para a gestão para que as devidas providências sejam tomadas. E quero te garantir que isso não vai voltar a acontecer.',
+          'Não vale a pena abrir mão da sua economia e dos benefícios por conta dessa situação. Estamos aqui justamente para trazer solução, suporte e vantagens para você.'
+        ]
+      },
+      {
+        label: 'Tempo em Espera',
+        icon: 'fa-solid fa-clock',
+        color: '#f97316',
+        phrases: [
+          'Entendemos totalmente sua insatisfação com o tempo de espera e peço desculpas por isso. Nossa empresa teve um crescimento muito rápido nos últimos meses e estamos ampliando fortemente nossa equipe de atendimento.',
+          'Pode ter certeza de que a prioridade da iGreen é cuidar bem de vocês. Estamos trabalhando para que seu atendimento seja cada vez mais rápido, eficiente e resolutivo.'
+        ]
+      },
+      {
+        label: 'Expectativa Não Atendida pelo Licenciado',
+        icon: 'fa-solid fa-user-slash',
+        color: '#dc2626',
+        phrases: [
+          'Entendo totalmente sua insatisfação e peço desculpas por essa experiência não ter atendido sua expectativa. Quem cuida do seu pós-venda e acompanhamento somos nós, então qualquer situação que surgir daqui pra frente, você pode contar diretamente com nossa equipe.',
+          'Vamos abrir internamente uma validação sobre esse licenciado para entender o que aconteceu e tomar as devidas providências. Não vale a pena você perder toda a economia e os benefícios por conta dessa situação específica.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 19,
+    title: '19. Casos de Atrito Extremo',
+    category: 'Atrito',
+    note: 'Manter tom calmo e profissional. Registrar corretamente o motivo do encerramento da chamada.',
+    sections: [
+      {
+        label: 'Cliente Não Informa o Motivo',
+        icon: 'fa-solid fa-circle-question',
+        color: '#dc2626',
+        phrases: [
+          'Tudo bem, eu vou seguir com o procedimento que você solicitou, sem problema. Só queria entender rapidamente o que aconteceu, porque sua opinião realmente é importante pra gente. Foi alguma insatisfação com o atendimento? Ou sentiu que o desconto não estava compensando como esperava?'
+        ]
+      },
+      {
+        label: 'Prazo de Cancelamento',
+        icon: 'fa-solid fa-calendar-xmark',
+        color: '#dc2626',
+        phrases: [
+          'Esse prazo de até 90 dias não é uma definição da iGreen, e sim uma regulamentação da ANEEL e também da própria distribuidora responsável pela sua unidade.',
+          'Tanto para ativação quanto para encerramento do fornecimento de energia, existe esse prazo regulatório para que todas as atualizações e validações sejam concluídas no sistema da concessionária.',
+          'A iGreen não consegue reduzir ou alterar esse prazo, porque esse processo depende diretamente das regras da distribuidora e da ANEEL.'
+        ]
+      },
+      {
+        label: 'Cliente Exaltado — 1ª Sinalização',
+        icon: 'fa-solid fa-volume-high',
+        color: '#dc2626',
+        phrases: [
+          'Entendo sua insatisfação e quero ajudar da melhor forma possível. Porém, preciso que mantenhamos o respeito durante o atendimento para que eu consiga seguir com a solução do seu caso.'
+        ]
+      },
+      {
+        label: 'Persistência em Tom Agressivo',
+        icon: 'fa-solid fa-hand',
+        color: '#dc2626',
+        phrases: [
+          'Compreendo seu posicionamento, porém não posso prosseguir com o atendimento diante de ofensas. Caso isso continue, será necessário encerrar a ligação.'
+        ]
+      },
+      {
+        label: 'Insultos Graves / Encerramento',
+        icon: 'fa-solid fa-phone-slash',
+        color: '#9f1239',
+        phrases: [
+          'Como as ofensas persistiram, vou encerrar este atendimento neste momento. Quando desejar continuar de forma respeitosa, estaremos à disposição para ajudar.'
+        ]
+      },
+      {
+        label: 'Cliente Solicita Gravação da Ligação',
+        icon: 'fa-solid fa-microphone',
+        color: '#6b7280',
+        phrases: [
+          'Informamos que as gravações de ligações são utilizadas exclusivamente para fins internos de qualidade e segurança, conforme diretrizes da LGPD, e não são disponibilizadas para envio externo.',
+          'Caso precise de um comprovante do atendimento, posso te fornecer o número de protocolo ou um resumo por escrito do contato realizado.',
+          'Caso o cliente insista, informar que para a disponibilização ele deverá realizar uma solicitação formal à empresa.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 20,
+    title: '20. UC Encerrada (Saldo de Energia)',
+    category: 'Situação Especial',
+    note: 'Antes de concluir o cancelamento, verificar possibilidade de transferência para nova unidade.',
+    sections: [
+      {
+        label: 'Script Padrão',
+        icon: 'fa-solid fa-plug-circle-xmark',
+        color: '#f59e0b',
+        phrases: [
+          'Entendo, Sr.(a). Antes de seguirmos com o desligamento da UC, gostaria de explicar um ponto importante referente ao saldo de energia já vinculado ao seu contrato.',
+          'Quando o cliente realiza o desligamento da UC, pode gerar o boleto de saldo referente à energia já disponibilizada. Por isso, antes de concluir o cancelamento, verificamos sempre a possibilidade de transferir a assinatura para uma nova casa.'
+        ]
+      }
+    ]
+  }
+];
+
+// ── State ──
+function loadScriptsState() {
+  try {
+    const saved = localStorage.getItem('scripts_data');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return { scripts: JSON.parse(JSON.stringify(DEFAULT_SCRIPTS)), favorites: [], nextId: 21 };
+}
+
+function saveScriptsState() {
+  localStorage.setItem('scripts_data', JSON.stringify(scriptsState));
+}
+
+let scriptsState = loadScriptsState();
+let activeCategory = 'all';
+let adminUnlocked = false;
+
+// ── Render filters ──
+function renderScriptsFilters() {
+  const container = document.getElementById('scriptsCategoryFilters');
+  const cats = ['all', ...Object.keys(CATEGORY_META)];
+  const counts = {};
+  scriptsState.scripts.forEach(s => {
+    counts[s.category] = (counts[s.category] || 0) + 1;
+  });
+
+  let html = `<div class="filter-section-label">Filtrar por Categoria</div>`;
+  html += cats.map(cat => {
+    const isAll = cat === 'all';
+    const meta = CATEGORY_META[cat] || {};
+    const count = isAll ? scriptsState.scripts.length : (counts[cat] || 0);
+    const active = activeCategory === cat ? 'active' : '';
+    const icon = isAll ? 'fa-solid fa-layer-group' : meta.icon;
+    const label = isAll ? 'Todos os Scripts' : cat;
+    return `<button class="filter-chip ${active}" onclick="setScriptCategory('${cat}')">
+      <i class="${icon}"></i>${label}<span class="count">${count}</span>
+    </button>`;
+  }).join('');
+
+  html += `<div class="filter-section-label" style="margin-top:12px">Outros</div>`;
+  html += `<button class="filter-chip ${activeCategory === 'favorites' ? 'active' : ''}" onclick="setScriptCategory('favorites')">
+    <i class="fa-solid fa-star"></i>Favoritos<span class="count">${scriptsState.favorites.length}</span>
+  </button>`;
+  const linksCount = loadLinks().length;
+  html += `<button class="filter-chip ${activeCategory === 'links' ? 'active' : ''}" onclick="setScriptCategory('links')">
+    <i class="fa-solid fa-link"></i>Links e Materiais<span class="count">${linksCount}</span>
+  </button>`;
+
+  container.innerHTML = html;
+}
+
+function setScriptCategory(cat) {
+  activeCategory = cat;
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+// ── Render grid ──
+function renderScriptsGrid() {
+  const grid = document.getElementById('scriptsGrid');
+  const badge = document.getElementById('scriptsCountBadge');
+  const search = document.getElementById('scriptsSearchInput').value.toLowerCase().trim();
+
+  // Links view
+  if (activeCategory === 'links') {
+    const links = loadLinks().filter(l => !search || l.title.toLowerCase().includes(search) || (l.desc||'').toLowerCase().includes(search));
+    badge.textContent = links.length + ' item' + (links.length !== 1 ? 's' : '');
+    if (!links.length) {
+      grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-link"></i><p>${search ? 'Nenhum link encontrado.' : 'Nenhum link adicionado.<br>Use o Painel Admin para adicionar.'}</p></div>`;
+    } else {
+      grid.innerHTML = `<div class="links-grid">${links.map(l => {
+        const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
+        const adminBtns = adminUnlocked ? `<button onclick="deleteLink(${l.id})" style="background:transparent;border:none;cursor:pointer;color:var(--gray-300);font-size:12px;flex-shrink:0;padding:2px" title="Remover"><i class="fa-solid fa-trash"></i></button>` : '';
+        return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener">
+          <div class="link-card-icon" style="background:${meta.bg};color:${meta.text}"><i class="${meta.icon}"></i></div>
+          <div class="link-card-info">
+            <div class="link-card-title">${l.title}</div>
+            <div class="link-card-desc">${l.desc||''}</div>
+            <div class="link-card-type" style="color:${meta.text}">${meta.label}</div>
+          </div>
+          ${adminBtns}
+        </a>`;
+      }).join('')}</div>`;
+    }
+    return;
+  }
+
+  let filtered = scriptsState.scripts.filter(s => {
+    if (activeCategory === 'favorites') return scriptsState.favorites.includes(s.id);
+    if (activeCategory !== 'all' && s.category !== activeCategory) return false;
+    if (search) {
+      const haystack = (s.title + ' ' + s.category + ' ' + (s.note||'') + ' ' +
+        s.sections.map(sec => sec.phrases.join(' ')).join(' ')).toLowerCase();
+      return haystack.includes(search);
+    }
+    return true;
+  });
+
+  badge.textContent = filtered.length + ' script' + (filtered.length !== 1 ? 's' : '');
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-magnifying-glass"></i><p>Nenhum script encontrado.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s => renderScriptCard(s)).join('');
+}
+
+function renderScriptCard(s) {
+  const catMeta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
+  const isFav = scriptsState.favorites.includes(s.id);
+  const isExpanded = document.querySelector(`[data-script-id="${s.id}"].expanded`) !== null;
+
+  const sectionsHtml = s.sections.map(sec => {
+    const phrasesHtml = sec.phrases.map(p =>
+      `<div class="script-phrase" style="border-left-color:${sec.color||'var(--green)'}">
+        ${p}
+        <button class="script-copy-btn" onclick="copyPhrase(event,'${escapeAttr(p)}')" title="Copiar">
+          <i class="fa-regular fa-copy"></i>
+        </button>
+      </div>`
+    ).join('');
+    return `<div class="script-section">
+      <div class="script-section-label" style="color:${sec.color||'var(--green)'}">
+        <i class="${sec.icon||'fa-solid fa-comment'}"></i>${sec.label}
+      </div>
+      ${phrasesHtml}
+    </div>`;
+  }).join('');
+
+  const noteHtml = s.note ? `<div class="script-note"><i class="fa-solid fa-circle-info"></i>${s.note}</div>` : '';
+
+  return `<div class="script-card" data-script-id="${s.id}">
+    <div class="script-card-header" onclick="toggleScriptCard(${s.id})">
+      <div class="script-card-icon" style="background:${catMeta.bg};color:${catMeta.text}">
+        <i class="${catMeta.icon}"></i>
+      </div>
+      <div class="script-card-info">
+        <div class="script-card-title">${s.title}</div>
+        <div class="script-card-meta">
+          <span>${s.sections.length} seção${s.sections.length!==1?'ões':''}</span>
+          <span>·</span>
+          <span>${s.sections.reduce((a,sec)=>a+sec.phrases.length,0)} frases</span>
+        </div>
+      </div>
+      <div class="script-card-badges">
+        <span class="cat-badge" style="background:${catMeta.bg};color:${catMeta.text}">${s.category}</span>
+        <button class="script-fav-btn ${isFav?'active':''}" onclick="toggleFav(event,${s.id})" title="${isFav?'Remover favorito':'Favoritar'}">
+          <i class="fa-${isFav?'solid':'regular'} fa-star"></i>
+        </button>
+        <button class="script-expand-btn"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+    </div>
+    <div class="script-card-body">
+      <div class="script-card-content">
+        ${noteHtml}
+        ${noteHtml ? '<div style="height:12px"></div>' : ''}
+        ${sectionsHtml}
+      </div>
+      <div class="script-card-actions">
+        ${adminUnlocked ? `<button class="btn-edit-script" onclick="openEditScript(${s.id})"><i class="fa-solid fa-pen"></i>Editar</button>
+        <button class="btn-edit-script" onclick="deleteScript(${s.id})" style="color:var(--red)"><i class="fa-solid fa-trash"></i>Excluir</button>` : ''}
+        <span style="margin-left:auto;font-size:11px;color:var(--gray-400)">Clique nas frases para copiar</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function escapeAttr(str) {
+  return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+function toggleScriptCard(id) {
+  const card = document.querySelector(`[data-script-id="${id}"]`);
+  if (!card) return;
+  card.classList.toggle('expanded');
+}
+
+function toggleFav(e, id) {
+  e.stopPropagation();
+  const idx = scriptsState.favorites.indexOf(id);
+  if (idx === -1) scriptsState.favorites.push(id);
+  else scriptsState.favorites.splice(idx, 1);
+  saveScriptsState();
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+function filterScripts() {
+  renderScriptsGrid();
+}
+
+function copyPhrase(e, text) {
+  e.stopPropagation();
+  navigator.clipboard.writeText(text).then(() => showToast('Frase copiada!', 'success'));
+}
+
+// ── Admin Modal ──
+function openAdminModal() {
+  adminUnlocked = false;
+  const overlay = document.getElementById('adminModalOverlay');
+  renderAdminPwdGate();
+  overlay.classList.add('open');
+}
+
+function closeAdminModal() {
+  document.getElementById('adminModalOverlay').classList.remove('open');
+}
+
+function renderAdminPwdGate() {
+  document.getElementById('adminModalTitle').textContent = 'Modo Administrador';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="pwd-gate">
+      <i class="fa-solid fa-lock"></i>
+      <p>Digite a senha de administrador para acessar o painel de edição.</p>
+      <input type="password" id="adminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPwd()">
+      <div class="pwd-gate-err" id="adminPwdErr">Senha incorreta. Tente novamente.</div>
+      <div style="margin-top:16px">
+        <button class="btn-primary" onclick="checkAdminPwd()"><i class="fa-solid fa-unlock"></i>Entrar</button>
+      </div>
+    </div>`;
+  document.getElementById('adminModalFooter').innerHTML = `
+    <button class="btn-secondary" onclick="closeAdminModal()">Cancelar</button>`;
+  setTimeout(() => { const i = document.getElementById('adminPwdInput'); if(i) i.focus(); }, 100);
+}
+
+function checkAdminPwd() {
+  const val = document.getElementById('adminPwdInput').value;
+  if (val === ADMIN_PASSWORD) {
+    adminUnlocked = true;
+    renderAdminPanel();
+  } else {
+    const err = document.getElementById('adminPwdErr');
+    err.style.display = 'block';
+    document.getElementById('adminPwdInput').value = '';
+    document.getElementById('adminPwdInput').focus();
+  }
+}
+
+function renderAdminPanel() {
+  document.getElementById('adminModalTitle').textContent = 'Painel Administrativo';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('list',this)">📋 Scripts</button>
+      <button class="admin-tab" onclick="switchAdminTab('new',this)">➕ Novo Script</button>
+      <button class="admin-tab" onclick="switchAdminTab('links',this)">🔗 Links</button>
+      <button class="admin-tab" onclick="switchAdminTab('cats',this)">🏷️ Categorias</button>
+    </div>
+    <div class="admin-tab-panel active" id="admin-tab-list">${renderAdminList()}</div>
+    <div class="admin-tab-panel" id="admin-tab-new">${renderAdminForm(null)}</div>
+    <div class="admin-tab-panel" id="admin-tab-links">${renderAdminLinksTab()}</div>
+    <div class="admin-tab-panel" id="admin-tab-cats">${renderAdminCats()}</div>`;
+  document.getElementById('adminModalFooter').innerHTML = `
+    <button class="btn-secondary" onclick="resetScriptsToDefault()" style="margin-right:auto;color:var(--red);border-color:#fca5a5">
+      <i class="fa-solid fa-rotate-left"></i> Restaurar Padrão
+    </button>
+    <button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
+  renderScriptsGrid();
+}
+
+function switchAdminTab(tab, btn) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('admin-tab-' + tab).classList.add('active');
+}
+
+function renderAdminList() {
+  return `<div class="admin-script-list">${scriptsState.scripts.map(s => {
+    const meta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
+    return `<div class="admin-script-row">
+      <span style="font-size:13px">${s.id}</span>
+      <div class="script-card-icon" style="width:28px;height:28px;border-radius:7px;font-size:12px;background:${meta.bg};color:${meta.text}">
+        <i class="${meta.icon}"></i>
+      </div>
+      <span class="admin-script-row-title">${s.title}</span>
+      <button class="btn-edit-row" onclick="openEditScript(${s.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn-del-row" onclick="deleteScript(${s.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  }).join('')}</div>
+  <div style="margin-top:16px">
+    <button class="btn-primary" onclick="switchAdminTab('new',document.querySelectorAll('.admin-tab')[1])">
+      <i class="fa-solid fa-plus"></i> Novo Script
+    </button>
+  </div>`;
+}
+
+function renderAdminForm(script) {
+  const s = script || { title: '', category: Object.keys(CATEGORY_META)[0], note: '', sections: [{ label: '', icon: 'fa-solid fa-comments', color: '#22c55e', phrases: [''] }] };
+  const isEdit = !!script;
+  const catOptions = Object.keys(CATEGORY_META).map(c =>
+    `<option value="${c}" ${s.category===c?'selected':''}>${c}</option>`).join('');
+  const sectionsHtml = s.sections.map((sec, si) => renderAdminSection(sec, si)).join('');
+  return `
+    <div id="adminFormContainer" data-edit-id="${isEdit?s.id:''}">
+      <div class="admin-field">
+        <label class="admin-label">Título do Script</label>
+        <input class="admin-input" id="af_title" value="${escapeAttr(s.title)}" placeholder="Ex: 1. Quando o cliente alega desconto baixo">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Categoria</label>
+        <select class="admin-select" id="af_category">${catOptions}</select>
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Observação / Nota Interna</label>
+        <textarea class="admin-textarea" id="af_note" placeholder="Instruções internas para o operador...">${s.note||''}</textarea>
+      </div>
+      <div class="admin-label" style="margin-bottom:8px">Seções e Frases</div>
+      <div id="af_sections">${sectionsHtml}</div>
+      <button class="btn-add-phrase" onclick="addAdminSection()" style="width:100%"><i class="fa-solid fa-plus"></i> Adicionar Seção</button>
+      <div style="margin-top:20px;display:flex;gap:8px">
+        <button class="btn-primary" onclick="saveAdminScript()">
+          <i class="fa-solid fa-floppy-disk"></i> ${isEdit?'Salvar Alterações':'Criar Script'}
+        </button>
+        ${isEdit?`<button class="btn-secondary" onclick="renderAdminPanel()">Cancelar</button>`:''}
+      </div>
+    </div>`;
+}
+
+function renderAdminSection(sec, si) {
+  const phrasesHtml = sec.phrases.map((p, pi) => `
+    <div class="admin-phrase-row">
+      <input value="${escapeAttr(p)}" placeholder="Frase ou argumentação..." oninput="updateAdminPhrase(${si},${pi},this.value)">
+      <button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>
+    </div>`).join('');
+  return `<div class="admin-section-block" data-si="${si}" style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:14px;margin-bottom:10px;">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input class="admin-input" style="flex:1" value="${escapeAttr(sec.label)}" placeholder="Nome da seção..." oninput="updateAdminSectionLabel(${si},this.value)">
+      <button class="btn-remove-phrase" onclick="removeAdminSection(${si})" title="Remover seção"><i class="fa-solid fa-trash"></i></button>
+    </div>
+    <div class="admin-phrases-list" id="af_phrases_${si}">${phrasesHtml}</div>
+    <button class="btn-add-phrase" onclick="addAdminPhrase(${si})"><i class="fa-solid fa-plus"></i> Adicionar Frase</button>
+  </div>`;
+}
+
+function renderAdminCats() {
+  return `<div style="font-size:13px;color:var(--gray-500);line-height:1.7">
+    As categorias são definidas automaticamente com base nos scripts cadastrados. 
+    Para criar uma nova categoria, basta digitar o nome dela no campo "Categoria" ao criar ou editar um script.
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:6px">
+      ${Object.entries(CATEGORY_META).map(([name,meta]) =>
+        `<span style="background:${meta.bg};color:${meta.text};padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500">
+          <i class="${meta.icon}"></i> ${name}
+        </span>`).join('')}
+    </div>
+  </div>`;
+}
+
+// Admin form actions
+let _adminFormSections = null;
+
+function getAdminFormSections() {
+  const blocks = document.querySelectorAll('.admin-section-block');
+  return Array.from(blocks).map((block, si) => {
+    const label = block.querySelector('input').value;
+    const phrases = Array.from(block.querySelectorAll('.admin-phrase-row input')).map(i => i.value).filter(v => v.trim());
+    return { label, icon: 'fa-solid fa-comments', color: '#22c55e', phrases };
+  });
+}
+
+function addAdminSection() {
+  const container = document.getElementById('af_sections');
+  const si = container.querySelectorAll('.admin-section-block').length;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderAdminSection({ label: '', icon: 'fa-solid fa-comments', color: '#22c55e', phrases: [''] }, si);
+  container.appendChild(tmp.firstElementChild);
+}
+
+function removeAdminSection(si) {
+  const blocks = document.querySelectorAll('.admin-section-block');
+  if (blocks[si]) blocks[si].remove();
+  refreshAdminSectionIndices();
+}
+
+function refreshAdminSectionIndices() {
+  document.querySelectorAll('.admin-section-block').forEach((b, i) => b.setAttribute('data-si', i));
+}
+
+function addAdminPhrase(si) {
+  const list = document.getElementById('af_phrases_' + si);
+  if (!list) return;
+  const pi = list.querySelectorAll('.admin-phrase-row').length;
+  const div = document.createElement('div');
+  div.className = 'admin-phrase-row';
+  div.innerHTML = `<input value="" placeholder="Nova frase..." oninput="updateAdminPhrase(${si},${pi},this.value)">
+    <button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>`;
+  list.appendChild(div);
+}
+
+function removeAdminPhrase(si, pi) {
+  const list = document.getElementById('af_phrases_' + si);
+  if (!list) return;
+  const rows = list.querySelectorAll('.admin-phrase-row');
+  if (rows[pi]) rows[pi].remove();
+}
+
+function updateAdminPhrase(si, pi, val) { /* live — no action needed */ }
+function updateAdminSectionLabel(si, val) { /* live */ }
+
+function saveAdminScript() {
+  const title = document.getElementById('af_title').value.trim();
+  const category = document.getElementById('af_category').value;
+  const note = document.getElementById('af_note').value.trim();
+  const sections = getAdminFormSections();
+  if (!title) { showToast('Informe o título do script', 'error'); return; }
+  if (!sections.length || sections.every(s => !s.phrases.length)) {
+    showToast('Adicione ao menos uma seção com frases', 'error'); return;
+  }
+  const container = document.getElementById('adminFormContainer');
+  const editId = container ? parseInt(container.getAttribute('data-edit-id')) : null;
+  if (editId) {
+    const idx = scriptsState.scripts.findIndex(s => s.id === editId);
+    if (idx !== -1) scriptsState.scripts[idx] = { ...scriptsState.scripts[idx], title, category, note, sections };
+    showToast('Script atualizado!');
+  } else {
+    scriptsState.scripts.push({ id: scriptsState.nextId++, title, category, note, sections });
+    showToast('Script criado!');
+  }
+  saveScriptsState();
+  renderAdminPanel();
+}
+
+function openEditScript(id) {
+  const s = scriptsState.scripts.find(sc => sc.id === id);
+  if (!s) return;
+  if (!adminUnlocked) { openAdminModal(); return; }
+  document.getElementById('adminModalOverlay').classList.add('open');
+  document.getElementById('adminModalTitle').textContent = 'Editar Script';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('list',document.querySelectorAll(&quot;.admin-tab&quot;)[0])">📋 Scripts</button>
+      <button class="admin-tab" onclick="switchAdminTab('new',document.querySelectorAll(&quot;.admin-tab&quot;)[1])">✏️ Editando</button>
+      <button class="admin-tab" onclick="switchAdminTab('cats',document.querySelectorAll(&quot;.admin-tab&quot;)[2])">🏷️ Categorias</button>
+    </div>
+    <div class="admin-tab-panel" id="admin-tab-list">${renderAdminList()}</div>
+    <div class="admin-tab-panel active" id="admin-tab-new">${renderAdminForm(s)}</div>
+    <div class="admin-tab-panel" id="admin-tab-cats">${renderAdminCats()}</div>`;
+  document.getElementById('adminModalFooter').innerHTML = `
+    <button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
+}
+
+function deleteScript(id) {
+  if (!confirm('Tem certeza que deseja excluir este script?')) return;
+  scriptsState.scripts = scriptsState.scripts.filter(s => s.id !== id);
+  scriptsState.favorites = scriptsState.favorites.filter(f => f !== id);
+  saveScriptsState();
+  showToast('Script excluído.', 'success');
+  renderAdminPanel();
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+function resetScriptsToDefault() {
+  if (!confirm('Isso vai restaurar todos os scripts para o padrão original. Continuar?')) return;
+  scriptsState.scripts = JSON.parse(JSON.stringify(DEFAULT_SCRIPTS));
+  scriptsState.favorites = [];
+  scriptsState.nextId = 21;
+  saveScriptsState();
+  showToast('Scripts restaurados!');
+  closeAdminModal();
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+function initScriptsPage() {
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+// ═══════════════════════════════════════════
+// ALIGNMENTS
+// ═══════════════════════════════════════════
+
+function loadAlignments() {
+  try { return JSON.parse(localStorage.getItem('energizados_alignments') || '[]'); } catch(e) { return []; }
+}
+function saveAlignments(list) {
+  localStorage.setItem('energizados_alignments', JSON.stringify(list));
+}
+// alignReads structure: { alignId: ['Nome1', 'Nome2', ...], ... }
+function loadAlignmentReads() {
+  try { return JSON.parse(localStorage.getItem('energizados_align_reads_v2') || '{}'); } catch(e) { return {}; }
+}
+function saveAlignmentReads(obj) {
+  localStorage.setItem('energizados_align_reads_v2', JSON.stringify(obj));
+}
+
+// Returns alignments that haven't been confirmed by ALL collaborators yet
+function getUnreadAlignments(myName) {
+  const all = loadAlignments();
+  const reads = loadAlignmentReads();
+  const totalCollabs = state.collaborators.length || 1;
+  return all.filter(a => {
+    const confirmed = reads[a.id] || [];
+    // If myName given: unread = I haven't confirmed yet
+    if (myName) return !confirmed.map(n => n.toLowerCase()).includes(myName.toLowerCase());
+    // Without myName: unread = not fully confirmed by everyone
+    return confirmed.length < totalCollabs;
+  });
+}
+
+function getAlignReadCount(alignId) {
+  const reads = loadAlignmentReads();
+  return (reads[alignId] || []).length;
+}
+
+function getAlignReadNames(alignId) {
+  const reads = loadAlignmentReads();
+  return reads[alignId] || [];
+}
+
+function addAlignment() {
+  const title = document.getElementById('newAlignTitle').value.trim();
+  const msg = document.getElementById('newAlignMsg').value.trim();
+  const author = document.getElementById('newAlignAuthor').value.trim();
+  if (!title || !msg) { showToast('Preencha o título e a mensagem', 'error'); return; }
+  const list = loadAlignments();
+  const newAlign = {
+    id: Date.now(),
+    title,
+    message: msg,
+    author: author || 'Gestão',
+    date: new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' })
+  };
+  list.unshift(newAlign);
+  saveAlignments(list);
+  document.getElementById('newAlignTitle').value = '';
+  document.getElementById('newAlignMsg').value = '';
+  document.getElementById('newAlignAuthor').value = '';
+  renderAlignmentsList();
+  renderHomeAlignIndicator();
+  showToast('Alinhamento publicado!');
+}
+
+function deleteAlignment(id) {
+  if (!confirm('Remover este alinhamento?')) return;
+  const list = loadAlignments().filter(a => a.id !== id);
+  saveAlignments(list);
+  const reads = loadAlignmentReads();
+  delete reads[id];
+  saveAlignmentReads(reads);
+  renderAlignmentsList();
+  renderHomeAlignIndicator();
+  showToast('Alinhamento removido.', 'success');
+}
+
+function renderAlignmentsList() {
+  const el = document.getElementById('alignmentsList');
+  if (!el) return;
+  const list = loadAlignments();
+  const total = state.collaborators.length;
+  if (!list.length) {
+    el.innerHTML = `<div style="font-size:13px;color:var(--gray-400);padding:8px 0">Nenhum alinhamento publicado ainda.</div>`;
+    return;
+  }
+  el.innerHTML = list.map(a => {
+    const count = getAlignReadCount(a.id);
+    const names = getAlignReadNames(a.id);
+    const allRead = count >= total && total > 0;
+    const pct = total > 0 ? Math.round(count/total*100) : 0;
+    const namesPreview = names.slice(0,4).join(', ') + (names.length > 4 ? ` +${names.length-4}` : '');
+    return `<div style="padding:12px 14px;border:1px solid var(--gray-200);border-radius:10px;margin-bottom:6px;background:${allRead?'var(--gray-50)':'#fffbeb'}">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600;color:var(--gray-800);margin-bottom:2px">${a.title}</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-bottom:8px">${a.date} · ${a.author}</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="flex:1;height:4px;background:var(--gray-200);border-radius:4px;overflow:hidden">
+              <div style="height:100%;width:${pct}%;background:var(--green);border-radius:4px;transition:width 0.3s"></div>
+            </div>
+            <span style="font-size:11px;font-weight:600;color:${allRead?'var(--green-dark)':'#b45309'};white-space:nowrap">${count}/${total} leram</span>
+          </div>
+          ${names.length ? `<div style="font-size:11px;color:var(--gray-400);margin-top:4px">✓ ${namesPreview}</div>` : ''}
+        </div>
+        <button onclick="deleteAlignment(${a.id})" class="btn-remove" title="Remover"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderHomeAlignIndicator() {
+  const unread = getUnreadAlignments(); // unread by someone (not fully confirmed)
+  const container = document.getElementById('homeAlignIndicator');
+  if (!container) return;
+  if (!unread.length) { container.style.display = 'none'; return; }
+  container.style.display = 'flex';
+  container.innerHTML = `<i class="fa-solid fa-bell"></i>
+    <span><strong>${unread.length} alinhamento${unread.length>1?'s':''}</strong> aguardando confirmação de leitura</span>
+    <span class="align-ind-badge">${unread.length}</span>`;
+  container.onclick = () => openAlignmentPopup(null, null);
+}
+
+function openAlignmentPopup(align, operatorName) {
+  const overlay = document.getElementById('alignPopupOverlay');
+  const box = document.getElementById('alignPopupBox');
+
+  // Step 1: Ask for name if not provided
+  if (!operatorName) {
+    const collabNames = state.collaborators.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    box.innerHTML = `
+      <div class="align-popup-banner">
+        <div class="align-popup-badge"><i class="fa-solid fa-bell"></i></div>
+        <div class="align-popup-banner-text">
+          <div class="align-popup-title">Alinhamento da Equipe</div>
+          <div class="align-popup-date">Confirme sua identidade para continuar</div>
+        </div>
+      </div>
+      <div class="align-popup-body">
+        <div style="text-align:center;padding:8px 0 20px">
+          <i class="fa-solid fa-user-check" style="font-size:32px;color:var(--green);display:block;margin-bottom:12px"></i>
+          <div style="font-size:15px;font-weight:600;color:var(--gray-800);margin-bottom:6px">Quem está confirmando?</div>
+          <div style="font-size:13px;color:var(--gray-500);margin-bottom:20px">Selecione seu nome para registrar sua leitura individualmente.</div>
+          <select id="alignNameSelect" style="width:100%;max-width:280px;padding:10px 14px;border:1px solid var(--gray-200);border-radius:10px;font-size:14px;font-family:var(--font);outline:none;margin-bottom:16px">
+            <option value="">Selecione seu nome...</option>
+            ${collabNames}
+          </select>
+          <div>
+            <button class="btn-confirm-read ready" onclick="proceedWithName()" style="display:inline-flex">
+              <i class="fa-solid fa-arrow-right"></i> Continuar
+            </button>
+          </div>
+        </div>
+      </div>`;
+    overlay.classList.add('open');
+    return;
+  }
+
+  // Step 2: Show unread alignments for this operator
+  const myUnread = getUnreadAlignments(operatorName);
+  const current = align || (myUnread.length ? myUnread[0] : null);
+
+  if (!current) {
+    // This person already read everything
+    overlay.classList.remove('open');
+    renderHomeAlignIndicator();
+    showToast('Você já confirmou todos os alinhamentos!', 'success');
+    return;
+  }
+
+  const total = state.collaborators.length;
+  const readCount = getAlignReadCount(current.id);
+  const readNames = getAlignReadNames(current.id);
+  const remaining = myUnread.length;
+
+  box.innerHTML = `
+    <div class="align-popup-banner">
+      <div class="align-popup-badge"><i class="fa-solid fa-bell"></i></div>
+      <div class="align-popup-banner-text">
+        <div class="align-popup-title">${current.title}</div>
+        <div class="align-popup-date">${current.date} · Por ${current.author}</div>
+      </div>
+      ${remaining > 1 ? `<span class="align-popup-unread">${remaining} pendentes</span>` : ''}
+    </div>
+    <div class="align-popup-body">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:8px 12px;background:var(--green-xlight);border-radius:8px">
+        <i class="fa-solid fa-user" style="color:var(--green-dark);font-size:12px"></i>
+        <span style="font-size:12px;color:var(--green-dark)">Confirmando como: <strong>${operatorName}</strong></span>
+        <button onclick="openAlignmentPopup(null,null)" style="margin-left:auto;background:transparent;border:none;cursor:pointer;font-size:11px;color:var(--gray-400)">Trocar</button>
+      </div>
+      <div class="align-popup-message">${current.message}</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div style="flex:1;height:5px;background:var(--gray-200);border-radius:4px;overflow:hidden">
+          <div style="height:100%;width:${total>0?Math.round(readCount/total*100):0}%;background:var(--green);border-radius:4px"></div>
+        </div>
+        <span style="font-size:11px;font-weight:600;color:var(--gray-500);white-space:nowrap">${readCount}/${total} confirmaram</span>
+      </div>
+      ${readNames.length ? `<div style="font-size:11px;color:var(--gray-400);margin-bottom:12px">✓ ${readNames.join(', ')}</div>` : ''}
+      <label class="align-confirm-check">
+        <input type="checkbox" id="alignReadCheck" onchange="document.getElementById('btnConfirmRead').classList.toggle('ready',this.checked)">
+        <label for="alignReadCheck">Confirmo que li e estou ciente deste alinhamento. Aplicarei as orientações no atendimento.</label>
+      </label>
+      <button class="btn-confirm-read" id="btnConfirmRead" onclick="confirmAlignRead(${current.id},'${operatorName.replace(/'/g,"\\'")}')">
+        <i class="fa-solid fa-check-circle"></i> Confirmar Leitura
+      </button>
+    </div>`;
+
+  overlay.classList.add('open');
+}
+
+function proceedWithName() {
+  const sel = document.getElementById('alignNameSelect');
+  if (!sel || !sel.value) { showToast('Selecione seu nome', 'error'); return; }
+  openAlignmentPopup(null, sel.value);
+}
+
+function confirmAlignRead(id, operatorName) {
+  const reads = loadAlignmentReads();
+  if (!reads[id]) reads[id] = [];
+  const already = reads[id].map(n => n.toLowerCase());
+  if (!already.includes(operatorName.toLowerCase())) {
+    reads[id].push(operatorName);
+    saveAlignmentReads(reads);
+  }
+
+  const myRemaining = getUnreadAlignments(operatorName);
+  if (myRemaining.length) {
+    showToast('Leitura confirmada! Próximo alinhamento.', 'success');
+    openAlignmentPopup(myRemaining[0], operatorName);
+  } else {
+    document.getElementById('alignPopupOverlay').classList.remove('open');
+    renderHomeAlignIndicator();
+    const total = state.collaborators.length;
+    const allDone = loadAlignments().every(a => (reads[a.id]||[]).length >= total);
+    showToast(allDone ? 'Todos confirmaram os alinhamentos! ✓' : 'Seus alinhamentos confirmados!', 'success');
+  }
+}
+
+// ═══════════════════════════════════════════
+// LINKS — Base de Conhecimento
+// ═══════════════════════════════════════════
+
+const LINK_TYPE_META = {
+  'link':  { icon: 'fa-solid fa-link',         bg: '#eff6ff', text: '#1d4ed8', label: 'Link' },
+  'pdf':   { icon: 'fa-solid fa-file-pdf',      bg: '#fef2f2', text: '#b91c1c', label: 'PDF' },
+  'video': { icon: 'fa-solid fa-play-circle',   bg: '#fff7ed', text: '#c2410c', label: 'Vídeo' },
+  'doc':   { icon: 'fa-solid fa-file-lines',    bg: '#f5f3ff', text: '#6d28d9', label: 'Documento' },
+  'sheet': { icon: 'fa-solid fa-table',         bg: '#f0fdf4', text: '#15803d', label: 'Planilha' },
+};
+
+function loadLinks() {
+  try { return JSON.parse(localStorage.getItem('energizados_links') || '[]'); } catch(e) { return []; }
+}
+function saveLinks(list) {
+  localStorage.setItem('energizados_links', JSON.stringify(list));
+}
+
+function renderLinksSection() {
+  const links = loadLinks();
+  if (!links.length) {
+    return `<div class="links-empty-state">
+      <i class="fa-solid fa-link"></i>
+      <p>Nenhum link adicionado ainda.<br>Use o Painel Admin para adicionar links e materiais.</p>
+    </div>`;
+  }
+  return `<div class="links-grid">${links.map(l => {
+    const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
+    return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener">
+      <div class="link-card-icon" style="background:${meta.bg};color:${meta.text}">
+        <i class="${meta.icon}"></i>
+      </div>
+      <div class="link-card-info">
+        <div class="link-card-title">${l.title}</div>
+        <div class="link-card-desc">${l.desc||''}</div>
+        <div class="link-card-type" style="color:${meta.text}">${meta.label}</div>
+      </div>
+    </a>`;
+  }).join('')}</div>`;
+}
+
+// Admin Links Tab
+function renderAdminLinksTab() {
+  const links = loadLinks();
+  return `<div style="margin-bottom:16px">
+    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:10px">Links Adicionados</div>
+    ${links.length ? `<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">${links.map(l => {
+      const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
+      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <span style="font-size:13px;color:${meta.text}"><i class="${meta.icon}"></i></span>
+        <span style="flex:1;font-size:13px;font-weight:500;color:var(--gray-700)">${l.title}</span>
+        <button class="btn-del-row" onclick="deleteLink(${l.id})"><i class="fa-solid fa-trash"></i></button>
+      </div>`;
+    }).join('')}</div>` : `<div style="font-size:13px;color:var(--gray-400);margin-bottom:14px">Nenhum link adicionado.</div>`}
+    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:8px">Novo Link / Material</div>
+    <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" id="lf_title" placeholder="Ex: Material de Apoio 2026"></div>
+    <div class="admin-field"><label class="admin-label">URL ou Link do PDF</label><input class="admin-input" id="lf_url" placeholder="https://..."></div>
+    <div class="admin-field"><label class="admin-label">Descrição (opcional)</label><input class="admin-input" id="lf_desc" placeholder="Breve descrição do conteúdo"></div>
+    <div class="admin-field">
+      <label class="admin-label">Tipo</label>
+      <select class="admin-select" id="lf_type">
+        ${Object.entries(LINK_TYPE_META).map(([v,m]) => `<option value="${v}">${m.label}</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn-primary" onclick="addLink()"><i class="fa-solid fa-plus"></i> Adicionar Link</button>
+  </div>`;
+}
+
+function addLink() {
+  const title = document.getElementById('lf_title').value.trim();
+  const url = document.getElementById('lf_url').value.trim();
+  const desc = document.getElementById('lf_desc').value.trim();
+  const type = document.getElementById('lf_type').value;
+  if (!title || !url) { showToast('Preencha título e URL', 'error'); return; }
+  const links = loadLinks();
+  links.push({ id: Date.now(), title, url, desc, type });
+  saveLinks(links);
+  showToast('Link adicionado!');
+  renderAdminPanel();
+  if (activeCategory === 'links') renderScriptsGrid();
+}
+
+function deleteLink(id) {
+  if (!confirm('Remover este link?')) return;
+  const links = loadLinks().filter(l => l.id !== id);
+  saveLinks(links);
+  showToast('Link removido.', 'success');
+  renderAdminPanel();
+  if (activeCategory === 'links') renderScriptsGrid();
+}
+
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+checkDayReset();
+seedDemoData();
+renderAll();
+renderCollabSelect();
+renderHomeAlignIndicator();
+renderSettingsPage();
+</script>
+</body>
+</html>
