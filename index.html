@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Energizados — Plataforma de Retenção</title>
+<title>Plataforma de Retenção</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -159,7 +159,6 @@
 
   .topbar-spacer { flex: 1; }
 
-  /* Mode Toggle */
   .mode-toggle {
     display: flex;
     background: var(--gray-100);
@@ -416,7 +415,6 @@
     font-family: var(--mono);
   }
 
-  /* DAILY RACE */
   .race-arena {
     padding: 20px;
     background: var(--green-xlight);
@@ -534,10 +532,7 @@
     white-space: nowrap;
   }
 
-  /* WEEKLY MAP */
-  .weekly-map {
-    padding: 20px;
-  }
+  .weekly-map { padding: 20px; }
 
   .week-grid {
     display: flex;
@@ -624,7 +619,6 @@
     font-family: var(--mono);
   }
 
-  /* WEEKLY CHART */
   .chart-card {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -667,18 +661,9 @@
     overflow: hidden;
   }
 
-  .rank-item.rank-1 {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-color: #fcd34d;
-  }
-  .rank-item.rank-2 {
-    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    border-color: #e2e8f0;
-  }
-  .rank-item.rank-3 {
-    background: linear-gradient(135deg, #fff7ed, #ffedd5);
-    border-color: #fdba74;
-  }
+  .rank-item.rank-1 { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fcd34d; }
+  .rank-item.rank-2 { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-color: #e2e8f0; }
+  .rank-item.rank-3 { background: linear-gradient(135deg, #fff7ed, #ffedd5); border-color: #fdba74; }
 
   .rank-pos {
     width: 20px;
@@ -740,10 +725,8 @@
     flex-shrink: 0;
   }
   .rank-1 .rank-count { color: var(--gold); }
-
   .rank-medal { font-size: 16px; flex-shrink: 0; }
 
-  /* Shimmer on new entry */
   @keyframes shimmer {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(200%); }
@@ -965,7 +948,6 @@
     to { opacity: 0; transform: translateX(100%); }
   }
 
-  /* ── CONFETTI ── */
   .confetti-piece {
     position: fixed;
     width: 8px; height: 8px;
@@ -979,7 +961,6 @@
     100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
   }
 
-  /* ── LEADER GLOW ── */
   .leader-glow {
     box-shadow: 0 0 0 2px var(--gold), 0 4px 16px rgba(245,158,11,0.25);
     animation: leaderPulse 2s ease-in-out infinite;
@@ -989,7 +970,6 @@
     50% { box-shadow: 0 0 0 3px var(--gold), 0 6px 24px rgba(245,158,11,0.35); }
   }
 
-  /* ── PROGRESS META ── */
   .meta-bar {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -1017,7 +997,6 @@
 
   .meta-divider { width: 1px; height: 40px; background: var(--gray-200); flex-shrink: 0; }
 
-  /* ── HISTORY TABLE ── */
   .history-card {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -1065,13 +1044,8 @@
 
   .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: white; opacity: 0.7; }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1100px) {
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 900px) {
-    .home-right { width: 260px; }
-  }
+  @media (max-width: 1100px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) { .home-right { width: 260px; } }
   @media (max-width: 720px) {
     .home-right { display: none; }
     .form-row { grid-template-columns: 1fr 1fr; }
@@ -1093,7 +1067,6 @@
     overflow: hidden;
   }
 
-  /* LEFT PANEL - filters */
   .scripts-sidebar {
     width: 240px;
     flex-shrink: 0;
@@ -1118,9 +1091,7 @@
     margin-bottom: 12px;
   }
 
-  .scripts-search {
-    position: relative;
-  }
+  .scripts-search { position: relative; }
 
   .scripts-search input {
     width: 100%;
@@ -1219,7 +1190,6 @@
   }
   .btn-admin:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-xlight); }
 
-  /* MAIN SCRIPTS AREA */
   .scripts-main {
     flex: 1;
     overflow-y: auto;
@@ -1260,7 +1230,6 @@
     gap: 8px;
   }
 
-  /* SCRIPT CARD */
   .script-card {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -1348,24 +1317,19 @@
   }
   .script-card.expanded .script-expand-btn { transform: rotate(180deg); color: var(--green-dark); }
 
-  /* SCRIPT BODY */
   .script-card-body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
   }
-  .script-card.expanded .script-card-body {
-    max-height: 2000px;
-  }
+  .script-card.expanded .script-card-body { max-height: 2000px; }
 
   .script-card-content {
     border-top: 1px solid var(--gray-100);
     padding: 20px 20px 20px 70px;
   }
 
-  .script-section {
-    margin-bottom: 16px;
-  }
+  .script-section { margin-bottom: 16px; }
   .script-section:last-child { margin-bottom: 0; }
 
   .script-section-label {
@@ -1449,7 +1413,6 @@
   }
   .btn-edit-script:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-xlight); }
 
-  /* EMPTY STATE */
   .scripts-empty {
     text-align: center;
     padding: 60px 20px;
@@ -1587,7 +1550,6 @@
   .btn-danger { padding: 9px 18px; border-radius: 9px; border: none; background: #fee2e2; color: var(--red); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.15s; margin-right: auto; }
   .btn-danger:hover { background: #fecaca; }
 
-  /* PASSWORD GATE */
   .pwd-gate { text-align: center; padding: 24px 0; }
   .pwd-gate i { font-size: 32px; color: var(--green); margin-bottom: 12px; display: block; }
   .pwd-gate p { font-size: 13px; color: var(--gray-500); margin-bottom: 16px; }
@@ -1661,11 +1623,6 @@
     margin-bottom: 16px;
     white-space: pre-wrap;
   }
-  .align-popup-author {
-    font-size: 12px; color: var(--gray-400);
-    display: flex; align-items: center; gap: 6px;
-    margin-bottom: 20px;
-  }
 
   .align-confirm-check {
     display: flex; align-items: flex-start; gap: 10px;
@@ -1689,7 +1646,6 @@
   .btn-confirm-read.ready { opacity: 1; pointer-events: all; }
   .btn-confirm-read.ready:hover { background: var(--green-dark); }
 
-  /* alignment indicator on home */
   .align-indicator {
     display: flex; align-items: center; gap: 8px;
     background: #fef3c7; border: 1px solid #fde68a;
@@ -1760,13 +1716,307 @@
     font-size: 15px; flex-shrink: 0;
   }
   .link-card-info { flex: 1; min-width: 0; }
-  .link-card-title { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .link-card-desc { font-size: 11px; color: var(--gray-400); line-height: 1.4; }
-  .link-card-type { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 6px; }
+  .link-card-title { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .link-card-desc { font-size: 12px; color: var(--gray-500); line-height: 1.5; margin-bottom: 6px; }
+  .link-card-type { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
 
   .links-empty-state { text-align: center; padding: 40px 20px; color: var(--gray-400); }
   .links-empty-state i { font-size: 32px; display: block; margin-bottom: 10px; }
   .links-empty-state p { font-size: 13px; }
+
+  /* ══════════════════════════════════════════
+     ABA DE ALINHAMENTOS
+  ══════════════════════════════════════════ */
+  #page-alignments {
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .alignments-layout {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .alignments-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .alignments-sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+
+  .alignments-sidebar-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .alignments-search { position: relative; }
+  .alignments-search input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font);
+    background: var(--gray-50);
+    color: var(--gray-800);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .alignments-search input:focus { border-color: var(--green); background: var(--white); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+  .alignments-search i { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--gray-400); pointer-events: none; }
+
+  .alignments-filter-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 8px;
+  }
+  .alignments-filter-list::-webkit-scrollbar { width: 3px; }
+  .alignments-filter-list::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+
+  .alignments-main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .alignments-main::-webkit-scrollbar { width: 4px; }
+  .alignments-main::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .alignments-main-header {
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid var(--gray-100);
+    background: var(--white);
+    flex-shrink: 0;
+  }
+
+  .alignments-main-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+  .alignments-main-sub {
+    font-size: 13px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  .alignments-content {
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* ALIGNMENT CARD no histórico */
+  .align-history-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .align-history-card:hover { box-shadow: var(--shadow); }
+  .align-history-card.expanded { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.08); }
+
+  .align-history-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .align-history-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--green-xlight);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--green-dark);
+    flex-shrink: 0;
+  }
+
+  .align-history-info { flex: 1; min-width: 0; }
+
+  .align-history-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .align-history-meta {
+    font-size: 12px;
+    color: var(--gray-400);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .align-history-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .align-read-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+  .align-read-badge.full { background: var(--green-light); color: var(--green-dark); }
+  .align-read-badge.partial { background: #fef3c7; color: #92400e; }
+  .align-read-badge.none { background: var(--gray-100); color: var(--gray-500); }
+
+  .align-history-expand {
+    width: 28px; height: 28px;
+    border-radius: 8px; border: none; background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--gray-400);
+    transition: all 0.2s;
+  }
+  .align-history-card.expanded .align-history-expand { transform: rotate(180deg); color: var(--green-dark); }
+
+  .align-history-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .align-history-card.expanded .align-history-body { max-height: 1200px; }
+
+  .align-history-content {
+    border-top: 1px solid var(--gray-100);
+    padding: 20px 20px 20px 70px;
+  }
+
+  .align-history-message {
+    background: var(--gray-50);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--gray-700);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    margin-bottom: 16px;
+  }
+
+  .align-readers-section { margin-top: 4px; }
+  .align-readers-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .align-readers-bar {
+    height: 6px;
+    background: var(--gray-100);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .align-readers-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), #4ade80);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  .align-readers-names {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .reader-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--green-xlight);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+  .reader-chip i { font-size: 10px; }
+
+  .align-empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--gray-400);
+  }
+  .align-empty-state i { font-size: 48px; display: block; margin-bottom: 16px; }
+  .align-empty-state h3 { font-size: 16px; font-weight: 600; color: var(--gray-600); margin-bottom: 6px; }
+  .align-empty-state p { font-size: 13px; }
+
+  /* PDF Upload progress */
+  .upload-progress {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .upload-progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--gray-200);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .upload-progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  /* File input styling */
+  .file-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1px dashed var(--gray-300);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--gray-50);
+  }
+  .file-input-wrap:hover { border-color: var(--green); background: var(--green-xlight); }
+  .file-input-wrap i { color: var(--gray-400); font-size: 16px; }
+  .file-input-wrap span { font-size: 13px; color: var(--gray-500); }
+  .file-input-wrap input { display: none; }
+
 </style>
 </head>
 <body>
@@ -1782,6 +2032,11 @@
   <button class="nav-item active" data-page="home" onclick="switchPage('home', this)">
     <i class="fa-solid fa-house"></i>
     <span class="nav-tooltip">Home</span>
+  </button>
+
+  <button class="nav-item" data-page="alignments" onclick="switchPage('alignments', this)">
+    <i class="fa-solid fa-bell-concierge"></i>
+    <span class="nav-tooltip">Alinhamentos</span>
   </button>
 
   <button class="nav-item" data-page="scripts" onclick="switchPage('scripts', this)">
@@ -1807,8 +2062,8 @@
   <!-- TOPBAR -->
   <header class="topbar">
     <div>
-      <span class="topbar-title">Energizados</span>
-      <span class="topbar-sub">Plataforma de Retenção</span>
+      <span class="topbar-title">Plataforma de Retenção</span>
+      <span class="topbar-sub" id="topbarSub">iGreen Energy</span>
     </div>
     <div class="topbar-spacer"></div>
 
@@ -1821,7 +2076,7 @@
       </button>
     </div>
 
-    <div class="topbar-avatar" id="userAvatar" title="Usuário">AD</div>
+    <div class="topbar-avatar" id="userAvatar" title="Usuário">iG</div>
   </header>
 
   <!-- CONTENT -->
@@ -1829,19 +2084,10 @@
 
     <!-- HOME PAGE -->
     <div class="page active" id="page-home">
-      <!-- LEFT PANEL -->
       <div class="home-left" id="homeLeft">
-
-        <!-- ALIGNMENT INDICATOR -->
         <div class="align-indicator" id="homeAlignIndicator" style="display:none"></div>
-
-        <!-- STATS -->
         <div class="stats-row" id="statsRow"></div>
-
-        <!-- META BAR -->
         <div class="meta-bar" id="metaBar"></div>
-
-        <!-- REGISTER -->
         <div class="register-card">
           <div class="card-header">
             <i class="fa-solid fa-plus-circle"></i>
@@ -1864,16 +2110,10 @@
             </button>
           </div>
         </div>
-
-        <!-- GAME AREA (Daily/Weekly) -->
         <div id="gameArea"></div>
-
-        <!-- HISTORY -->
         <div class="history-card" id="historyCard"></div>
-
       </div>
 
-      <!-- RIGHT PANEL - RANKING -->
       <aside class="home-right">
         <div class="rank-header">
           <span>Ranking</span>
@@ -1883,14 +2123,48 @@
       </aside>
     </div>
 
-    <!-- SETTINGS PAGE -->
     <!-- ══════════════════════════════════════
-         SCRIPTS DE ATENDIMENTO PAGE
+         ALINHAMENTOS PAGE (NOVA ABA)
     ══════════════════════════════════════ -->
+    <div class="page" id="page-alignments">
+      <div class="alignments-layout">
+
+        <!-- Sidebar de filtros -->
+        <div class="alignments-sidebar">
+          <div class="alignments-sidebar-header">
+            <div class="alignments-sidebar-title">Base de Alinhamentos</div>
+            <div class="alignments-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="alignSearchInput" placeholder="Buscar alinhamento..." oninput="renderAlignmentsPage()">
+            </div>
+          </div>
+          <div class="alignments-filter-list" id="alignFilterList">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Conteúdo principal -->
+        <div class="alignments-main">
+          <div class="alignments-main-header">
+            <div style="display:flex; align-items:center; justify-content:space-between">
+              <div>
+                <div class="alignments-main-title">Histórico de Alinhamentos</div>
+                <div class="alignments-main-sub">Base de conhecimento e decisões da equipe</div>
+              </div>
+              <span class="scripts-count-badge" id="alignCountBadge">0 registros</span>
+            </div>
+          </div>
+          <div class="alignments-content" id="alignmentsContent">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCRIPTS PAGE -->
     <div class="page" id="page-scripts">
       <div class="scripts-layout">
-
-        <!-- Left sidebar filters -->
         <div class="scripts-sidebar">
           <div class="scripts-sidebar-header">
             <div class="scripts-sidebar-title">Base de Conhecimento</div>
@@ -1899,11 +2173,7 @@
               <input type="text" id="scriptsSearchInput" placeholder="Buscar script..." oninput="filterScripts()">
             </div>
           </div>
-
-          <div class="scripts-filters" id="scriptsCategoryFilters">
-            <!-- rendered by JS -->
-          </div>
-
+          <div class="scripts-filters" id="scriptsCategoryFilters"></div>
           <div class="scripts-sidebar-footer">
             <button class="btn-admin" onclick="openAdminModal()">
               <i class="fa-solid fa-shield-halved"></i>
@@ -1912,7 +2182,6 @@
           </div>
         </div>
 
-        <!-- Main content -->
         <div class="scripts-main">
           <div class="scripts-topbar">
             <div>
@@ -1921,12 +2190,8 @@
             </div>
             <div class="scripts-count-badge" id="scriptsCountBadge">0 scripts</div>
           </div>
-
-          <div class="scripts-grid" id="scriptsGrid">
-            <!-- rendered by JS -->
-          </div>
+          <div class="scripts-grid" id="scriptsGrid"></div>
         </div>
-
       </div>
     </div>
 
@@ -1942,19 +2207,14 @@
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div class="admin-modal-body" id="adminModalBody">
-          <!-- rendered by JS -->
-        </div>
-        <div class="admin-modal-footer" id="adminModalFooter">
-          <!-- rendered by JS -->
-        </div>
+        <div class="admin-modal-body" id="adminModalBody"></div>
+        <div class="admin-modal-footer" id="adminModalFooter"></div>
       </div>
     </div>
 
+    <!-- SETTINGS PAGE -->
     <div class="page" id="page-settings">
-      <div id="settingsLockScreen">
-        <!-- rendered by JS -->
-      </div>
+      <div id="settingsLockScreen"></div>
       <div id="settingsContent" style="display:none; max-width:700px; width:100%">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
           <div class="settings-title">Configurações</div>
@@ -1967,7 +2227,7 @@
         <!-- Alinhamentos -->
         <div class="settings-section">
           <div class="settings-section-title">
-            <i class="fa-solid fa-bell-concierge"></i> Alinhamentos
+            <i class="fa-solid fa-bell-concierge"></i> Publicar Alinhamento
           </div>
           <div id="alignmentsList" style="margin-bottom:12px"></div>
           <div style="display:flex;flex-direction:column;gap:8px">
@@ -2068,6 +2328,7 @@
       </div>
     </div>
 
+  </div><!-- /content -->
 </main>
 
 <!-- TOAST CONTAINER -->
@@ -2075,13 +2336,10 @@
 
 <!-- ALIGNMENT POPUP -->
 <div class="align-popup-overlay" id="alignPopupOverlay">
-  <div class="align-popup" id="alignPopupBox">
-    <!-- rendered by JS -->
-  </div>
+  <div class="align-popup" id="alignPopupBox"></div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
 // ═══════════════════════════════════════════
 // SUPABASE CONFIG
 // ═══════════════════════════════════════════
@@ -2089,10 +2347,8 @@ const SUPABASE_URL = 'https://taaeehhdxqtkgymcpaiu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRhYWVlaGhkeHF0a2d5bWNwYWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NTIwMDYsImV4cCI6MjA5NTEyODAwNn0.ZSSdkS2HKk8i2w6OGOlmifF--9EfKtck-ttnio-8uvA';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ═══════════════════════════════════════════
-// STATE (in-memory, synced from Supabase)
-// ═══════════════════════════════════════════
 const COLORS = ['#22c55e','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#06b6d4','#ec4899','#f97316'];
+const ADMIN_PASSWORD = 'igreen2026';
 
 let state = {
   collaborators: [],
@@ -2134,7 +2390,7 @@ function showLoadingOverlay(show) {
   el.style.display = show ? 'flex' : 'none';
 }
 
-// ── REALTIME SUBSCRIPTIONS ──
+// ── REALTIME ──
 function setupRealtime() {
   sb.channel('db-changes')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'retentions' }, async () => {
@@ -2152,13 +2408,17 @@ function setupRealtime() {
       if (data) state.settings = { dailyGoal: data.daily_goal, individualGoal: data.individual_goal };
       renderAll();
     })
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'alignments' }, () => {
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'alignments' }, async () => {
+      await loadAlignmentsFromDB();
       renderHomeAlignIndicator();
       if (settingsUnlocked) renderAlignmentsList();
+      if (currentPage === 'alignments') renderAlignmentsPage();
     })
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'alignment_reads' }, () => {
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'alignment_reads' }, async () => {
+      await loadAlignmentsFromDB();
       renderHomeAlignIndicator();
       if (settingsUnlocked) renderAlignmentsList();
+      if (currentPage === 'alignments') renderAlignmentsPage();
     })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'scripts' }, async () => {
       await loadScriptsFromDB();
@@ -2171,25 +2431,8 @@ function setupRealtime() {
     .subscribe();
 }
 
-// ── SAVE STATE (now writes to Supabase) ──
-async function saveState() { /* no-op: writes happen inline per action */ }
-
-// ── DAY RESET CHECK ──
-function checkDayReset() {
-  const lastCheck = localStorage.getItem('energizados_lastday');
-  const today = todayStr();
-  if (lastCheck && lastCheck !== today) {
-    // New day — data is already filtered by date, just update
-  }
-  localStorage.setItem('energizados_lastday', today);
-}
-
-// ═══════════════════════════════════════════
-// DATE HELPERS
-// ═══════════════════════════════════════════
-function todayStr() {
-  return new Date().toISOString().slice(0,10);
-}
+// ── DATE HELPERS ──
+function todayStr() { return new Date().toISOString().slice(0,10); }
 function weekKey(dateStr) {
   const d = new Date(dateStr + 'T12:00:00');
   const day = d.getDay();
@@ -2197,9 +2440,7 @@ function weekKey(dateStr) {
   monday.setDate(d.getDate() - (day === 0 ? 6 : day - 1));
   return monday.toISOString().slice(0,10);
 }
-function currentWeekKey() {
-  return weekKey(todayStr());
-}
+function currentWeekKey() { return weekKey(todayStr()); }
 function getWeekDays() {
   const wk = currentWeekKey();
   const base = new Date(wk + 'T12:00:00');
@@ -2212,17 +2453,11 @@ function getWeekDays() {
   return days;
 }
 
-// ═══════════════════════════════════════════
-// COMPUTED
-// ═══════════════════════════════════════════
+// ── COMPUTED ──
 function getRetentionsByCollab(dateFilter) {
   const map = {};
   state.collaborators.forEach(c => { map[c.id] = 0; });
-  state.retentions
-    .filter(r => !dateFilter || r.date === dateFilter)
-    .forEach(r => {
-      if (map[r.collabId] !== undefined) map[r.collabId]++;
-    });
+  state.retentions.filter(r => !dateFilter || r.date === dateFilter).forEach(r => { if (map[r.collabId] !== undefined) map[r.collabId]++; });
   return map;
 }
 
@@ -2230,27 +2465,15 @@ function getWeeklyByCollab() {
   const map = {};
   state.collaborators.forEach(c => { map[c.id] = 0; });
   const wk = currentWeekKey();
-  state.retentions
-    .filter(r => weekKey(r.date) === wk)
-    .forEach(r => {
-      if (map[r.collabId] !== undefined) map[r.collabId]++;
-    });
+  state.retentions.filter(r => weekKey(r.date) === wk).forEach(r => { if (map[r.collabId] !== undefined) map[r.collabId]++; });
   return map;
 }
 
 function getWeeklyByCollabAndDay() {
   const weekDays = getWeekDays();
   const result = {};
-  state.collaborators.forEach(c => {
-    result[c.id] = {};
-    weekDays.forEach(d => { result[c.id][d] = 0; });
-  });
-  state.retentions
-    .filter(r => weekDays.includes(r.date))
-    .forEach(r => {
-      if (result[r.collabId] && result[r.collabId][r.date] !== undefined)
-        result[r.collabId][r.date]++;
-    });
+  state.collaborators.forEach(c => { result[c.id] = {}; weekDays.forEach(d => { result[c.id][d] = 0; }); });
+  state.retentions.filter(r => weekDays.includes(r.date)).forEach(r => { if (result[r.collabId] && result[r.collabId][r.date] !== undefined) result[r.collabId][r.date]++; });
   return result;
 }
 
@@ -2261,15 +2484,7 @@ function getRankedCollabs(mode) {
   yesterday.setDate(yesterday.getDate() - 1);
   const yStr = yesterday.toISOString().slice(0,10);
   const yCount = getRetentionsByCollab(yStr);
-
-  return state.collaborators
-    .map(c => {
-      const count = counts[c.id] || 0;
-      const yc = yCount[c.id] || 0;
-      const streak = getStreak(c.id);
-      return { ...c, count, yc, streak };
-    })
-    .sort((a, b) => b.count - a.count);
+  return state.collaborators.map(c => ({ ...c, count: counts[c.id] || 0, yc: yCount[c.id] || 0, streak: getStreak(c.id) })).sort((a, b) => b.count - a.count);
 }
 
 function getStreak(collabId) {
@@ -2278,30 +2493,24 @@ function getStreak(collabId) {
   for (let i = 0; i < 30; i++) {
     const ds = d.toISOString().slice(0,10);
     const cnt = state.retentions.filter(r => r.collabId === collabId && r.date === ds).length;
-    if (cnt > 0) { streak++; d.setDate(d.getDate()-1); }
-    else break;
+    if (cnt > 0) { streak++; d.setDate(d.getDate()-1); } else break;
   }
   return streak;
 }
 
-// ═══════════════════════════════════════════
-// MODE
-// ═══════════════════════════════════════════
+// ── MODE ──
 let currentMode = 'daily';
-
 function switchMode(mode) {
   currentMode = mode;
   document.getElementById('btnDaily').classList.toggle('active', mode === 'daily');
   document.getElementById('btnWeekly').classList.toggle('active', mode === 'weekly');
   document.getElementById('rankSubtitle').textContent = mode === 'daily' ? 'Hoje' : 'Esta semana';
+  // hide/show mode toggle only on home
   renderAll();
 }
 
-// ═══════════════════════════════════════════
-// NAV
-// ═══════════════════════════════════════════
+// ── NAV ──
 let currentPage = 'home';
-
 let settingsUnlocked = false;
 
 function switchPage(page, btn) {
@@ -2310,16 +2519,20 @@ function switchPage(page, btn) {
   document.getElementById('page-' + page).classList.add('active');
   btn.classList.add('active');
   currentPage = page;
+
+  // Show/hide mode toggle: only on home
+  const modeToggle = document.getElementById('modeToggle');
+  modeToggle.style.display = page === 'home' ? 'flex' : 'none';
+
   if (page === 'settings') renderSettingsPage();
   if (page === 'scripts') initScriptsPage();
+  if (page === 'alignments') renderAlignmentsPage();
 }
 
+// ── SETTINGS ──
 function renderSettingsPage() {
-  if (settingsUnlocked) {
-    showSettingsContent();
-  } else {
-    showSettingsLock();
-  }
+  if (settingsUnlocked) showSettingsContent();
+  else showSettingsLock();
 }
 
 function showSettingsLock() {
@@ -2344,10 +2557,8 @@ function showSettingsLock() {
 
 function checkSettingsPwd() {
   const val = document.getElementById('settingsPwdInput')?.value;
-  if (val === ADMIN_PASSWORD) {
-    settingsUnlocked = true;
-    showSettingsContent();
-  } else {
+  if (val === ADMIN_PASSWORD) { settingsUnlocked = true; showSettingsContent(); }
+  else {
     const err = document.getElementById('settingsLockErr');
     if (err) err.style.display = 'block';
     const inp = document.getElementById('settingsPwdInput');
@@ -2367,51 +2578,29 @@ function lockSettings() {
   showSettingsLock();
 }
 
-// ═══════════════════════════════════════════
-// REGISTER RETENTION
-// ═══════════════════════════════════════════
+// ── REGISTER RETENTION ──
 async function registerRetention() {
   const collabSel = document.getElementById('inputCollab');
   const clientIn = document.getElementById('inputClient');
   const collabId = parseInt(collabSel.value);
   const clientCode = clientIn.value.trim();
-
   if (!collabId) { showToast('Selecione um colaborador', 'error'); return; }
   if (!clientCode) { showToast('Informe o código do cliente', 'error'); return; }
-
   const collab = state.collaborators.find(c => c.id === collabId);
   const todayCount = getRetentionsByCollab(todayStr())[collabId] || 0;
-
   const btn = document.querySelector('.btn-register');
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Registrando...'; }
-
-  const { error } = await sb.from('retentions').insert({
-    collab_id: collabId,
-    collab_name: collab.name,
-    client_code: clientCode,
-    date: todayStr(),
-    timestamp: Date.now()
-  });
-
-  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Registrar'; }
-
-  if (error) { showToast('Erro ao registrar. Tente novamente.', 'error'); console.error(error); return; }
-
+  const { error } = await sb.from('retentions').insert({ collab_id: collabId, collab_name: collab.name, client_code: clientCode, date: todayStr(), timestamp: Date.now() });
+  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Registrar'; }
+  if (error) { showToast('Erro ao registrar. Tente novamente.', 'error'); return; }
   clientIn.value = '';
   const newCount = todayCount + 1;
   const goal = state.settings.individualGoal;
-  if (newCount === goal) {
-    triggerConfetti();
-    showToast(`🎉 ${collab.name} atingiu a meta diária!`, 'success');
-  } else {
-    showToast(`✓ Retenção registrada para ${collab.name}`, 'success');
-  }
-  // Realtime will trigger renderAll automatically
+  if (newCount === goal) { triggerConfetti(); showToast(`🎉 ${collab.name} atingiu a meta diária!`, 'success'); }
+  else showToast(`✓ Retenção registrada para ${collab.name}`, 'success');
 }
 
-// ═══════════════════════════════════════════
-// RENDER ALL
-// ═══════════════════════════════════════════
+// ── RENDER ALL ──
 function renderAll() {
   renderStats();
   renderMetaBar();
@@ -2421,9 +2610,7 @@ function renderAll() {
   renderCollabSelect();
 }
 
-// ═══════════════════════════════════════════
-// STATS
-// ═══════════════════════════════════════════
+// ── STATS ──
 function renderStats() {
   const todayCounts = getRetentionsByCollab(todayStr());
   const totalToday = Object.values(todayCounts).reduce((a,b) => a+b, 0);
@@ -2433,7 +2620,6 @@ function renderStats() {
   const leader = ranked[0];
   const goal = state.settings.dailyGoal;
   const pct = goal > 0 ? Math.min(100, Math.round(totalToday/goal*100)) : 0;
-
   const html = [
     { label:'Retenções Hoje', value: totalToday, icon:'fa-shield-halved', color:'#22c55e', delta: `${pct}% da meta diária` },
     { label:'Total na Semana', value: totalWeek, icon:'fa-chart-line', color:'#3b82f6', delta: 'acumulado' },
@@ -2441,21 +2627,14 @@ function renderStats() {
     { label:'Líder Hoje', value: leader ? leader.count : 0, icon:'fa-crown', color:'#f59e0b', delta: leader ? leader.name : '—' },
   ].map(s => `
     <div class="stat-card">
-      <div class="stat-label">
-        <i class="fa-solid ${s.icon}" style="color:${s.color}; font-size:13px"></i>
-        ${s.label}
-      </div>
+      <div class="stat-label"><i class="fa-solid ${s.icon}" style="color:${s.color}; font-size:13px"></i>${s.label}</div>
       <div class="stat-value">${s.value}</div>
       <div class="stat-delta ${s.delta.includes('%') ? 'up' : 'neutral'}">${s.delta}</div>
-    </div>
-  `).join('');
-
+    </div>`).join('');
   document.getElementById('statsRow').innerHTML = html;
 }
 
-// ═══════════════════════════════════════════
-// META BAR
-// ═══════════════════════════════════════════
+// ── META BAR ──
 function renderMetaBar() {
   const todayCounts = getRetentionsByCollab(todayStr());
   const totalToday = Object.values(todayCounts).reduce((a,b)=>a+b,0);
@@ -2464,102 +2643,60 @@ function renderMetaBar() {
   const remaining = Math.max(0, goal - totalToday);
   const ranked = getRankedCollabs('daily');
   const leader = ranked[0];
-
   document.getElementById('metaBar').innerHTML = `
-    <div class="meta-item">
-      <span class="meta-item-label">Hoje</span>
-      <span class="meta-item-value green">${totalToday}</span>
-    </div>
+    <div class="meta-item"><span class="meta-item-label">Hoje</span><span class="meta-item-value green">${totalToday}</span></div>
     <div class="meta-divider"></div>
-    <div class="meta-item">
-      <span class="meta-item-label">Restam</span>
-      <span class="meta-item-value">${remaining}</span>
-    </div>
+    <div class="meta-item"><span class="meta-item-label">Restam</span><span class="meta-item-value">${remaining}</span></div>
     <div class="meta-divider"></div>
     <div class="meta-progress-wrap">
-      <div class="meta-progress-label">
-        <span>Progresso da meta diária</span>
-        <span style="font-weight:600; color:var(--gray-700)">${pct}%</span>
-      </div>
-      <div class="meta-progress-bar">
-        <div class="meta-progress-fill" style="width:${pct}%"></div>
-      </div>
+      <div class="meta-progress-label"><span>Progresso da meta diária</span><span style="font-weight:600; color:var(--gray-700)">${pct}%</span></div>
+      <div class="meta-progress-bar"><div class="meta-progress-fill" style="width:${pct}%"></div></div>
     </div>
     <div class="meta-divider"></div>
-    <div class="meta-item">
-      <span class="meta-item-label">Líder</span>
-      <span class="meta-item-value" style="font-size:13px; font-weight:600; color:var(--gray-700)">
-        ${leader ? leader.name.split(' ')[0] : '—'}
-      </span>
-    </div>
-  `;
+    <div class="meta-item"><span class="meta-item-label">Líder</span><span class="meta-item-value" style="font-size:13px; font-weight:600; color:var(--gray-700)">${leader ? leader.name.split(' ')[0] : '—'}</span></div>`;
 }
 
-// ═══════════════════════════════════════════
-// GAME AREA
-// ═══════════════════════════════════════════
+// ── GAME AREA ──
 function renderGameArea() {
   const container = document.getElementById('gameArea');
-  if (currentMode === 'daily') {
-    renderDailyRace(container);
-  } else {
-    renderWeeklyMap(container);
-  }
+  if (currentMode === 'daily') renderDailyRace(container);
+  else renderWeeklyMap(container);
 }
 
 function renderDailyRace(container) {
   const counts = getRetentionsByCollab(todayStr());
   const goal = state.settings.individualGoal;
   const maxCount = Math.max(goal, ...Object.values(counts));
-
-  const lanes = state.collaborators.map(c => ({
-    ...c,
-    count: counts[c.id] || 0
-  })).sort((a,b) => b.count - a.count);
-
+  const lanes = state.collaborators.map(c => ({ ...c, count: counts[c.id] || 0 })).sort((a,b) => b.count - a.count);
   const rockets = ['🚀','🛸','✈️','🏎️','⚡','🌟','💫','🔥'];
-
   const lanesHtml = lanes.map((c, i) => {
     const pct = maxCount > 0 ? Math.max(5, (c.count / maxCount) * 88) : 5;
     const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
-    return `
-      <div class="race-lane" id="lane-${c.id}">
-        <div class="lane-info">
-          <div class="lane-avatar" style="background:${c.color}">${initials}</div>
-          <div class="lane-name">${c.name.split(' ')[0]}</div>
-        </div>
-        <div class="track-bar-wrap">
-          <div class="track-bar" style="width:${pct}%; background:${c.color}20; border:1.5px solid ${c.color}40">
-          </div>
-          <span class="rocket-emoji" style="left:calc(${pct}% - 8px)">${rockets[i % rockets.length]}</span>
-          <div class="finish-line"></div>
-          <span class="goal-label">META: ${goal}</span>
-        </div>
-        <div class="lane-score">${c.count}</div>
+    return `<div class="race-lane" id="lane-${c.id}">
+      <div class="lane-info">
+        <div class="lane-avatar" style="background:${c.color}">${initials}</div>
+        <div class="lane-name">${c.name.split(' ')[0]}</div>
       </div>
-    `;
+      <div class="track-bar-wrap">
+        <div class="track-bar" style="width:${pct}%; background:${c.color}20; border:1.5px solid ${c.color}40"></div>
+        <span class="rocket-emoji" style="left:calc(${pct}% - 8px)">${rockets[i % rockets.length]}</span>
+        <div class="finish-line"></div>
+        <span class="goal-label">META: ${goal}</span>
+      </div>
+      <div class="lane-score">${c.count}</div>
+    </div>`;
   }).join('');
-
   container.innerHTML = `
     <div class="game-card">
       <div class="game-header">
-        <div class="game-title">
-          <i class="fa-solid fa-flag-checkered" style="color:var(--green)"></i>
-          Corrida do Dia
-        </div>
+        <div class="game-title"><i class="fa-solid fa-flag-checkered" style="color:var(--green)"></i>Corrida do Dia</div>
         <div style="display:flex; align-items:center; gap:10px">
-          <div class="live-badge">
-            <span class="live-dot"></span>
-            AO VIVO
-          </div>
+          <div class="live-badge"><span class="live-dot"></span>AO VIVO</div>
           <span class="meta-info">Meta: ${state.settings.individualGoal} retenções/pessoa</span>
         </div>
       </div>
-      <div class="race-arena">
-        <div class="race-track">${lanesHtml}</div>
-      </div>
-    </div>
-  `;
+      <div class="race-arena"><div class="race-track">${lanesHtml}</div></div>
+    </div>`;
 }
 
 function renderWeeklyMap(container) {
@@ -2568,72 +2705,45 @@ function renderWeeklyMap(container) {
   const dayCounts = getWeeklyByCollab();
   const labels = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
   const today = todayStr();
-
   const dayLabelHtml = labels.map((l, i) => {
     const isToday = weekDays[i] === today;
     return `<div class="day-label" style="flex:1; color:${isToday ? 'var(--green-dark)' : ''}; font-weight:${isToday?'700':'500'}">${l}</div>`;
   }).join('');
-
   const playersHtml = state.collaborators.map(c => {
     const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
     const total = dayCounts[c.id] || 0;
     const maxDay = Math.max(1, ...weekDays.map(d => dayData[c.id][d] || 0));
-
     const cellsHtml = weekDays.map(d => {
       const cnt = dayData[c.id][d] || 0;
       const isToday = d === today;
       const isFuture = d > today;
       const intensity = cnt === 0 ? 0 : Math.max(0.2, cnt / maxDay);
-
       let bg, border;
       if (isFuture) { bg = 'var(--gray-100)'; border = 'var(--gray-200)'; }
       else if (cnt === 0) { bg = 'var(--gray-100)'; border = 'var(--gray-200)'; }
       else {
         const alpha = Math.round(intensity * 255).toString(16).padStart(2,'0');
-        bg = c.color + alpha;
-        border = c.color;
+        bg = c.color + alpha; border = c.color;
       }
-
-      return `<div class="day-cell" style="flex:1; background:${bg}; border:1px solid ${border}; outline:${isToday ? `2px solid ${c.color}` : 'none'}; outline-offset:1px" title="${labels[weekDays.indexOf(d)]}: ${cnt} retenções">
-        ${cnt > 0 ? `<span style="text-shadow:0 1px 2px rgba(0,0,0,0.3)">${cnt}</span>` : ''}
-      </div>`;
+      return `<div class="day-cell" style="flex:1; background:${bg}; border:1px solid ${border}; outline:${isToday ? `2px solid ${c.color}` : 'none'}; outline-offset:1px" title="${labels[weekDays.indexOf(d)]}: ${cnt} retenções">${cnt > 0 ? `<span style="text-shadow:0 1px 2px rgba(0,0,0,0.3)">${cnt}</span>` : ''}</div>`;
     }).join('');
-
-    return `
-      <div class="week-player">
-        <div class="week-info">
-          <div class="week-avatar" style="background:${c.color}">${initials}</div>
-          <div class="week-name">${c.name.split(' ')[0]}</div>
-        </div>
-        <div class="days-track">${cellsHtml}</div>
-        <div class="week-total">${total}</div>
-      </div>
-    `;
+    return `<div class="week-player">
+      <div class="week-info"><div class="week-avatar" style="background:${c.color}">${initials}</div><div class="week-name">${c.name.split(' ')[0]}</div></div>
+      <div class="days-track">${cellsHtml}</div>
+      <div class="week-total">${total}</div>
+    </div>`;
   }).join('');
-
-  // Chart data
-  const chartLabels = labels;
+  const chartId = 'weeklyChart_' + Date.now();
   const datasets = state.collaborators.map(c => ({
     label: c.name.split(' ')[0],
     data: weekDays.map(d => dayData[c.id][d] || 0),
-    borderColor: c.color,
-    backgroundColor: c.color + '22',
-    borderWidth: 2,
-    pointRadius: 4,
-    pointHoverRadius: 6,
-    tension: 0.4,
-    fill: false
+    borderColor: c.color, backgroundColor: c.color + '22',
+    borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, tension: 0.4, fill: false
   }));
-
-  const chartId = 'weeklyChart_' + Date.now();
-
   container.innerHTML = `
     <div class="game-card">
       <div class="game-header">
-        <div class="game-title">
-          <i class="fa-solid fa-map" style="color:var(--purple)"></i>
-          Mapa Semanal — Calor de Performance
-        </div>
+        <div class="game-title"><i class="fa-solid fa-map" style="color:var(--purple)"></i>Mapa Semanal — Calor de Performance</div>
         <span class="meta-info">Semana atual</span>
       </div>
       <div class="weekly-map">
@@ -2642,61 +2752,22 @@ function renderWeeklyMap(container) {
       </div>
     </div>
     <div class="chart-card">
-      <div class="card-header">
-        <i class="fa-solid fa-chart-area" style="color:var(--blue)"></i>
-        Evolução Diária da Semana
-      </div>
-      <div class="chart-wrap">
-        <canvas id="${chartId}"></canvas>
-      </div>
-    </div>
-  `;
-
-  // Render chart after DOM update
+      <div class="card-header"><i class="fa-solid fa-chart-area" style="color:var(--blue)"></i>Evolução Diária da Semana</div>
+      <div class="chart-wrap"><canvas id="${chartId}"></canvas></div>
+    </div>`;
   setTimeout(() => {
     const ctx = document.getElementById(chartId);
     if (!ctx) return;
     if (window._weekChart) { try { window._weekChart.destroy(); } catch(e){} }
     window._weekChart = new Chart(ctx, {
       type: 'line',
-      data: { labels: chartLabels, datasets },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: { font: { family: 'DM Sans', size: 11 }, boxWidth: 12, padding: 16 }
-          },
-          tooltip: {
-            backgroundColor: '#1f2937',
-            titleFont: { family: 'DM Sans', size: 12, weight: '600' },
-            bodyFont: { family: 'DM Sans', size: 11 },
-            padding: 10,
-            cornerRadius: 8
-          }
-        },
-        scales: {
-          x: {
-            grid: { color: '#f3f4f6' },
-            ticks: { font: { family: 'DM Sans', size: 11 }, color: '#9ca3af' }
-          },
-          y: {
-            grid: { color: '#f3f4f6' },
-            ticks: { font: { family: 'DM Mono', size: 11 }, color: '#9ca3af', stepSize: 1 },
-            beginAtZero: true
-          }
-        }
-      }
+      data: { labels, datasets },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { font: { family: 'DM Sans', size: 11 }, boxWidth: 12, padding: 16 } }, tooltip: { backgroundColor: '#1f2937', titleFont: { family: 'DM Sans', size: 12, weight: '600' }, bodyFont: { family: 'DM Sans', size: 11 }, padding: 10, cornerRadius: 8 } }, scales: { x: { grid: { color: '#f3f4f6' }, ticks: { font: { family: 'DM Sans', size: 11 }, color: '#9ca3af' } }, y: { grid: { color: '#f3f4f6' }, ticks: { font: { family: 'DM Mono', size: 11 }, color: '#9ca3af', stepSize: 1 }, beginAtZero: true } } }
     });
   }, 50);
 }
 
-// ═══════════════════════════════════════════
-// RANKING
-// ═══════════════════════════════════════════
-const MEDALS = ['🥇','🥈','🥉'];
-
+// ── RANKING ──
 function renderRanking() {
   const ranked = getRankedCollabs(currentMode);
   const medals = ['🥇','🥈','🥉'];
@@ -2707,93 +2778,53 @@ function renderRanking() {
     const delta = c.count - c.yc;
     const deltaHtml = delta !== 0 ? `<span style="color:${delta>0?'var(--green-dark)':'var(--red)'}; font-size:10px; font-weight:600">${delta>0?'▲':'▼'}${Math.abs(delta)}</span>` : '';
     const isLeader = i === 0 && c.count > 0;
-
-    return `
-      <div class="rank-item rank-${i+1} ${isLeader ? 'leader-glow' : ''}" id="rank-item-${c.id}">
-        <div class="rank-pos">${i+1}</div>
-        <div class="rank-avatar" style="background:${c.color}">${initials}</div>
-        <div class="rank-details">
-          <div class="rank-name">${c.name}</div>
-          <div class="rank-meta">
-            ${streakHtml}
-            ${deltaHtml}
-          </div>
-        </div>
-        <div class="rank-count">${c.count}</div>
-        ${medalHtml}
-      </div>
-    `;
+    return `<div class="rank-item rank-${i+1} ${isLeader ? 'leader-glow' : ''}" id="rank-item-${c.id}">
+      <div class="rank-pos">${i+1}</div>
+      <div class="rank-avatar" style="background:${c.color}">${initials}</div>
+      <div class="rank-details"><div class="rank-name">${c.name}</div><div class="rank-meta">${streakHtml}${deltaHtml}</div></div>
+      <div class="rank-count">${c.count}</div>
+      ${medalHtml}
+    </div>`;
   }).join('');
-
   document.getElementById('rankList').innerHTML = html;
 }
 
-// ═══════════════════════════════════════════
-// HISTORY
-// ═══════════════════════════════════════════
+// ── HISTORY ──
 function renderHistory() {
   const today = todayStr();
-  const recs = [...state.retentions]
-    .filter(r => r.date === today)
-    .sort((a,b) => b.timestamp - a.timestamp)
-    .slice(0, 12);
-
+  const recs = [...state.retentions].filter(r => r.date === today).sort((a,b) => b.timestamp - a.timestamp).slice(0, 12);
   if (recs.length === 0) {
-    document.getElementById('historyCard').innerHTML = `
-      <div style="padding:24px; text-align:center; color:var(--gray-300)">
-        <i class="fa-solid fa-inbox" style="font-size:28px; display:block; margin-bottom:8px"></i>
-        <span style="font-size:13px">Nenhuma retenção registrada hoje</span>
-      </div>
-    `;
+    document.getElementById('historyCard').innerHTML = `<div style="padding:24px; text-align:center; color:var(--gray-300)"><i class="fa-solid fa-inbox" style="font-size:28px; display:block; margin-bottom:8px"></i><span style="font-size:13px">Nenhuma retenção registrada hoje</span></div>`;
     return;
   }
-
   const rows = recs.map((r, i) => {
     const c = state.collaborators.find(x => x.id === r.collabId);
     if (!c) return '';
-    const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
     const isNew = i === 0 && (Date.now() - r.timestamp) < 3000;
-    return `
-      <tr class="${isNew ? 'history-new' : ''}">
-        <td><span class="badge-collab" style="background:${c.color}">
-          <span class="badge-dot"></span>${c.name.split(' ')[0]}
-        </span></td>
-        <td><span style="font-family:var(--mono); font-size:12px; background:var(--gray-100); padding:3px 8px; border-radius:6px">${r.clientCode}</span></td>
-        <td style="color:var(--gray-400); font-size:12px; font-family:var(--mono)">${r.time}</td>
-        <td><span style="color:var(--green-dark); font-size:12px; font-weight:500">✓ Retido</span></td>
-      </tr>
-    `;
+    const time = new Date(r.timestamp).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    return `<tr class="${isNew ? 'history-new' : ''}">
+      <td><span class="badge-collab" style="background:${c.color}"><span class="badge-dot"></span>${c.name.split(' ')[0]}</span></td>
+      <td><span style="font-family:var(--mono); font-size:12px; background:var(--gray-100); padding:3px 8px; border-radius:6px">${r.clientCode}</span></td>
+      <td style="color:var(--gray-400); font-size:12px; font-family:var(--mono)">${time}</td>
+      <td><span style="color:var(--green-dark); font-size:12px; font-weight:500">✓ Retido</span></td>
+    </tr>`;
   }).join('');
-
   document.getElementById('historyCard').innerHTML = `
     <table class="history-table">
-      <thead>
-        <tr>
-          <th>Colaborador</th>
-          <th>Código</th>
-          <th>Horário</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Colaborador</th><th>Código</th><th>Horário</th><th>Status</th></tr></thead>
       <tbody>${rows}</tbody>
-    </table>
-  `;
+    </table>`;
 }
 
-// ═══════════════════════════════════════════
-// COLLAB SELECT
-// ═══════════════════════════════════════════
+// ── COLLAB SELECT ──
 function renderCollabSelect() {
   const sel = document.getElementById('inputCollab');
   const prev = sel.value;
-  sel.innerHTML = '<option value="">Selecione...</option>' +
-    state.collaborators.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  sel.innerHTML = '<option value="">Selecione...</option>' + state.collaborators.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
   if (prev) sel.value = prev;
 }
 
-// ═══════════════════════════════════════════
-// SETTINGS
-// ═══════════════════════════════════════════
+// ── SETTINGS ──
 function renderSettings() {
   const dg = document.getElementById('dailyGoal');
   const ig = document.getElementById('individualGoal');
@@ -2803,18 +2834,14 @@ function renderSettings() {
 }
 
 function renderCollabListSettings() {
-  document.getElementById('collabList').innerHTML = state.collaborators.map((c, i) => {
+  document.getElementById('collabList').innerHTML = state.collaborators.map(c => {
     const initials = c.name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
-    return `
-      <div class="collab-item">
-        <div class="collab-avatar-sm" style="background:${c.color}">${initials}</div>
-        <span class="collab-name-sm">${c.name}</span>
-        <div style="width:12px; height:12px; border-radius:50%; background:${c.color}; border:2px solid var(--gray-200)"></div>
-        <button class="btn-remove" onclick="removeCollaborator(${c.id})" title="Remover">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-    `;
+    return `<div class="collab-item">
+      <div class="collab-avatar-sm" style="background:${c.color}">${initials}</div>
+      <span class="collab-name-sm">${c.name}</span>
+      <div style="width:12px; height:12px; border-radius:50%; background:${c.color}; border:2px solid var(--gray-200)"></div>
+      <button class="btn-remove" onclick="removeCollaborator(${c.id})" title="Remover"><i class="fa-solid fa-xmark"></i></button>
+    </div>`;
   }).join('');
 }
 
@@ -2822,15 +2849,12 @@ async function addCollaborator() {
   const inp = document.getElementById('newCollabName');
   const name = inp.value.trim();
   if (!name) { showToast('Digite o nome do colaborador', 'error'); return; }
-  if (state.collaborators.find(c => c.name.toLowerCase() === name.toLowerCase())) {
-    showToast('Colaborador já existe', 'error'); return;
-  }
+  if (state.collaborators.find(c => c.name.toLowerCase() === name.toLowerCase())) { showToast('Colaborador já existe', 'error'); return; }
   const color = COLORS[state.collaborators.length % COLORS.length];
   const { error } = await sb.from('collaborators').insert({ name, color });
   if (error) { showToast('Erro ao adicionar colaborador', 'error'); return; }
   inp.value = '';
   showToast(`${name} adicionado com sucesso`, 'success');
-  // Realtime updates state
 }
 
 async function removeCollaborator(id) {
@@ -2847,8 +2871,7 @@ async function saveSettings() {
   if (isNaN(ig) || ig < 1) { showToast('Meta individual inválida', 'error'); return; }
   const { error } = await sb.from('settings').update({ daily_goal: dg, individual_goal: ig }).eq('id', 1);
   if (error) { showToast('Erro ao salvar configurações', 'error'); return; }
-  state.settings.dailyGoal = dg;
-  state.settings.individualGoal = ig;
+  state.settings.dailyGoal = dg; state.settings.individualGoal = ig;
   showToast('Configurações salvas com sucesso', 'success');
   renderAll();
 }
@@ -2867,9 +2890,7 @@ async function clearAllData() {
   showToast('Todos os dados removidos', 'success');
 }
 
-// ═══════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════
+// ── TOAST ──
 function showToast(msg, type = 'success') {
   const container = document.getElementById('toastContainer');
   const toast = document.createElement('div');
@@ -2877,15 +2898,10 @@ function showToast(msg, type = 'success') {
   const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-circle-exclamation' : 'fa-info-circle';
   toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${msg}`;
   container.appendChild(toast);
-  setTimeout(() => {
-    toast.style.animation = 'fadeOut 0.3s ease forwards';
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  setTimeout(() => { toast.style.animation = 'fadeOut 0.3s ease forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
-// ═══════════════════════════════════════════
-// CONFETTI
-// ═══════════════════════════════════════════
+// ── CONFETTI ──
 function triggerConfetti() {
   const colors = ['#22c55e','#3b82f6','#f59e0b','#8b5cf6','#ef4444','#06b6d4'];
   for (let i = 0; i < 60; i++) {
@@ -2906,978 +2922,11 @@ function triggerConfetti() {
   }
 }
 
-
-
-// ═══════════════════════════════════════════
-// SCRIPTS DE ATENDIMENTO — DATA & LOGIC
-// ═══════════════════════════════════════════
-
-const ADMIN_PASSWORD = 'igreen2026';
-
-const CATEGORY_META = {
-  'Objeção de Desconto':   { icon: 'fa-solid fa-percent',        color: '#3b82f6', bg: '#eff6ff', text: '#1d4ed8' },
-  'Mudança de Endereço':   { icon: 'fa-solid fa-location-dot',   color: '#8b5cf6', bg: '#f5f3ff', text: '#6d28d9' },
-  'Concorrência':          { icon: 'fa-solid fa-bolt',           color: '#f97316', bg: '#fff7ed', text: '#c2410c' },
-  'Faturamento':           { icon: 'fa-solid fa-file-invoice',   color: '#06b6d4', bg: '#ecfeff', text: '#0e7490' },
-  'Insatisfação':          { icon: 'fa-solid fa-face-frown',     color: '#ef4444', bg: '#fef2f2', text: '#b91c1c' },
-  'Situação Especial':     { icon: 'fa-solid fa-circle-info',    color: '#f59e0b', bg: '#fffbeb', text: '#b45309' },
-  'Atrito':                { icon: 'fa-solid fa-triangle-exclamation', color: '#dc2626', bg: '#fff1f2', text: '#9f1239' },
-  'Técnico / Injeção':     { icon: 'fa-solid fa-solar-panel',    color: '#22c55e', bg: '#f0fdf4', text: '#15803d' },
-  'Geral':                 { icon: 'fa-solid fa-headset',        color: '#6b7280', bg: '#f9fafb', text: '#374151' },
-};
-
-const DEFAULT_SCRIPTS = [
-  {
-    id: 1,
-    title: '1. Argumentações Obrigatórias',
-    category: 'Geral',
-    note: 'Argumentos que devem ser usados em TODOS os atendimentos de retenção.',
-    sections: [
-      {
-        label: 'Club de Benefícios',
-        icon: 'fa-solid fa-star',
-        color: '#f59e0b',
-        phrases: [
-          'Além do desconto na conta, você ainda tem acesso ao nosso Club de Benefícios, que gera uma economia média de aproximadamente R$40 por mês só utilizando os descontos disponíveis.',
-          'Somando isso com a economia da iGreen na energia, o valor faz bastante diferença no fim do mês.'
-        ]
-      },
-      {
-        label: 'Cashback / Indicações',
-        icon: 'fa-solid fa-coins',
-        color: '#22c55e',
-        phrases: [
-          'Imagina não pagar mais conta de energia? Aqui você pode ter até 100% de desconto, sabia?',
-          'Com as indicações você recebe comissão a cada fatura paga por suas indicações.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: '2. Quando o Cliente Fala que o Desconto é Pouco',
-    category: 'Objeção de Desconto',
-    note: 'Use argumentos que recontextualizam o valor ao longo do tempo e combinam com os benefícios do Club.',
-    sections: [
-      {
-        label: 'Frases de Retenção',
-        icon: 'fa-solid fa-comments',
-        color: '#3b82f6',
-        phrases: [
-          'Entendo você! Mas quando fez o cadastro esse desconto chamou sua atenção, né? O que mudou de lá pra cá?',
-          'Hoje qualquer economia faz diferença, principalmente porque ela vem sem você precisar mudar nada no seu consumo e ainda ajuda nosso planeta.',
-          'Às vezes olhando só o percentual parece pouco, mas no acumulado faz bastante diferença. Você já economizou cerca de R$ X por mês, isso dá quase R$ Y no ano.',
-          'Pensa que é um valor que você teria pago e ficou no seu bolso sem precisar fazer investimento nenhum.',
-          'Esses R$ Y no ano praticamente pagam uma conta de internet, mercado ou até combustível.',
-          'É aquele desconto que parece pequeno no mês, mas quando soma 12 meses você sente a diferença.',
-          'E o mais interessante nem é só o desconto da energia. Utilizando o Club, muitos clientes conseguem economizar mais uns R$ 30 a R$ 40 por mês em benefícios e parceiros.',
-          'Somando o desconto do boleto + os benefícios do Club, sua economia mensal pode chegar próximo de R$ X.',
-          'Cancelar faria você voltar a pagar 100% da conta sem nenhum benefício adicional. Minha ideia é justamente evitar que você perca essa economia.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: '3. Cliente Alega que Está Saindo no Prejuízo',
-    category: 'Objeção de Desconto',
-    note: 'Reforce que o próprio contrato garante vantagem ao cliente. Ofereça verificar os valores juntos.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-shield-check',
-        color: '#22c55e',
-        phrases: [
-          'Pode ficar tranquilo(a), porque o próprio contrato garante que o serviço precisa trazer vantagem pra você, nunca prejuízo.',
-          'Inclusive, se tiver qualquer dúvida sobre os valores, a gente consegue conferir tudo junto agora. E caso seja identificado algum pagamento acima do correto, o ressarcimento é feito via Pix.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 4,
-    title: '4. Mudança de Endereço',
-    category: 'Mudança de Endereço',
-    note: 'Siga o fluxo: verificar se nova unidade está no nome do cliente → transferir benefício → abrir ticket ou agendar retorno em 31 dias.',
-    sections: [
-      {
-        label: 'Abordagem Inicial',
-        icon: 'fa-solid fa-house-chimney',
-        color: '#8b5cf6',
-        phrases: [
-          'Entendo sua mudança! Antes de cancelar, deixa eu verificar uma coisa rapidinho: se a nova casa estiver no seu nome, conseguimos transferir o desconto para você continuar economizando. Você já possui o número da UC da nova casa ou alguma fatura do endereço?',
-          'O processo de transferência é muito simples e você não perde o benefício que já conquistou.',
-          'Muitos clientes acabam cancelando na mudança e depois retornam porque percebem a diferença no valor da conta sem o desconto.'
-        ]
-      },
-      {
-        label: 'Se Houver Possibilidade de Aumento de Desconto',
-        icon: 'fa-solid fa-arrow-trend-up',
-        color: '#22c55e',
-        phrases: [
-          'Que ótimo! Verifiquei aqui e consegui liberar um aumento no seu desconto caso você queira transferir o benefício. Assim você continua economizando normalmente no novo endereço.'
-        ]
-      },
-      {
-        label: 'Procedimento Interno',
-        icon: 'fa-solid fa-clipboard-list',
-        color: '#6b7280',
-        phrases: [
-          'Verificar se a nova unidade já está ativa no nome do cliente e se já possui fatura emitida.',
-          'Caso tenha fatura com consumo apto: abrir ticket para novo cadastro.',
-          'Caso não tenha fatura: inserir na planilha de acompanhamento e agendar retorno para 31 dias.',
-          'Apenas Cemig - Comerc: há possibilidade de cadastro sem fatura.',
-          'Após o cadastro ser assinado e validado, registrar retenção nesse novo cadastro.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 5,
-    title: '5. Cliente Deseja Ir para Outra Fornecedora',
-    category: 'Concorrência',
-    note: 'Sondagem: verificar se o desconto da concorrente é realmente fixo e pesquisar reputação no Reclame Aqui.',
-    sections: [
-      {
-        label: 'Diferenciais iGreen',
-        icon: 'fa-solid fa-trophy',
-        color: '#f97316',
-        phrases: [
-          'Com a iGreen, você tem a segurança de estar com uma das empresas referência no mercado de energia solar, trazendo não só economia na conta, mas também muito mais benefícios e tranquilidade no dia a dia.',
-          'Hoje a iGreen é reconhecida justamente porque nosso foco é realmente resolver a vida dos clientes e entregar um atendimento de qualidade. Tanto que conquistamos o selo RA1000 no Reclame Aqui.',
-          'Entendo você buscar um desconto maior, isso é totalmente válido. Mas muitas vezes olhar só o percentual pode acabar não trazendo a melhor vantagem no final. Aqui na iGreen, além da economia na conta, você tem suporte de verdade e o Clube de Descontos com economia média de R$40, além de cashback por indicações.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 6,
-    title: '6. Cliente Já Está com 2 Fornecedoras',
-    category: 'Concorrência',
-    note: 'Use os argumentos de concorrência + explique como funciona o sistema de duas fornecedoras.',
-    sections: [
-      {
-        label: 'Explicação do Funcionamento',
-        icon: 'fa-solid fa-bolt',
-        color: '#f97316',
-        phrases: [
-          'Quando você possui duas empresas de energia solar: uma é utilizada para o consumo mensal normal, cobrindo a energia que você realmente utiliza.',
-          'A outra empresa gera crédito, que fica disponível para abater faturas futuras. Esse crédito não pode ser usado imediatamente, e você não sabe qual empresa está acumulando-o.',
-          'Ambas fornecem energia, mas a utilização efetiva é apenas de uma delas. A outra apenas acumula crédito, enquanto você continua pagando pelo mesmo consumo.',
-          'Em um momento ou outro você utilizará esse crédito gerado sem receber nenhuma cobrança. Podemos analisar até mesmo a possibilidade de arquivar seus boletos. (Chamar a gestão para análise)'
-        ]
-      }
-    ]
-  },
-  {
-    id: 7,
-    title: '7. Mora de Aluguel e Vai Mudar de Casa',
-    category: 'Mudança de Endereço',
-    note: 'Seguir procedimento padrão de mudança. Se o proprietário não autorizar, usar saldo acumulado como argumento.',
-    sections: [
-      {
-        label: 'Argumentos de Retenção',
-        icon: 'fa-solid fa-key',
-        color: '#8b5cf6',
-        phrases: [
-          'Orientar o cliente a conversar com o proprietário, explicando que o desconto na energia gera economia mensal e que os créditos/benefícios estão atrelados ao CPF do titular.',
-          'Manter a conta no próprio nome também traz mais segurança para ambas as partes, já que qualquer débito ficaria vinculado diretamente ao titular responsável.',
-          'A continuidade no mesmo CPF facilita a manutenção dos descontos e evita perda de benefícios já acumulados.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 8,
-    title: '8. Não Concorda em Receber Dois Boletos',
-    category: 'Faturamento',
-    note: 'Se o cliente insistir no cancelamento por isso, analisar transferência para fornecedora parceira com unificação disponível na região.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-file-invoice-dollar',
-        color: '#06b6d4',
-        phrases: [
-          'Olha, estamos trabalhando para trazer essa possibilidade para a sua região, porém a distribuidora acaba dificultando bastante esse processo. Afinal, eles não têm interesse que você deixe de consumir a energia tradicional.',
-          'Mas pode ficar tranquilo que seguimos tentando viabilizar essa unificação para você e, assim que houver disponibilidade, faremos o procedimento.',
-          'Enquanto isso, para facilitar sua rotina e evitar preocupação com duas contas, você pode cadastrar a fatura da distribuidora ou da iGreen em débito automático.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 9,
-    title: '9. Proprietário Faleceu',
-    category: 'Situação Especial',
-    note: 'Solicitar atestado de óbito. Verificar saldo acumulado e se há alguém no imóvel para continuar usando o benefício.',
-    sections: [
-      {
-        label: 'Procedimento',
-        icon: 'fa-solid fa-file-contract',
-        color: '#f59e0b',
-        phrases: [
-          'Solicitar o atestado de óbito para seguir com a tratativa do caso.',
-          'Confirmar se a unidade já foi cancelada ou se houve alteração de titularidade junto à distribuidora.',
-          'Verificar se a fornecedora vinculada possui saldo de energia/créditos acumulados.',
-          'Caso existam créditos, identificar se há alguém residindo no imóvel para continuar utilizando a energia com desconto até que os créditos sejam consumidos integralmente antes da troca de TT.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 10,
-    title: '10. Sócios Não Concordam em Manter o Desconto',
-    category: 'Situação Especial',
-    note: 'Sugerir contato direto com os demais sócios para explicar o funcionamento.',
-    sections: [
-      {
-        label: 'Abordagem',
-        icon: 'fa-solid fa-handshake',
-        color: '#f59e0b',
-        phrases: [
-          'Caso o cliente já compreenda os benefícios da iGreen, sugerir que permita um contato direto com os demais sócios para que a equipe possa explicar melhor o funcionamento do desconto.',
-          'Muitas vezes a resistência acontece por falta de informação sobre a economia gerada e os benefícios disponíveis.',
-          'A intenção é apresentar os detalhes de forma transparente, para que todos consigam avaliar a vantagem financeira antes de tomar a decisão de cancelamento.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 11,
-    title: '11. Cancelamento por Placas Solares',
-    category: 'Técnico / Injeção',
-    note: 'Aplicar sondagem para entender se o cliente realmente tem o projeto em andamento.',
-    sections: [
-      {
-        label: 'Sondagem',
-        icon: 'fa-solid fa-solar-panel',
-        color: '#22c55e',
-        phrases: [
-          'Quantas placas solares serão instaladas?',
-          'Qual será a potência/voltagem do sistema?',
-          'O contrato da instalação já foi assinado?',
-          'Foi realizado orçamento conosco anteriormente?',
-          'Qual a previsão de finalização do projeto?',
-          'Qual é o consumo médio atual do cliente?',
-          'A vistoria da distribuidora já foi realizada?'
-        ]
-      },
-      {
-        label: 'Se o Cliente Ficou em Dúvida na Sondagem',
-        icon: 'fa-solid fa-comments',
-        color: '#3b82f6',
-        phrases: [
-          'Sr., eu senti que talvez não seja nem pela instalação em si, porque o senhor ficou um pouco em dúvida agora. Então eu queria entender de verdade o que está pesando nessa decisão, porque hoje o senhor está abrindo mão de benefícios importantes com a gente, como economia na conta, suporte e o iGreen Club.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 12,
-    title: '12. Atraso de Injeção',
-    category: 'Técnico / Injeção',
-    note: 'Deixar claro que o atraso é responsabilidade da distribuidora, não da iGreen.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-clock-rotate-left',
-        color: '#22c55e',
-        phrases: [
-          'Entendo sua preocupação com o atraso, mas isso acontece por parte da distribuidora e não da iGreen. Enquanto aguarda, você continua tendo vantagens no iGreen Club, então não fica no prejuízo nesse período.',
-          'Cancelar agora acaba não compensando, porque para entrar em outra fornecedora você pode enfrentar praticamente todo o processo de novo, levando até uns 180 dias para normalizar os créditos. Aí você perde tempo, benefícios e ainda continua aguardando do mesmo jeito.',
-          'O melhor cenário hoje é manter ativo para já aproveitar quando a distribuidora liberar.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 13,
-    title: '13. Atraso de Faturamento',
-    category: 'Faturamento',
-    note: 'O atraso ocorre porque a distribuidora não enviou a leitura. O cliente não terá prejuízo.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-hourglass-half',
-        color: '#06b6d4',
-        phrases: [
-          'O atraso aconteceu porque a distribuidora ainda não enviou a leitura necessária para a emissão do boleto. Como a cobrança é feita em cima do seu consumo real, dependemos dessa informação para gerar o valor correto.',
-          'Mas pode ficar tranquilo(a), porque você não terá nenhum prejuízo com isso. Vou abrir um chamado solicitando prioridade na emissão e, enquanto isso, o ideal é apenas reservar o valor da conta.',
-          'Assim que o boleto for liberado, ele já virá com o desconto aplicado normalmente, sem multa, sem juros e mantendo toda a sua economia.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 14,
-    title: '14. Erro no Faturamento',
-    category: 'Faturamento',
-    note: 'O erro vem da leitura da distribuidora. O cliente tem direito à releitura. Se já pagou, recebe ressarcimento.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-file-circle-exclamation',
-        color: '#06b6d4',
-        phrases: [
-          'Nós emitimos o boleto com base nas informações enviadas pela própria distribuidora. Como você informou que a leitura pode estar incorreta, a solução é entrar em contato com a distribuidora e solicitar uma releitura, porque isso é um direito seu.',
-          'Se for identificado que realmente houve erro na leitura, o nosso boleto também será corrigido normalmente.',
-          'Caso já tenha realizado o pagamento, a diferença é ressarcida. Caso ainda não tenha pago, o valor será ajustado antes.',
-          'Mesmo sem a iGreen, esse problema aconteceria da mesma forma, porque o erro vem diretamente da leitura feita pela distribuidora, não da nossa cobrança.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 15,
-    title: '15. Injeção Incompleta',
-    category: 'Técnico / Injeção',
-    note: 'Verificar se é inadimplência, condições climáticas, ou manutenção. Solicitar prioridade na regularização.',
-    sections: [
-      {
-        label: 'Causas e Scripts',
-        icon: 'fa-solid fa-solar-panel',
-        color: '#22c55e',
-        phrases: [
-          'INADIMPLÊNCIA: No seu caso os créditos deixaram de ser compensados por conta dos boletos em aberto. Para continuar recebendo normalmente os benefícios e descontos, é importante manter os pagamentos em dia. Assim que regularizar, consigo solicitar prioridade para normalização da sua unidade.',
-          'COMPENSAÇÃO PARCIAL: Mesmo quando a compensação não cobre 100% do consumo, você ainda recebe um desconto proporcional. Ou seja, não houve prejuízo, porque essa parte compensada saiu mais barata do que sairia direto pela distribuidora.',
-          'CLIMA/MANUTENÇÃO: Isso pode acontecer em períodos de chuva forte próximos da usina ou em momentos de manutenção. Isso também aconteceria mesmo com placas solares instaladas na própria casa. Vou solicitar prioridade na regularização.',
-          'De qualquer forma, você não está tendo prejuízo com a iGreen. Além da economia proporcional, ainda continua tendo acesso ao iGreen Club e todos os benefícios da plataforma.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 16,
-    title: '16. Não Concorda com a TT de Fornecedora',
-    category: 'Técnico / Injeção',
-    note: 'Explicar que esse modelo é mais estável e evita problemas de saldo acumulado.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-plug-circle-check',
-        color: '#22c55e',
-        phrases: [
-          'Mas o que exatamente te impede hoje? Você não terá nenhum prejuízo pelo fato dessa energia estar vinculada ao nosso nome. Na verdade, esse modelo acaba sendo até mais vantajoso para você.',
-          'Em muitos casos, quando a energia fica vinculada diretamente ao nome do cliente, pode ocorrer o que chamamos de saldo acumulado, gerando possíveis transtornos futuros. Por isso esse formato traz mais estabilidade.',
-          'Além disso, a própria distribuidora costuma dificultar bastante a coleta e validação das leituras quando tudo fica diretamente no nome do cliente, o que pode atrasar ainda mais a compensação dos créditos.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 17,
-    title: '17. Insatisfação com Atendimento da Distribuidora',
-    category: 'Insatisfação',
-    note: 'Reforçar que a iGreen acompanha tudo junto à distribuidora e o cliente não precisa resolver sozinho.',
-    sections: [
-      {
-        label: 'Script — Troca de Titularidade',
-        icon: 'fa-solid fa-building',
-        color: '#ef4444',
-        phrases: [
-          'Como a usina está vinculada no nome da iGreen, algumas informações realmente não ficam visíveis diretamente para você no sistema da distribuidora. Mas fica tranquilo(a), porque nossa equipe acompanha tudo.',
-          'Seu caso continua sendo acompanhado normalmente por nós junto à distribuidora, para garantir que tudo seja ajustado corretamente. Nosso objetivo é justamente facilitar para você, acompanhando todo o processo até a finalização, sem que você precise resolver isso sozinho(a).'
-        ]
-      }
-    ]
-  },
-  {
-    id: 18,
-    title: '18. Insatisfação com Atendimento da iGreen / Licenciado',
-    category: 'Insatisfação',
-    note: 'Pedir desculpas genuínas, levar para gestão e garantir que não vai se repetir.',
-    sections: [
-      {
-        label: 'Atendimento Insatisfatório',
-        icon: 'fa-solid fa-heart-crack',
-        color: '#ef4444',
-        phrases: [
-          'Peço desculpas pelo ocorrido. Realmente não é essa experiência que queremos passar, porque sabemos que o motivo da iGreen existir são nossos clientes, e nosso foco é sempre oferecer o melhor atendimento possível.',
-          'Pode deixar que vou levar toda essa situação para a gestão para que as devidas providências sejam tomadas. E quero te garantir que isso não vai voltar a acontecer.',
-          'Não vale a pena abrir mão da sua economia e dos benefícios por conta dessa situação. Estamos aqui justamente para trazer solução, suporte e vantagens para você.'
-        ]
-      },
-      {
-        label: 'Tempo em Espera',
-        icon: 'fa-solid fa-clock',
-        color: '#f97316',
-        phrases: [
-          'Entendemos totalmente sua insatisfação com o tempo de espera e peço desculpas por isso. Nossa empresa teve um crescimento muito rápido nos últimos meses e estamos ampliando fortemente nossa equipe de atendimento.',
-          'Pode ter certeza de que a prioridade da iGreen é cuidar bem de vocês. Estamos trabalhando para que seu atendimento seja cada vez mais rápido, eficiente e resolutivo.'
-        ]
-      },
-      {
-        label: 'Expectativa Não Atendida pelo Licenciado',
-        icon: 'fa-solid fa-user-slash',
-        color: '#dc2626',
-        phrases: [
-          'Entendo totalmente sua insatisfação e peço desculpas por essa experiência não ter atendido sua expectativa. Quem cuida do seu pós-venda e acompanhamento somos nós, então qualquer situação que surgir daqui pra frente, você pode contar diretamente com nossa equipe.',
-          'Vamos abrir internamente uma validação sobre esse licenciado para entender o que aconteceu e tomar as devidas providências. Não vale a pena você perder toda a economia e os benefícios por conta dessa situação específica.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 19,
-    title: '19. Casos de Atrito Extremo',
-    category: 'Atrito',
-    note: 'Manter tom calmo e profissional. Registrar corretamente o motivo do encerramento da chamada.',
-    sections: [
-      {
-        label: 'Cliente Não Informa o Motivo',
-        icon: 'fa-solid fa-circle-question',
-        color: '#dc2626',
-        phrases: [
-          'Tudo bem, eu vou seguir com o procedimento que você solicitou, sem problema. Só queria entender rapidamente o que aconteceu, porque sua opinião realmente é importante pra gente. Foi alguma insatisfação com o atendimento? Ou sentiu que o desconto não estava compensando como esperava?'
-        ]
-      },
-      {
-        label: 'Prazo de Cancelamento',
-        icon: 'fa-solid fa-calendar-xmark',
-        color: '#dc2626',
-        phrases: [
-          'Esse prazo de até 90 dias não é uma definição da iGreen, e sim uma regulamentação da ANEEL e também da própria distribuidora responsável pela sua unidade.',
-          'Tanto para ativação quanto para encerramento do fornecimento de energia, existe esse prazo regulatório para que todas as atualizações e validações sejam concluídas no sistema da concessionária.',
-          'A iGreen não consegue reduzir ou alterar esse prazo, porque esse processo depende diretamente das regras da distribuidora e da ANEEL.'
-        ]
-      },
-      {
-        label: 'Cliente Exaltado — 1ª Sinalização',
-        icon: 'fa-solid fa-volume-high',
-        color: '#dc2626',
-        phrases: [
-          'Entendo sua insatisfação e quero ajudar da melhor forma possível. Porém, preciso que mantenhamos o respeito durante o atendimento para que eu consiga seguir com a solução do seu caso.'
-        ]
-      },
-      {
-        label: 'Persistência em Tom Agressivo',
-        icon: 'fa-solid fa-hand',
-        color: '#dc2626',
-        phrases: [
-          'Compreendo seu posicionamento, porém não posso prosseguir com o atendimento diante de ofensas. Caso isso continue, será necessário encerrar a ligação.'
-        ]
-      },
-      {
-        label: 'Insultos Graves / Encerramento',
-        icon: 'fa-solid fa-phone-slash',
-        color: '#9f1239',
-        phrases: [
-          'Como as ofensas persistiram, vou encerrar este atendimento neste momento. Quando desejar continuar de forma respeitosa, estaremos à disposição para ajudar.'
-        ]
-      },
-      {
-        label: 'Cliente Solicita Gravação da Ligação',
-        icon: 'fa-solid fa-microphone',
-        color: '#6b7280',
-        phrases: [
-          'Informamos que as gravações de ligações são utilizadas exclusivamente para fins internos de qualidade e segurança, conforme diretrizes da LGPD, e não são disponibilizadas para envio externo.',
-          'Caso precise de um comprovante do atendimento, posso te fornecer o número de protocolo ou um resumo por escrito do contato realizado.',
-          'Caso o cliente insista, informar que para a disponibilização ele deverá realizar uma solicitação formal à empresa.'
-        ]
-      }
-    ]
-  },
-  {
-    id: 20,
-    title: '20. UC Encerrada (Saldo de Energia)',
-    category: 'Situação Especial',
-    note: 'Antes de concluir o cancelamento, verificar possibilidade de transferência para nova unidade.',
-    sections: [
-      {
-        label: 'Script Padrão',
-        icon: 'fa-solid fa-plug-circle-xmark',
-        color: '#f59e0b',
-        phrases: [
-          'Entendo, Sr.(a). Antes de seguirmos com o desligamento da UC, gostaria de explicar um ponto importante referente ao saldo de energia já vinculado ao seu contrato.',
-          'Quando o cliente realiza o desligamento da UC, pode gerar o boleto de saldo referente à energia já disponibilizada. Por isso, antes de concluir o cancelamento, verificamos sempre a possibilidade de transferir a assinatura para uma nova casa.'
-        ]
-      }
-    ]
-  }
-];
-
-// ── State ──
-function loadScriptsState() {
-  try {
-    const saved = localStorage.getItem('scripts_data');
-    if (saved) return JSON.parse(saved);
-  } catch(e) {}
-  return { scripts: JSON.parse(JSON.stringify(DEFAULT_SCRIPTS)), favorites: [], nextId: 21 };
-}
-
-function saveScriptsState() {
-  localStorage.setItem('scripts_data', JSON.stringify(scriptsState));
-}
-
-let scriptsState = loadScriptsState();
-let activeCategory = 'all';
-let adminUnlocked = false;
-
-// ── Render filters ──
-function renderScriptsFilters() {
-  const container = document.getElementById('scriptsCategoryFilters');
-  const cats = ['all', ...Object.keys(CATEGORY_META)];
-  const counts = {};
-  scriptsState.scripts.forEach(s => {
-    counts[s.category] = (counts[s.category] || 0) + 1;
-  });
-
-  let html = `<div class="filter-section-label">Filtrar por Categoria</div>`;
-  html += cats.map(cat => {
-    const isAll = cat === 'all';
-    const meta = CATEGORY_META[cat] || {};
-    const count = isAll ? scriptsState.scripts.length : (counts[cat] || 0);
-    const active = activeCategory === cat ? 'active' : '';
-    const icon = isAll ? 'fa-solid fa-layer-group' : meta.icon;
-    const label = isAll ? 'Todos os Scripts' : cat;
-    return `<button class="filter-chip ${active}" onclick="setScriptCategory('${cat}')">
-      <i class="${icon}"></i>${label}<span class="count">${count}</span>
-    </button>`;
-  }).join('');
-
-  html += `<div class="filter-section-label" style="margin-top:12px">Outros</div>`;
-  html += `<button class="filter-chip ${activeCategory === 'favorites' ? 'active' : ''}" onclick="setScriptCategory('favorites')">
-    <i class="fa-solid fa-star"></i>Favoritos<span class="count">${scriptsState.favorites.length}</span>
-  </button>`;
-  const linksCount = loadLinks().length;
-  html += `<button class="filter-chip ${activeCategory === 'links' ? 'active' : ''}" onclick="setScriptCategory('links')">
-    <i class="fa-solid fa-link"></i>Links e Materiais<span class="count">${linksCount}</span>
-  </button>`;
-
-  container.innerHTML = html;
-}
-
-function setScriptCategory(cat) {
-  activeCategory = cat;
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
-// ── Render grid ──
-function renderScriptsGrid() {
-  const grid = document.getElementById('scriptsGrid');
-  const badge = document.getElementById('scriptsCountBadge');
-  const search = document.getElementById('scriptsSearchInput').value.toLowerCase().trim();
-
-  // Links view
-  if (activeCategory === 'links') {
-    const links = loadLinks().filter(l => !search || l.title.toLowerCase().includes(search) || (l.desc||'').toLowerCase().includes(search));
-    badge.textContent = links.length + ' item' + (links.length !== 1 ? 's' : '');
-    if (!links.length) {
-      grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-link"></i><p>${search ? 'Nenhum link encontrado.' : 'Nenhum link adicionado.<br>Use o Painel Admin para adicionar.'}</p></div>`;
-    } else {
-      grid.innerHTML = `<div class="links-grid">${links.map(l => {
-        const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
-        const adminBtns = adminUnlocked ? `<button onclick="deleteLink(${l.id})" style="background:transparent;border:none;cursor:pointer;color:var(--gray-300);font-size:12px;flex-shrink:0;padding:2px" title="Remover"><i class="fa-solid fa-trash"></i></button>` : '';
-        return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener">
-          <div class="link-card-icon" style="background:${meta.bg};color:${meta.text}"><i class="${meta.icon}"></i></div>
-          <div class="link-card-info">
-            <div class="link-card-title">${l.title}</div>
-            <div class="link-card-desc">${l.desc||''}</div>
-            <div class="link-card-type" style="color:${meta.text}">${meta.label}</div>
-          </div>
-          ${adminBtns}
-        </a>`;
-      }).join('')}</div>`;
-    }
-    return;
-  }
-
-  let filtered = scriptsState.scripts.filter(s => {
-    if (activeCategory === 'favorites') return scriptsState.favorites.includes(s.id);
-    if (activeCategory !== 'all' && s.category !== activeCategory) return false;
-    if (search) {
-      const haystack = (s.title + ' ' + s.category + ' ' + (s.note||'') + ' ' +
-        s.sections.map(sec => sec.phrases.join(' ')).join(' ')).toLowerCase();
-      return haystack.includes(search);
-    }
-    return true;
-  });
-
-  badge.textContent = filtered.length + ' script' + (filtered.length !== 1 ? 's' : '');
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-magnifying-glass"></i><p>Nenhum script encontrado.</p></div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(s => renderScriptCard(s)).join('');
-}
-
-function renderScriptCard(s) {
-  const catMeta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
-  const isFav = scriptsState.favorites.includes(s.id);
-  const isExpanded = document.querySelector(`[data-script-id="${s.id}"].expanded`) !== null;
-
-  const sectionsHtml = s.sections.map(sec => {
-    const phrasesHtml = sec.phrases.map(p =>
-      `<div class="script-phrase" style="border-left-color:${sec.color||'var(--green)'}">
-        ${p}
-        <button class="script-copy-btn" onclick="copyPhrase(event,'${escapeAttr(p)}')" title="Copiar">
-          <i class="fa-regular fa-copy"></i>
-        </button>
-      </div>`
-    ).join('');
-    return `<div class="script-section">
-      <div class="script-section-label" style="color:${sec.color||'var(--green)'}">
-        <i class="${sec.icon||'fa-solid fa-comment'}"></i>${sec.label}
-      </div>
-      ${phrasesHtml}
-    </div>`;
-  }).join('');
-
-  const noteHtml = s.note ? `<div class="script-note"><i class="fa-solid fa-circle-info"></i>${s.note}</div>` : '';
-
-  return `<div class="script-card" data-script-id="${s.id}">
-    <div class="script-card-header" onclick="toggleScriptCard(${s.id})">
-      <div class="script-card-icon" style="background:${catMeta.bg};color:${catMeta.text}">
-        <i class="${catMeta.icon}"></i>
-      </div>
-      <div class="script-card-info">
-        <div class="script-card-title">${s.title}</div>
-        <div class="script-card-meta">
-          <span>${s.sections.length} seção${s.sections.length!==1?'ões':''}</span>
-          <span>·</span>
-          <span>${s.sections.reduce((a,sec)=>a+sec.phrases.length,0)} frases</span>
-        </div>
-      </div>
-      <div class="script-card-badges">
-        <span class="cat-badge" style="background:${catMeta.bg};color:${catMeta.text}">${s.category}</span>
-        <button class="script-fav-btn ${isFav?'active':''}" onclick="toggleFav(event,${s.id})" title="${isFav?'Remover favorito':'Favoritar'}">
-          <i class="fa-${isFav?'solid':'regular'} fa-star"></i>
-        </button>
-        <button class="script-expand-btn"><i class="fa-solid fa-chevron-down"></i></button>
-      </div>
-    </div>
-    <div class="script-card-body">
-      <div class="script-card-content">
-        ${noteHtml}
-        ${noteHtml ? '<div style="height:12px"></div>' : ''}
-        ${sectionsHtml}
-      </div>
-      <div class="script-card-actions">
-        ${adminUnlocked ? `<button class="btn-edit-script" onclick="openEditScript(${s.id})"><i class="fa-solid fa-pen"></i>Editar</button>
-        <button class="btn-edit-script" onclick="deleteScript(${s.id})" style="color:var(--red)"><i class="fa-solid fa-trash"></i>Excluir</button>` : ''}
-        <span style="margin-left:auto;font-size:11px;color:var(--gray-400)">Clique nas frases para copiar</span>
-      </div>
-    </div>
-  </div>`;
-}
-
-function escapeAttr(str) {
-  return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-}
-
-function toggleScriptCard(id) {
-  const card = document.querySelector(`[data-script-id="${id}"]`);
-  if (!card) return;
-  card.classList.toggle('expanded');
-}
-
-function toggleFav(e, id) {
-  e.stopPropagation();
-  const idx = scriptsState.favorites.indexOf(id);
-  if (idx === -1) scriptsState.favorites.push(id);
-  else scriptsState.favorites.splice(idx, 1);
-  saveScriptsState();
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
-function filterScripts() {
-  renderScriptsGrid();
-}
-
-function copyPhrase(e, text) {
-  e.stopPropagation();
-  navigator.clipboard.writeText(text).then(() => showToast('Frase copiada!', 'success'));
-}
-
-// ── Admin Modal ──
-function openAdminModal() {
-  adminUnlocked = false;
-  const overlay = document.getElementById('adminModalOverlay');
-  renderAdminPwdGate();
-  overlay.classList.add('open');
-}
-
-function closeAdminModal() {
-  document.getElementById('adminModalOverlay').classList.remove('open');
-}
-
-function renderAdminPwdGate() {
-  document.getElementById('adminModalTitle').textContent = 'Modo Administrador';
-  document.getElementById('adminModalBody').innerHTML = `
-    <div class="pwd-gate">
-      <i class="fa-solid fa-lock"></i>
-      <p>Digite a senha de administrador para acessar o painel de edição.</p>
-      <input type="password" id="adminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPwd()">
-      <div class="pwd-gate-err" id="adminPwdErr">Senha incorreta. Tente novamente.</div>
-      <div style="margin-top:16px">
-        <button class="btn-primary" onclick="checkAdminPwd()"><i class="fa-solid fa-unlock"></i>Entrar</button>
-      </div>
-    </div>`;
-  document.getElementById('adminModalFooter').innerHTML = `
-    <button class="btn-secondary" onclick="closeAdminModal()">Cancelar</button>`;
-  setTimeout(() => { const i = document.getElementById('adminPwdInput'); if(i) i.focus(); }, 100);
-}
-
-function checkAdminPwd() {
-  const val = document.getElementById('adminPwdInput').value;
-  if (val === ADMIN_PASSWORD) {
-    adminUnlocked = true;
-    renderAdminPanel();
-  } else {
-    const err = document.getElementById('adminPwdErr');
-    err.style.display = 'block';
-    document.getElementById('adminPwdInput').value = '';
-    document.getElementById('adminPwdInput').focus();
-  }
-}
-
-function renderAdminPanel() {
-  document.getElementById('adminModalTitle').textContent = 'Painel Administrativo';
-  document.getElementById('adminModalBody').innerHTML = `
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchAdminTab('list',this)">📋 Scripts</button>
-      <button class="admin-tab" onclick="switchAdminTab('new',this)">➕ Novo Script</button>
-      <button class="admin-tab" onclick="switchAdminTab('links',this)">🔗 Links</button>
-      <button class="admin-tab" onclick="switchAdminTab('cats',this)">🏷️ Categorias</button>
-    </div>
-    <div class="admin-tab-panel active" id="admin-tab-list">${renderAdminList()}</div>
-    <div class="admin-tab-panel" id="admin-tab-new">${renderAdminForm(null)}</div>
-    <div class="admin-tab-panel" id="admin-tab-links">${renderAdminLinksTab()}</div>
-    <div class="admin-tab-panel" id="admin-tab-cats">${renderAdminCats()}</div>`;
-  document.getElementById('adminModalFooter').innerHTML = `
-    <button class="btn-secondary" onclick="resetScriptsToDefault()" style="margin-right:auto;color:var(--red);border-color:#fca5a5">
-      <i class="fa-solid fa-rotate-left"></i> Restaurar Padrão
-    </button>
-    <button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
-  renderScriptsGrid();
-}
-
-function switchAdminTab(tab, btn) {
-  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('admin-tab-' + tab).classList.add('active');
-}
-
-function renderAdminList() {
-  return `<div class="admin-script-list">${scriptsState.scripts.map(s => {
-    const meta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
-    return `<div class="admin-script-row">
-      <span style="font-size:13px">${s.id}</span>
-      <div class="script-card-icon" style="width:28px;height:28px;border-radius:7px;font-size:12px;background:${meta.bg};color:${meta.text}">
-        <i class="${meta.icon}"></i>
-      </div>
-      <span class="admin-script-row-title">${s.title}</span>
-      <button class="btn-edit-row" onclick="openEditScript(${s.id})" title="Editar"><i class="fa-solid fa-pen"></i></button>
-      <button class="btn-del-row" onclick="deleteScript(${s.id})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-    </div>`;
-  }).join('')}</div>
-  <div style="margin-top:16px">
-    <button class="btn-primary" onclick="switchAdminTab('new',document.querySelectorAll('.admin-tab')[1])">
-      <i class="fa-solid fa-plus"></i> Novo Script
-    </button>
-  </div>`;
-}
-
-function renderAdminForm(script) {
-  const s = script || { title: '', category: Object.keys(CATEGORY_META)[0], note: '', sections: [{ label: '', icon: 'fa-solid fa-comments', color: '#22c55e', phrases: [''] }] };
-  const isEdit = !!script;
-  const catOptions = Object.keys(CATEGORY_META).map(c =>
-    `<option value="${c}" ${s.category===c?'selected':''}>${c}</option>`).join('');
-  const sectionsHtml = s.sections.map((sec, si) => renderAdminSection(sec, si)).join('');
-  return `
-    <div id="adminFormContainer" data-edit-id="${isEdit?s.id:''}">
-      <div class="admin-field">
-        <label class="admin-label">Título do Script</label>
-        <input class="admin-input" id="af_title" value="${escapeAttr(s.title)}" placeholder="Ex: 1. Quando o cliente alega desconto baixo">
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Categoria</label>
-        <select class="admin-select" id="af_category">${catOptions}</select>
-      </div>
-      <div class="admin-field">
-        <label class="admin-label">Observação / Nota Interna</label>
-        <textarea class="admin-textarea" id="af_note" placeholder="Instruções internas para o operador...">${s.note||''}</textarea>
-      </div>
-      <div class="admin-label" style="margin-bottom:8px">Seções e Frases</div>
-      <div id="af_sections">${sectionsHtml}</div>
-      <button class="btn-add-phrase" onclick="addAdminSection()" style="width:100%"><i class="fa-solid fa-plus"></i> Adicionar Seção</button>
-      <div style="margin-top:20px;display:flex;gap:8px">
-        <button class="btn-primary" onclick="saveAdminScript()">
-          <i class="fa-solid fa-floppy-disk"></i> ${isEdit?'Salvar Alterações':'Criar Script'}
-        </button>
-        ${isEdit?`<button class="btn-secondary" onclick="renderAdminPanel()">Cancelar</button>`:''}
-      </div>
-    </div>`;
-}
-
-function renderAdminSection(sec, si) {
-  const phrasesHtml = sec.phrases.map((p, pi) => `
-    <div class="admin-phrase-row">
-      <input value="${escapeAttr(p)}" placeholder="Frase ou argumentação..." oninput="updateAdminPhrase(${si},${pi},this.value)">
-      <button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>
-    </div>`).join('');
-  return `<div class="admin-section-block" data-si="${si}" style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:14px;margin-bottom:10px;">
-    <div style="display:flex;gap:8px;margin-bottom:10px">
-      <input class="admin-input" style="flex:1" value="${escapeAttr(sec.label)}" placeholder="Nome da seção..." oninput="updateAdminSectionLabel(${si},this.value)">
-      <button class="btn-remove-phrase" onclick="removeAdminSection(${si})" title="Remover seção"><i class="fa-solid fa-trash"></i></button>
-    </div>
-    <div class="admin-phrases-list" id="af_phrases_${si}">${phrasesHtml}</div>
-    <button class="btn-add-phrase" onclick="addAdminPhrase(${si})"><i class="fa-solid fa-plus"></i> Adicionar Frase</button>
-  </div>`;
-}
-
-function renderAdminCats() {
-  return `<div style="font-size:13px;color:var(--gray-500);line-height:1.7">
-    As categorias são definidas automaticamente com base nos scripts cadastrados. 
-    Para criar uma nova categoria, basta digitar o nome dela no campo "Categoria" ao criar ou editar um script.
-    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:6px">
-      ${Object.entries(CATEGORY_META).map(([name,meta]) =>
-        `<span style="background:${meta.bg};color:${meta.text};padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500">
-          <i class="${meta.icon}"></i> ${name}
-        </span>`).join('')}
-    </div>
-  </div>`;
-}
-
-// Admin form actions
-let _adminFormSections = null;
-
-function getAdminFormSections() {
-  const blocks = document.querySelectorAll('.admin-section-block');
-  return Array.from(blocks).map((block, si) => {
-    const label = block.querySelector('input').value;
-    const phrases = Array.from(block.querySelectorAll('.admin-phrase-row input')).map(i => i.value).filter(v => v.trim());
-    return { label, icon: 'fa-solid fa-comments', color: '#22c55e', phrases };
-  });
-}
-
-function addAdminSection() {
-  const container = document.getElementById('af_sections');
-  const si = container.querySelectorAll('.admin-section-block').length;
-  const tmp = document.createElement('div');
-  tmp.innerHTML = renderAdminSection({ label: '', icon: 'fa-solid fa-comments', color: '#22c55e', phrases: [''] }, si);
-  container.appendChild(tmp.firstElementChild);
-}
-
-function removeAdminSection(si) {
-  const blocks = document.querySelectorAll('.admin-section-block');
-  if (blocks[si]) blocks[si].remove();
-  refreshAdminSectionIndices();
-}
-
-function refreshAdminSectionIndices() {
-  document.querySelectorAll('.admin-section-block').forEach((b, i) => b.setAttribute('data-si', i));
-}
-
-function addAdminPhrase(si) {
-  const list = document.getElementById('af_phrases_' + si);
-  if (!list) return;
-  const pi = list.querySelectorAll('.admin-phrase-row').length;
-  const div = document.createElement('div');
-  div.className = 'admin-phrase-row';
-  div.innerHTML = `<input value="" placeholder="Nova frase..." oninput="updateAdminPhrase(${si},${pi},this.value)">
-    <button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>`;
-  list.appendChild(div);
-}
-
-function removeAdminPhrase(si, pi) {
-  const list = document.getElementById('af_phrases_' + si);
-  if (!list) return;
-  const rows = list.querySelectorAll('.admin-phrase-row');
-  if (rows[pi]) rows[pi].remove();
-}
-
-function updateAdminPhrase(si, pi, val) { /* live — no action needed */ }
-function updateAdminSectionLabel(si, val) { /* live */ }
-
-async function saveAdminScript() {
-  const title = document.getElementById('af_title').value.trim();
-  const category = document.getElementById('af_category').value;
-  const note = document.getElementById('af_note').value.trim();
-  const sections = getAdminFormSections();
-  if (!title) { showToast('Informe o título do script', 'error'); return; }
-  if (!sections.length || sections.every(s => !s.phrases.length)) {
-    showToast('Adicione ao menos uma seção com frases', 'error'); return;
-  }
-  const container = document.getElementById('adminFormContainer');
-  const editId = container ? parseInt(container.getAttribute('data-edit-id')) : null;
-  if (editId) {
-    const { error } = await sb.from('scripts').update({ title, category, note, sections }).eq('id', editId);
-    if (error) { showToast('Erro ao atualizar script', 'error'); return; }
-    showToast('Script atualizado!');
-  } else {
-    const { error } = await sb.from('scripts').insert({ title, category, note, sections });
-    if (error) { showToast('Erro ao criar script', 'error'); return; }
-    showToast('Script criado!');
-  }
-  await loadScriptsFromDB();
-  renderAdminPanel();
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
-function openEditScript(id) {
-  const s = scriptsState.scripts.find(sc => sc.id === id);
-  if (!s) return;
-  if (!adminUnlocked) { openAdminModal(); return; }
-  document.getElementById('adminModalOverlay').classList.add('open');
-  document.getElementById('adminModalTitle').textContent = 'Editar Script';
-  document.getElementById('adminModalBody').innerHTML = `
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchAdminTab('list',document.querySelectorAll(&quot;.admin-tab&quot;)[0])">📋 Scripts</button>
-      <button class="admin-tab" onclick="switchAdminTab('new',document.querySelectorAll(&quot;.admin-tab&quot;)[1])">✏️ Editando</button>
-      <button class="admin-tab" onclick="switchAdminTab('cats',document.querySelectorAll(&quot;.admin-tab&quot;)[2])">🏷️ Categorias</button>
-    </div>
-    <div class="admin-tab-panel" id="admin-tab-list">${renderAdminList()}</div>
-    <div class="admin-tab-panel active" id="admin-tab-new">${renderAdminForm(s)}</div>
-    <div class="admin-tab-panel" id="admin-tab-cats">${renderAdminCats()}</div>`;
-  document.getElementById('adminModalFooter').innerHTML = `
-    <button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
-}
-
-async function deleteScript(id) {
-  if (!confirm('Tem certeza que deseja excluir este script?')) return;
-  const { error } = await sb.from('scripts').delete().eq('id', id);
-  if (error) { showToast('Erro ao excluir script', 'error'); return; }
-  scriptsState.favorites = scriptsState.favorites.filter(f => f !== id);
-  await loadScriptsFromDB();
-  showToast('Script excluído.', 'success');
-  renderAdminPanel();
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
-async function resetScriptsToDefault() {
-  if (!confirm('Isso vai restaurar todos os scripts para o padrão original. Continuar?')) return;
-  await sb.from('scripts').delete().neq('id', 0);
-  const inserts = DEFAULT_SCRIPTS.map(s => ({ title: s.title, category: s.category, note: s.note || '', sections: s.sections }));
-  const { error } = await sb.from('scripts').insert(inserts);
-  if (error) { showToast('Erro ao restaurar scripts', 'error'); return; }
-  scriptsState.favorites = [];
-  await loadScriptsFromDB();
-  showToast('Scripts restaurados!');
-  closeAdminModal();
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
-function initScriptsPage() {
-  renderScriptsFilters();
-  renderScriptsGrid();
-}
-
 // ═══════════════════════════════════════════
 // ALIGNMENTS
 // ═══════════════════════════════════════════
-
-// ── ALIGNMENTS: Supabase-backed ──
 let _alignmentsCache = [];
-let _alignReadsCache = {}; // { alignId: ['Nome1','Nome2'] }
+let _alignReadsCache = {};
 
 async function loadAlignmentsFromDB() {
   const [aligns, reads] = await Promise.all([
@@ -3894,32 +2943,24 @@ async function loadAlignmentsFromDB() {
 
 function loadAlignments() { return _alignmentsCache; }
 function loadAlignmentReads() { return _alignReadsCache; }
-function saveAlignments() { /* handled by Supabase */ }
-function saveAlignmentReads() { /* handled by Supabase */ }
-// alignReads structure: { alignId: ['Nome1', 'Nome2', ...], ... }
 
-// Returns alignments that haven't been confirmed by ALL collaborators yet
 function getUnreadAlignments(myName) {
   const all = loadAlignments();
   const reads = loadAlignmentReads();
   const totalCollabs = state.collaborators.length || 1;
   return all.filter(a => {
     const confirmed = reads[a.id] || [];
-    // If myName given: unread = I haven't confirmed yet
     if (myName) return !confirmed.map(n => n.toLowerCase()).includes(myName.toLowerCase());
-    // Without myName: unread = not fully confirmed by everyone
     return confirmed.length < totalCollabs;
   });
 }
 
 function getAlignReadCount(alignId) {
-  const reads = loadAlignmentReads();
-  return (reads[alignId] || []).length;
+  return (loadAlignmentReads()[alignId] || []).length;
 }
 
 function getAlignReadNames(alignId) {
-  const reads = loadAlignmentReads();
-  return reads[alignId] || [];
+  return loadAlignmentReads()[alignId] || [];
 }
 
 async function addAlignment() {
@@ -3936,6 +2977,7 @@ async function addAlignment() {
   await loadAlignmentsFromDB();
   renderAlignmentsList();
   renderHomeAlignIndicator();
+  if (currentPage === 'alignments') renderAlignmentsPage();
   showToast('Alinhamento publicado!');
 }
 
@@ -3946,6 +2988,7 @@ async function deleteAlignment(id) {
   await loadAlignmentsFromDB();
   renderAlignmentsList();
   renderHomeAlignIndicator();
+  if (currentPage === 'alignments') renderAlignmentsPage();
   showToast('Alinhamento removido.', 'success');
 }
 
@@ -3984,7 +3027,7 @@ function renderAlignmentsList() {
 }
 
 function renderHomeAlignIndicator() {
-  const unread = getUnreadAlignments(); // unread by someone (not fully confirmed)
+  const unread = getUnreadAlignments();
   const container = document.getElementById('homeAlignIndicator');
   if (!container) return;
   if (!unread.length) { container.style.display = 'none'; return; }
@@ -3995,19 +3038,143 @@ function renderHomeAlignIndicator() {
   container.onclick = () => openAlignmentPopup(null, null);
 }
 
+// ── ABA DE ALINHAMENTOS (histórico/consulta) ──
+let activeAlignFilter = 'all'; // 'all' | 'pending' | 'done'
+
+function renderAlignmentsPage() {
+  renderAlignFilterSidebar();
+  renderAlignmentsContent();
+}
+
+function renderAlignFilterSidebar() {
+  const list = loadAlignments();
+  const total = state.collaborators.length;
+  const reads = loadAlignmentReads();
+  const pendingCount = list.filter(a => (reads[a.id]||[]).length < total).length;
+  const doneCount = list.filter(a => (reads[a.id]||[]).length >= total && total > 0).length;
+
+  document.getElementById('alignFilterList').innerHTML = `
+    <div class="filter-section-label">Filtrar por Status</div>
+    <button class="filter-chip ${activeAlignFilter==='all'?'active':''}" onclick="setAlignFilter('all')">
+      <i class="fa-solid fa-layer-group"></i>Todos<span class="count">${list.length}</span>
+    </button>
+    <button class="filter-chip ${activeAlignFilter==='pending'?'active':''}" onclick="setAlignFilter('pending')">
+      <i class="fa-solid fa-hourglass-half"></i>Pendentes<span class="count">${pendingCount}</span>
+    </button>
+    <button class="filter-chip ${activeAlignFilter==='done'?'active':''}" onclick="setAlignFilter('done')">
+      <i class="fa-solid fa-circle-check"></i>Concluídos<span class="count">${doneCount}</span>
+    </button>`;
+}
+
+function setAlignFilter(filter) {
+  activeAlignFilter = filter;
+  renderAlignmentsPage();
+}
+
+function renderAlignmentsContent() {
+  const allAligns = loadAlignments();
+  const reads = loadAlignmentReads();
+  const total = state.collaborators.length;
+  const search = (document.getElementById('alignSearchInput')?.value || '').toLowerCase().trim();
+
+  let filtered = allAligns.filter(a => {
+    const readCount = (reads[a.id]||[]).length;
+    const isDone = readCount >= total && total > 0;
+    if (activeAlignFilter === 'pending' && isDone) return false;
+    if (activeAlignFilter === 'done' && !isDone) return false;
+    if (search) {
+      const hay = (a.title + ' ' + a.message + ' ' + a.author).toLowerCase();
+      return hay.includes(search);
+    }
+    return true;
+  });
+
+  const badge = document.getElementById('alignCountBadge');
+  if (badge) badge.textContent = filtered.length + ' registro' + (filtered.length !== 1 ? 's' : '');
+
+  const container = document.getElementById('alignmentsContent');
+  if (!container) return;
+
+  if (!filtered.length) {
+    container.innerHTML = `
+      <div class="align-empty-state">
+        <i class="fa-solid fa-bell-concierge" style="color:var(--gray-300)"></i>
+        <h3>${search ? 'Nenhum resultado encontrado' : 'Nenhum alinhamento publicado'}</h3>
+        <p>${search ? 'Tente buscar com outros termos.' : 'Os alinhamentos publicados pela gestão aparecerão aqui como histórico.'}</p>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(a => {
+    const readCount = getAlignReadCount(a.id);
+    const readNames = getAlignReadNames(a.id);
+    const isDone = readCount >= total && total > 0;
+    const pct = total > 0 ? Math.round(readCount/total*100) : 0;
+    const badgeClass = isDone ? 'full' : readCount > 0 ? 'partial' : 'none';
+    const badgeText = isDone ? '✓ Todos leram' : `${readCount}/${total} leram`;
+
+    const readersHtml = readNames.length
+      ? `<div class="align-readers-names">${readNames.map(n => `<span class="reader-chip"><i class="fa-solid fa-check"></i>${n}</span>`).join('')}</div>`
+      : `<div style="font-size:12px; color:var(--gray-400)">Nenhuma confirmação ainda.</div>`;
+
+    return `<div class="align-history-card" id="ahcard-${a.id}">
+      <div class="align-history-header" onclick="toggleAlignCard(${a.id})">
+        <div class="align-history-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+        <div class="align-history-info">
+          <div class="align-history-title">${a.title}</div>
+          <div class="align-history-meta">
+            <span><i class="fa-regular fa-calendar" style="margin-right:4px"></i>${a.date}</span>
+            <span>·</span>
+            <span><i class="fa-solid fa-user" style="margin-right:4px"></i>${a.author}</span>
+          </div>
+        </div>
+        <div class="align-history-badges">
+          <span class="align-read-badge ${badgeClass}">${badgeText}</span>
+          <button class="align-history-expand"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+      </div>
+      <div class="align-history-body">
+        <div class="align-history-content">
+          <div class="align-history-message">${a.message}</div>
+          <div class="align-readers-section">
+            <div class="align-readers-label">Confirmações de leitura</div>
+            <div class="align-readers-bar"><div class="align-readers-fill" style="width:${pct}%"></div></div>
+            ${readersHtml}
+          </div>
+          <div style="margin-top:14px; display:flex; gap:8px; justify-content:flex-end">
+            <button class="btn-confirm-read ready" style="width:auto;padding:8px 16px;font-size:12px" onclick="openAlignmentPopupForCard(${a.id})">
+              <i class="fa-solid fa-check-circle"></i> Confirmar Minha Leitura
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAlignCard(id) {
+  const card = document.getElementById('ahcard-' + id);
+  if (card) card.classList.toggle('expanded');
+}
+
+function openAlignmentPopupForCard(alignId) {
+  const align = _alignmentsCache.find(a => a.id === alignId);
+  openAlignmentPopup(align, null);
+}
+
+// ── ALIGNMENT POPUP ──
 function openAlignmentPopup(align, operatorName) {
   const overlay = document.getElementById('alignPopupOverlay');
   const box = document.getElementById('alignPopupBox');
 
-  // Step 1: Ask for name if not provided
   if (!operatorName) {
     const collabNames = state.collaborators.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
     box.innerHTML = `
       <div class="align-popup-banner">
         <div class="align-popup-badge"><i class="fa-solid fa-bell"></i></div>
         <div class="align-popup-banner-text">
-          <div class="align-popup-title">Alinhamento da Equipe</div>
-          <div class="align-popup-date">Confirme sua identidade para continuar</div>
+          <div class="align-popup-title">Confirmar Leitura</div>
+          <div class="align-popup-date">Selecione seu nome para registrar</div>
         </div>
       </div>
       <div class="align-popup-body">
@@ -4020,7 +3187,7 @@ function openAlignmentPopup(align, operatorName) {
             ${collabNames}
           </select>
           <div>
-            <button class="btn-confirm-read ready" onclick="proceedWithName()" style="display:inline-flex">
+            <button class="btn-confirm-read ready" onclick="proceedWithName(${align ? align.id : 'null'})" style="display:inline-flex">
               <i class="fa-solid fa-arrow-right"></i> Continuar
             </button>
           </div>
@@ -4030,14 +3197,13 @@ function openAlignmentPopup(align, operatorName) {
     return;
   }
 
-  // Step 2: Show unread alignments for this operator
   const myUnread = getUnreadAlignments(operatorName);
   const current = align || (myUnread.length ? myUnread[0] : null);
 
   if (!current) {
-    // This person already read everything
     overlay.classList.remove('open');
     renderHomeAlignIndicator();
+    if (currentPage === 'alignments') renderAlignmentsPage();
     showToast('Você já confirmou todos os alinhamentos!', 'success');
     return;
   }
@@ -4046,6 +3212,7 @@ function openAlignmentPopup(align, operatorName) {
   const readCount = getAlignReadCount(current.id);
   const readNames = getAlignReadNames(current.id);
   const remaining = myUnread.length;
+  const alreadyRead = readNames.map(n=>n.toLowerCase()).includes(operatorName.toLowerCase());
 
   box.innerHTML = `
     <div class="align-popup-banner">
@@ -4070,32 +3237,39 @@ function openAlignmentPopup(align, operatorName) {
         <span style="font-size:11px;font-weight:600;color:var(--gray-500);white-space:nowrap">${readCount}/${total} confirmaram</span>
       </div>
       ${readNames.length ? `<div style="font-size:11px;color:var(--gray-400);margin-bottom:12px">✓ ${readNames.join(', ')}</div>` : ''}
-      <label class="align-confirm-check">
-        <input type="checkbox" id="alignReadCheck" onchange="document.getElementById('btnConfirmRead').classList.toggle('ready',this.checked)">
-        <label for="alignReadCheck">Confirmo que li e estou ciente deste alinhamento. Aplicarei as orientações no atendimento.</label>
-      </label>
-      <button class="btn-confirm-read" id="btnConfirmRead" onclick="confirmAlignRead(${current.id},'${operatorName.replace(/'/g,"\\'")}')">
-        <i class="fa-solid fa-check-circle"></i> Confirmar Leitura
+      ${alreadyRead
+        ? `<div style="background:var(--green-xlight);border:1px solid var(--green-mid);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--green-dark);text-align:center;margin-bottom:16px"><i class="fa-solid fa-check-circle" style="margin-right:6px"></i>Você já confirmou este alinhamento.</div>`
+        : `<label class="align-confirm-check"><input type="checkbox" id="alignReadCheck" onchange="document.getElementById('btnConfirmRead').classList.toggle('ready',this.checked)"><label for="alignReadCheck">Confirmo que li e estou ciente deste alinhamento.</label></label>`
+      }
+      <button class="btn-confirm-read ${alreadyRead ? '' : ''}" id="btnConfirmRead" onclick="confirmAlignRead(${current.id},'${operatorName.replace(/'/g,"\\'")}')">
+        <i class="fa-solid fa-check-circle"></i> ${alreadyRead ? 'Fechar' : 'Confirmar Leitura'}
       </button>
     </div>`;
+
+  if (alreadyRead) {
+    const btn = document.getElementById('btnConfirmRead');
+    if (btn) { btn.classList.add('ready'); btn.onclick = () => overlay.classList.remove('open'); }
+  }
 
   overlay.classList.add('open');
 }
 
-function proceedWithName() {
+function proceedWithName(specificAlignId) {
   const sel = document.getElementById('alignNameSelect');
   if (!sel || !sel.value) { showToast('Selecione seu nome', 'error'); return; }
-  openAlignmentPopup(null, sel.value);
+  const align = specificAlignId && specificAlignId !== 'null' ? _alignmentsCache.find(a => a.id === specificAlignId) : null;
+  openAlignmentPopup(align, sel.value);
 }
 
 async function confirmAlignRead(id, operatorName) {
-  const { error } = await sb.from('alignment_reads').upsert(
-    { alignment_id: id, operator_name: operatorName },
-    { onConflict: 'alignment_id,operator_name' }
-  );
+  const reads = loadAlignmentReads();
+  if ((reads[id]||[]).map(n=>n.toLowerCase()).includes(operatorName.toLowerCase())) {
+    document.getElementById('alignPopupOverlay').classList.remove('open');
+    return;
+  }
+  const { error } = await sb.from('alignment_reads').upsert({ alignment_id: id, operator_name: operatorName }, { onConflict: 'alignment_id,operator_name' });
   if (error) { showToast('Erro ao confirmar leitura', 'error'); return; }
   await loadAlignmentsFromDB();
-
   const myRemaining = getUnreadAlignments(operatorName);
   if (myRemaining.length) {
     showToast('Leitura confirmada! Próximo alinhamento.', 'success');
@@ -4103,15 +3277,398 @@ async function confirmAlignRead(id, operatorName) {
   } else {
     document.getElementById('alignPopupOverlay').classList.remove('open');
     renderHomeAlignIndicator();
-    const total = state.collaborators.length;
-    const reads = loadAlignmentReads();
-    const allDone = loadAlignments().every(a => (reads[a.id]||[]).length >= total);
-    showToast(allDone ? 'Todos confirmaram os alinhamentos! ✓' : 'Seus alinhamentos confirmados!', 'success');
+    if (currentPage === 'alignments') renderAlignmentsPage();
+    showToast('Todos os alinhamentos confirmados! ✓', 'success');
   }
 }
 
 // ═══════════════════════════════════════════
-// LINKS — Base de Conhecimento
+// SCRIPTS DE ATENDIMENTO
+// ═══════════════════════════════════════════
+
+const CATEGORY_META = {
+  'Objeção de Desconto':   { icon: 'fa-solid fa-percent',        color: '#3b82f6', bg: '#eff6ff', text: '#1d4ed8' },
+  'Mudança de Endereço':   { icon: 'fa-solid fa-location-dot',   color: '#8b5cf6', bg: '#f5f3ff', text: '#6d28d9' },
+  'Concorrência':          { icon: 'fa-solid fa-bolt',           color: '#f97316', bg: '#fff7ed', text: '#c2410c' },
+  'Faturamento':           { icon: 'fa-solid fa-file-invoice',   color: '#06b6d4', bg: '#ecfeff', text: '#0e7490' },
+  'Insatisfação':          { icon: 'fa-solid fa-face-frown',     color: '#ef4444', bg: '#fef2f2', text: '#b91c1c' },
+  'Situação Especial':     { icon: 'fa-solid fa-circle-info',    color: '#f59e0b', bg: '#fffbeb', text: '#b45309' },
+  'Atrito':                { icon: 'fa-solid fa-triangle-exclamation', color: '#dc2626', bg: '#fff1f2', text: '#9f1239' },
+  'Técnico / Injeção':     { icon: 'fa-solid fa-solar-panel',    color: '#22c55e', bg: '#f0fdf4', text: '#15803d' },
+  'Geral':                 { icon: 'fa-solid fa-headset',        color: '#6b7280', bg: '#f9fafb', text: '#374151' },
+};
+
+const DEFAULT_SCRIPTS = [
+  { id:1, title:'1. Argumentações Obrigatórias', category:'Geral', note:'Argumentos que devem ser usados em TODOS os atendimentos de retenção.', sections:[{label:'Club de Benefícios',icon:'fa-solid fa-star',color:'#f59e0b',phrases:['Além do desconto na conta, você ainda tem acesso ao nosso Club de Benefícios, que gera uma economia média de aproximadamente R$40 por mês só utilizando os descontos disponíveis.','Somando isso com a economia da iGreen na energia, o valor faz bastante diferença no fim do mês.']},{label:'Cashback / Indicações',icon:'fa-solid fa-coins',color:'#22c55e',phrases:['Imagina não pagar mais conta de energia? Aqui você pode ter até 100% de desconto, sabia?','Com as indicações você recebe comissão a cada fatura paga por suas indicações.']}]},
+  { id:2, title:'2. Quando o Cliente Fala que o Desconto é Pouco', category:'Objeção de Desconto', note:'Use argumentos que recontextualizam o valor ao longo do tempo e combinam com os benefícios do Club.', sections:[{label:'Frases de Retenção',icon:'fa-solid fa-comments',color:'#3b82f6',phrases:['Entendo você! Mas quando fez o cadastro esse desconto chamou sua atenção, né? O que mudou de lá pra cá?','Hoje qualquer economia faz diferença, principalmente porque ela vem sem você precisar mudar nada no seu consumo e ainda ajuda nosso planeta.','Às vezes olhando só o percentual parece pouco, mas no acumulado faz bastante diferença. Você já economizou cerca de R$ X por mês, isso dá quase R$ Y no ano.']}]},
+];
+
+function loadScriptsStateLocal() {
+  try { const s = localStorage.getItem('scripts_data'); if(s) return JSON.parse(s); } catch(e){}
+  return { scripts: JSON.parse(JSON.stringify(DEFAULT_SCRIPTS)), favorites: [], nextId: 21 };
+}
+let scriptsState = loadScriptsStateLocal();
+let activeCategory = 'all';
+let adminUnlocked = false;
+
+async function loadScriptsFromDB() {
+  const { data } = await sb.from('scripts').select('*').order('id');
+  if (data && data.length > 0) {
+    scriptsState.scripts = data.map(s => ({ id: s.id, title: s.title, category: s.category, note: s.note || '', sections: s.sections || [] }));
+  }
+}
+
+function renderScriptsFilters() {
+  const container = document.getElementById('scriptsCategoryFilters');
+  const cats = ['all', ...Object.keys(CATEGORY_META)];
+  const counts = {};
+  scriptsState.scripts.forEach(s => { counts[s.category] = (counts[s.category] || 0) + 1; });
+  let html = `<div class="filter-section-label">Filtrar por Categoria</div>`;
+  html += cats.map(cat => {
+    const isAll = cat === 'all';
+    const meta = CATEGORY_META[cat] || {};
+    const count = isAll ? scriptsState.scripts.length : (counts[cat] || 0);
+    const active = activeCategory === cat ? 'active' : '';
+    const icon = isAll ? 'fa-solid fa-layer-group' : meta.icon;
+    const label = isAll ? 'Todos os Scripts' : cat;
+    return `<button class="filter-chip ${active}" onclick="setScriptCategory('${cat}')"><i class="${icon}"></i>${label}<span class="count">${count}</span></button>`;
+  }).join('');
+  html += `<div class="filter-section-label" style="margin-top:12px">Outros</div>`;
+  html += `<button class="filter-chip ${activeCategory === 'favorites' ? 'active' : ''}" onclick="setScriptCategory('favorites')"><i class="fa-solid fa-star"></i>Favoritos<span class="count">${scriptsState.favorites.length}</span></button>`;
+  const linksCount = loadLinks().length;
+  html += `<button class="filter-chip ${activeCategory === 'links' ? 'active' : ''}" onclick="setScriptCategory('links')"><i class="fa-solid fa-link"></i>Links e Materiais<span class="count">${linksCount}</span></button>`;
+  container.innerHTML = html;
+}
+
+function setScriptCategory(cat) {
+  activeCategory = cat;
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+function renderScriptsGrid() {
+  const grid = document.getElementById('scriptsGrid');
+  const badge = document.getElementById('scriptsCountBadge');
+  const search = document.getElementById('scriptsSearchInput').value.toLowerCase().trim();
+
+  if (activeCategory === 'links') {
+    const links = loadLinks().filter(l => !search || l.title.toLowerCase().includes(search) || (l.description||'').toLowerCase().includes(search) || (l.desc||'').toLowerCase().includes(search));
+    badge.textContent = links.length + ' item' + (links.length !== 1 ? 's' : '');
+    if (!links.length) {
+      grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-link"></i><p>${search ? 'Nenhum link encontrado.' : 'Nenhum link adicionado.<br>Use o Painel Admin para adicionar.'}</p></div>`;
+    } else {
+      grid.innerHTML = `<div class="links-grid">${links.map(l => {
+        const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
+        // Support both 'description' (DB column) and 'desc' (legacy)
+        const desc = l.description || l.desc || '';
+        const adminBtns = adminUnlocked ? `<button onclick="event.preventDefault();deleteLink(${l.id})" style="background:transparent;border:none;cursor:pointer;color:var(--gray-300);font-size:12px;flex-shrink:0;padding:4px 6px;border-radius:6px;transition:all 0.15s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--gray-300)'" title="Remover"><i class="fa-solid fa-trash"></i></button>` : '';
+        // Build proper href - ensure it's an absolute URL
+        const href = l.url.startsWith('http') ? l.url : ('https://' + l.url);
+        return `<a class="link-card" href="${href}" target="_blank" rel="noopener noreferrer">
+          <div class="link-card-icon" style="background:${meta.bg};color:${meta.text}"><i class="${meta.icon}"></i></div>
+          <div class="link-card-info">
+            <div class="link-card-title">${l.title}</div>
+            ${desc ? `<div class="link-card-desc">${desc}</div>` : ''}
+            <div class="link-card-type" style="color:${meta.text}">${meta.label}</div>
+          </div>
+          ${adminBtns}
+        </a>`;
+      }).join('')}</div>`;
+    }
+    return;
+  }
+
+  let filtered = scriptsState.scripts.filter(s => {
+    if (activeCategory === 'favorites') return scriptsState.favorites.includes(s.id);
+    if (activeCategory !== 'all' && s.category !== activeCategory) return false;
+    if (search) {
+      const haystack = (s.title + ' ' + s.category + ' ' + (s.note||'') + ' ' + s.sections.map(sec => sec.phrases.join(' ')).join(' ')).toLowerCase();
+      return haystack.includes(search);
+    }
+    return true;
+  });
+
+  badge.textContent = filtered.length + ' script' + (filtered.length !== 1 ? 's' : '');
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="scripts-empty"><i class="fa-solid fa-magnifying-glass"></i><p>Nenhum script encontrado.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(s => renderScriptCard(s)).join('');
+}
+
+function renderScriptCard(s) {
+  const catMeta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
+  const isFav = scriptsState.favorites.includes(s.id);
+  const sectionsHtml = s.sections.map(sec => {
+    const phrasesHtml = sec.phrases.map(p =>
+      `<div class="script-phrase" style="border-left-color:${sec.color||'var(--green)'}">
+        ${p}
+        <button class="script-copy-btn" onclick="copyPhrase(event,'${escapeAttr(p)}')" title="Copiar"><i class="fa-regular fa-copy"></i></button>
+      </div>`).join('');
+    return `<div class="script-section">
+      <div class="script-section-label" style="color:${sec.color||'var(--green)'}"><i class="${sec.icon||'fa-solid fa-comment'}"></i>${sec.label}</div>
+      ${phrasesHtml}
+    </div>`;
+  }).join('');
+  const noteHtml = s.note ? `<div class="script-note"><i class="fa-solid fa-circle-info"></i>${s.note}</div>` : '';
+  return `<div class="script-card" data-script-id="${s.id}">
+    <div class="script-card-header" onclick="toggleScriptCard(${s.id})">
+      <div class="script-card-icon" style="background:${catMeta.bg};color:${catMeta.text}"><i class="${catMeta.icon}"></i></div>
+      <div class="script-card-info">
+        <div class="script-card-title">${s.title}</div>
+        <div class="script-card-meta"><span>${s.sections.length} seção${s.sections.length!==1?'ões':''}</span><span>·</span><span>${s.sections.reduce((a,sec)=>a+sec.phrases.length,0)} frases</span></div>
+      </div>
+      <div class="script-card-badges">
+        <span class="cat-badge" style="background:${catMeta.bg};color:${catMeta.text}">${s.category}</span>
+        <button class="script-fav-btn ${isFav?'active':''}" onclick="toggleFav(event,${s.id})" title="${isFav?'Remover favorito':'Favoritar'}"><i class="fa-${isFav?'solid':'regular'} fa-star"></i></button>
+        <button class="script-expand-btn"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+    </div>
+    <div class="script-card-body">
+      <div class="script-card-content">
+        ${noteHtml}${noteHtml ? '<div style="height:12px"></div>' : ''}
+        ${sectionsHtml}
+      </div>
+      <div class="script-card-actions">
+        ${adminUnlocked ? `<button class="btn-edit-script" onclick="openEditScript(${s.id})"><i class="fa-solid fa-pen"></i>Editar</button><button class="btn-edit-script" onclick="deleteScript(${s.id})" style="color:var(--red)"><i class="fa-solid fa-trash"></i>Excluir</button>` : ''}
+        <span style="margin-left:auto;font-size:11px;color:var(--gray-400)">Clique nas frases para copiar</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function escapeAttr(str) { return str.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+function toggleScriptCard(id) { const card = document.querySelector(`[data-script-id="${id}"]`); if(card) card.classList.toggle('expanded'); }
+function toggleFav(e, id) {
+  e.stopPropagation();
+  const idx = scriptsState.favorites.indexOf(id);
+  if (idx === -1) scriptsState.favorites.push(id); else scriptsState.favorites.splice(idx, 1);
+  localStorage.setItem('scripts_data', JSON.stringify(scriptsState));
+  renderScriptsFilters(); renderScriptsGrid();
+}
+function filterScripts() { renderScriptsGrid(); }
+function copyPhrase(e, text) { e.stopPropagation(); navigator.clipboard.writeText(text).then(() => showToast('Frase copiada!', 'success')); }
+
+// ── ADMIN MODAL ──
+function openAdminModal() {
+  adminUnlocked = false;
+  document.getElementById('adminModalOverlay').classList.add('open');
+  renderAdminPwdGate();
+}
+function closeAdminModal() { document.getElementById('adminModalOverlay').classList.remove('open'); }
+
+function renderAdminPwdGate() {
+  document.getElementById('adminModalTitle').textContent = 'Modo Administrador';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="pwd-gate">
+      <i class="fa-solid fa-lock"></i>
+      <p>Digite a senha de administrador para acessar o painel de edição.</p>
+      <input type="password" id="adminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdminPwd()">
+      <div class="pwd-gate-err" id="adminPwdErr">Senha incorreta. Tente novamente.</div>
+      <div style="margin-top:16px"><button class="btn-primary" onclick="checkAdminPwd()"><i class="fa-solid fa-unlock"></i>Entrar</button></div>
+    </div>`;
+  document.getElementById('adminModalFooter').innerHTML = `<button class="btn-secondary" onclick="closeAdminModal()">Cancelar</button>`;
+  setTimeout(() => { const i = document.getElementById('adminPwdInput'); if(i) i.focus(); }, 100);
+}
+
+function checkAdminPwd() {
+  const val = document.getElementById('adminPwdInput').value;
+  if (val === ADMIN_PASSWORD) { adminUnlocked = true; renderAdminPanel(); }
+  else {
+    document.getElementById('adminPwdErr').style.display = 'block';
+    document.getElementById('adminPwdInput').value = '';
+    document.getElementById('adminPwdInput').focus();
+  }
+}
+
+function renderAdminPanel() {
+  document.getElementById('adminModalTitle').textContent = 'Painel Administrativo';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('list',this)">📋 Scripts</button>
+      <button class="admin-tab" onclick="switchAdminTab('new',this)">➕ Novo Script</button>
+      <button class="admin-tab" onclick="switchAdminTab('links',this)">🔗 Links</button>
+      <button class="admin-tab" onclick="switchAdminTab('cats',this)">🏷️ Categorias</button>
+    </div>
+    <div class="admin-tab-panel active" id="admin-tab-list">${renderAdminList()}</div>
+    <div class="admin-tab-panel" id="admin-tab-new">${renderAdminForm(null)}</div>
+    <div class="admin-tab-panel" id="admin-tab-links">${renderAdminLinksTab()}</div>
+    <div class="admin-tab-panel" id="admin-tab-cats">${renderAdminCats()}</div>`;
+  document.getElementById('adminModalFooter').innerHTML = `
+    <button class="btn-secondary" onclick="resetScriptsToDefault()" style="margin-right:auto;color:var(--red);border-color:#fca5a5"><i class="fa-solid fa-rotate-left"></i> Restaurar Padrão</button>
+    <button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
+  renderScriptsGrid();
+}
+
+function switchAdminTab(tab, btn) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('admin-tab-' + tab).classList.add('active');
+}
+
+function renderAdminList() {
+  return `<div class="admin-script-list">${scriptsState.scripts.map(s => {
+    const meta = CATEGORY_META[s.category] || CATEGORY_META['Geral'];
+    return `<div class="admin-script-row">
+      <span style="font-size:13px">${s.id}</span>
+      <div class="script-card-icon" style="width:28px;height:28px;border-radius:7px;font-size:12px;background:${meta.bg};color:${meta.text}"><i class="${meta.icon}"></i></div>
+      <span class="admin-script-row-title">${s.title}</span>
+      <button class="btn-edit-row" onclick="openEditScript(${s.id})"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn-del-row" onclick="deleteScript(${s.id})"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  }).join('')}</div>
+  <div style="margin-top:16px"><button class="btn-primary" onclick="switchAdminTab('new',document.querySelectorAll('.admin-tab')[1])"><i class="fa-solid fa-plus"></i> Novo Script</button></div>`;
+}
+
+function renderAdminForm(script) {
+  const s = script || { title:'', category: Object.keys(CATEGORY_META)[0], note:'', sections:[{label:'',icon:'fa-solid fa-comments',color:'#22c55e',phrases:['']}] };
+  const isEdit = !!script;
+  const catOptions = Object.keys(CATEGORY_META).map(c => `<option value="${c}" ${s.category===c?'selected':''}>${c}</option>`).join('');
+  const sectionsHtml = s.sections.map((sec, si) => renderAdminSection(sec, si)).join('');
+  return `<div id="adminFormContainer" data-edit-id="${isEdit?s.id:''}">
+    <div class="admin-field"><label class="admin-label">Título do Script</label><input class="admin-input" id="af_title" value="${escapeAttr(s.title)}" placeholder="Ex: 1. Quando o cliente alega desconto baixo"></div>
+    <div class="admin-field"><label class="admin-label">Categoria</label><select class="admin-select" id="af_category">${catOptions}</select></div>
+    <div class="admin-field"><label class="admin-label">Observação / Nota Interna</label><textarea class="admin-textarea" id="af_note" placeholder="Instruções internas...">${s.note||''}</textarea></div>
+    <div class="admin-label" style="margin-bottom:8px">Seções e Frases</div>
+    <div id="af_sections">${sectionsHtml}</div>
+    <button class="btn-add-phrase" onclick="addAdminSection()" style="width:100%"><i class="fa-solid fa-plus"></i> Adicionar Seção</button>
+    <div style="margin-top:20px;display:flex;gap:8px">
+      <button class="btn-primary" onclick="saveAdminScript()"><i class="fa-solid fa-floppy-disk"></i> ${isEdit?'Salvar Alterações':'Criar Script'}</button>
+      ${isEdit?`<button class="btn-secondary" onclick="renderAdminPanel()">Cancelar</button>`:''}
+    </div>
+  </div>`;
+}
+
+function renderAdminSection(sec, si) {
+  const phrasesHtml = sec.phrases.map((p, pi) => `
+    <div class="admin-phrase-row">
+      <input value="${escapeAttr(p)}" placeholder="Frase ou argumentação...">
+      <button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>
+    </div>`).join('');
+  return `<div class="admin-section-block" data-si="${si}" style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:10px;padding:14px;margin-bottom:10px;">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input class="admin-input" style="flex:1" value="${escapeAttr(sec.label)}" placeholder="Nome da seção...">
+      <button class="btn-remove-phrase" onclick="removeAdminSection(${si})"><i class="fa-solid fa-trash"></i></button>
+    </div>
+    <div class="admin-phrases-list" id="af_phrases_${si}">${phrasesHtml}</div>
+    <button class="btn-add-phrase" onclick="addAdminPhrase(${si})"><i class="fa-solid fa-plus"></i> Adicionar Frase</button>
+  </div>`;
+}
+
+function renderAdminCats() {
+  return `<div style="font-size:13px;color:var(--gray-500);line-height:1.7">As categorias são definidas pelos scripts cadastrados.
+    <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:6px">${Object.entries(CATEGORY_META).map(([name,meta]) =>
+      `<span style="background:${meta.bg};color:${meta.text};padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500"><i class="${meta.icon}"></i> ${name}</span>`).join('')}</div></div>`;
+}
+
+function getAdminFormSections() {
+  const blocks = document.querySelectorAll('.admin-section-block');
+  return Array.from(blocks).map(block => {
+    const label = block.querySelector('input').value;
+    const phrases = Array.from(block.querySelectorAll('.admin-phrase-row input')).map(i => i.value).filter(v => v.trim());
+    return { label, icon: 'fa-solid fa-comments', color: '#22c55e', phrases };
+  });
+}
+
+function addAdminSection() {
+  const container = document.getElementById('af_sections');
+  const si = container.querySelectorAll('.admin-section-block').length;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderAdminSection({ label:'', icon:'fa-solid fa-comments', color:'#22c55e', phrases:[''] }, si);
+  container.appendChild(tmp.firstElementChild);
+}
+
+function removeAdminSection(si) {
+  const blocks = document.querySelectorAll('.admin-section-block');
+  if (blocks[si]) blocks[si].remove();
+}
+
+function addAdminPhrase(si) {
+  const list = document.getElementById('af_phrases_' + si);
+  if (!list) return;
+  const pi = list.querySelectorAll('.admin-phrase-row').length;
+  const div = document.createElement('div');
+  div.className = 'admin-phrase-row';
+  div.innerHTML = `<input value="" placeholder="Nova frase..."><button class="btn-remove-phrase" onclick="removeAdminPhrase(${si},${pi})"><i class="fa-solid fa-minus"></i></button>`;
+  list.appendChild(div);
+}
+
+function removeAdminPhrase(si, pi) {
+  const list = document.getElementById('af_phrases_' + si);
+  if (!list) return;
+  const rows = list.querySelectorAll('.admin-phrase-row');
+  if (rows[pi]) rows[pi].remove();
+}
+
+async function saveAdminScript() {
+  const title = document.getElementById('af_title').value.trim();
+  const category = document.getElementById('af_category').value;
+  const note = document.getElementById('af_note').value.trim();
+  const sections = getAdminFormSections();
+  if (!title) { showToast('Informe o título do script', 'error'); return; }
+  if (!sections.length || sections.every(s => !s.phrases.length)) { showToast('Adicione ao menos uma seção com frases', 'error'); return; }
+  const container = document.getElementById('adminFormContainer');
+  const editId = container ? parseInt(container.getAttribute('data-edit-id')) : null;
+  if (editId) {
+    const { error } = await sb.from('scripts').update({ title, category, note, sections }).eq('id', editId);
+    if (error) { showToast('Erro ao atualizar script', 'error'); return; }
+    showToast('Script atualizado!');
+  } else {
+    const { error } = await sb.from('scripts').insert({ title, category, note, sections });
+    if (error) { showToast('Erro ao criar script', 'error'); return; }
+    showToast('Script criado!');
+  }
+  await loadScriptsFromDB(); renderAdminPanel(); renderScriptsFilters(); renderScriptsGrid();
+}
+
+function openEditScript(id) {
+  const s = scriptsState.scripts.find(sc => sc.id === id);
+  if (!s) return;
+  if (!adminUnlocked) { openAdminModal(); return; }
+  document.getElementById('adminModalOverlay').classList.add('open');
+  document.getElementById('adminModalTitle').textContent = 'Editar Script';
+  document.getElementById('adminModalBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab" onclick="switchAdminTab('list',this)">📋 Scripts</button>
+      <button class="admin-tab active" onclick="switchAdminTab('new',this)">✏️ Editando</button>
+    </div>
+    <div class="admin-tab-panel" id="admin-tab-list">${renderAdminList()}</div>
+    <div class="admin-tab-panel active" id="admin-tab-new">${renderAdminForm(s)}</div>`;
+  document.getElementById('adminModalFooter').innerHTML = `<button class="btn-secondary" onclick="closeAdminModal()">Fechar</button>`;
+}
+
+async function deleteScript(id) {
+  if (!confirm('Tem certeza que deseja excluir este script?')) return;
+  const { error } = await sb.from('scripts').delete().eq('id', id);
+  if (error) { showToast('Erro ao excluir script', 'error'); return; }
+  scriptsState.favorites = scriptsState.favorites.filter(f => f !== id);
+  await loadScriptsFromDB();
+  showToast('Script excluído.', 'success');
+  renderAdminPanel(); renderScriptsFilters(); renderScriptsGrid();
+}
+
+async function resetScriptsToDefault() {
+  if (!confirm('Isso vai restaurar todos os scripts para o padrão original. Continuar?')) return;
+  await sb.from('scripts').delete().neq('id', 0);
+  const inserts = DEFAULT_SCRIPTS.map(s => ({ title: s.title, category: s.category, note: s.note || '', sections: s.sections }));
+  const { error } = await sb.from('scripts').insert(inserts);
+  if (error) { showToast('Erro ao restaurar scripts', 'error'); return; }
+  scriptsState.favorites = [];
+  await loadScriptsFromDB();
+  showToast('Scripts restaurados!');
+  closeAdminModal(); renderScriptsFilters(); renderScriptsGrid();
+}
+
+function initScriptsPage() {
+  renderScriptsFilters();
+  renderScriptsGrid();
+}
+
+// ═══════════════════════════════════════════
+// LINKS — Base de Conhecimento (CORRIGIDO)
 // ═══════════════════════════════════════════
 
 const LINK_TYPE_META = {
@@ -4130,68 +3687,166 @@ async function loadLinksFromDB() {
 }
 
 function loadLinks() { return _linksCache; }
-function saveLinks() { /* handled by Supabase */ }
 
-function renderLinksSection() {
-  const links = loadLinks();
-  if (!links.length) {
-    return `<div class="links-empty-state">
-      <i class="fa-solid fa-link"></i>
-      <p>Nenhum link adicionado ainda.<br>Use o Painel Admin para adicionar links e materiais.</p>
-    </div>`;
-  }
-  return `<div class="links-grid">${links.map(l => {
-    const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
-    return `<a class="link-card" href="${l.url}" target="_blank" rel="noopener">
-      <div class="link-card-icon" style="background:${meta.bg};color:${meta.text}">
-        <i class="${meta.icon}"></i>
-      </div>
-      <div class="link-card-info">
-        <div class="link-card-title">${l.title}</div>
-        <div class="link-card-desc">${l.desc||''}</div>
-        <div class="link-card-type" style="color:${meta.text}">${meta.label}</div>
-      </div>
-    </a>`;
-  }).join('')}</div>`;
-}
-
-// Admin Links Tab
 function renderAdminLinksTab() {
   const links = loadLinks();
   return `<div style="margin-bottom:16px">
-    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:10px">Links Adicionados</div>
+    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:10px">Links e Materiais Adicionados</div>
     ${links.length ? `<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">${links.map(l => {
       const meta = LINK_TYPE_META[l.type] || LINK_TYPE_META['link'];
+      const desc = l.description || l.desc || '';
       return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
         <span style="font-size:13px;color:${meta.text}"><i class="${meta.icon}"></i></span>
-        <span style="flex:1;font-size:13px;font-weight:500;color:var(--gray-700)">${l.title}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500;color:var(--gray-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${l.title}</div>
+          ${desc ? `<div style="font-size:11px;color:var(--gray-400)">${desc}</div>` : ''}
+        </div>
         <button class="btn-del-row" onclick="deleteLink(${l.id})"><i class="fa-solid fa-trash"></i></button>
       </div>`;
     }).join('')}</div>` : `<div style="font-size:13px;color:var(--gray-400);margin-bottom:14px">Nenhum link adicionado.</div>`}
-    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:8px">Novo Link / Material</div>
-    <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" id="lf_title" placeholder="Ex: Material de Apoio 2026"></div>
-    <div class="admin-field"><label class="admin-label">URL ou Link do PDF</label><input class="admin-input" id="lf_url" placeholder="https://..."></div>
-    <div class="admin-field"><label class="admin-label">Descrição (opcional)</label><input class="admin-input" id="lf_desc" placeholder="Breve descrição do conteúdo"></div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:8px">Adicionar Novo Link / Material</div>
+    <div class="admin-field"><label class="admin-label">Título *</label><input class="admin-input" id="lf_title" placeholder="Ex: Material de Apoio iGreen 2025"></div>
+
     <div class="admin-field">
-      <label class="admin-label">Tipo</label>
-      <select class="admin-select" id="lf_type">
+      <label class="admin-label">Tipo de Arquivo *</label>
+      <select class="admin-select" id="lf_type" onchange="toggleLinkInputMode()">
         ${Object.entries(LINK_TYPE_META).map(([v,m]) => `<option value="${v}">${m.label}</option>`).join('')}
       </select>
     </div>
-    <button class="btn-primary" onclick="addLink()"><i class="fa-solid fa-plus"></i> Adicionar Link</button>
+
+    <div class="admin-field" id="lf_url_field">
+      <label class="admin-label">URL ou Link *</label>
+      <input class="admin-input" id="lf_url" placeholder="https://drive.google.com/...">
+      <div style="font-size:11px;color:var(--gray-400);margin-top:4px">
+        💡 Para PDFs: use Google Drive (Compartilhar → Qualquer pessoa com o link) ou faça upload abaixo.
+      </div>
+    </div>
+
+    <div class="admin-field" id="lf_upload_field" style="display:none">
+      <label class="admin-label">Upload de PDF *</label>
+      <label class="file-input-wrap">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <span id="lf_upload_label">Clique para selecionar o arquivo PDF</span>
+        <input type="file" id="lf_file" accept=".pdf" onchange="onFileSelected()">
+      </label>
+      <div id="lf_upload_progress" style="display:none" class="upload-progress">
+        <span id="lf_upload_status">Preparando...</span>
+        <div class="upload-progress-bar"><div class="upload-progress-fill" id="lf_progress_fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="admin-field"><label class="admin-label">Descrição (opcional)</label><input class="admin-input" id="lf_desc" placeholder="Breve descrição do conteúdo"></div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn-primary" id="lf_add_btn" onclick="addLink()"><i class="fa-solid fa-plus"></i> Adicionar</button>
+      <button class="btn-secondary" onclick="toggleUploadMode()" id="lf_toggle_btn" style="display:none">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Fazer Upload de PDF
+      </button>
+    </div>
   </div>`;
 }
 
+let _useUploadMode = false;
+let _uploadedFileUrl = null;
+
+function toggleLinkInputMode() {
+  const type = document.getElementById('lf_type')?.value;
+  const toggleBtn = document.getElementById('lf_toggle_btn');
+  if (toggleBtn) toggleBtn.style.display = type === 'pdf' ? 'flex' : 'none';
+  if (type !== 'pdf') {
+    _useUploadMode = false;
+    document.getElementById('lf_url_field').style.display = 'block';
+    document.getElementById('lf_upload_field').style.display = 'none';
+  }
+}
+
+function toggleUploadMode() {
+  _useUploadMode = !_useUploadMode;
+  _uploadedFileUrl = null;
+  document.getElementById('lf_url_field').style.display = _useUploadMode ? 'none' : 'block';
+  document.getElementById('lf_upload_field').style.display = _useUploadMode ? 'block' : 'none';
+  const btn = document.getElementById('lf_toggle_btn');
+  if (btn) btn.innerHTML = _useUploadMode
+    ? '<i class="fa-solid fa-link"></i> Usar URL em vez disso'
+    : '<i class="fa-solid fa-cloud-arrow-up"></i> Fazer Upload de PDF';
+}
+
+function onFileSelected() {
+  const file = document.getElementById('lf_file')?.files?.[0];
+  if (file) {
+    document.getElementById('lf_upload_label').textContent = file.name;
+    _uploadedFileUrl = null; // will be uploaded on addLink
+  }
+}
+
+async function uploadPdfToSupabase(file) {
+  const fileName = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.\-_]/g, '_')}`;
+
+  const progressFill = document.getElementById('lf_progress_fill');
+  const progressStatus = document.getElementById('lf_upload_status');
+  const progressWrap = document.getElementById('lf_upload_progress');
+
+  if (progressWrap) progressWrap.style.display = 'flex';
+  if (progressStatus) progressStatus.textContent = 'Enviando arquivo...';
+  if (progressFill) progressFill.style.width = '30%';
+
+  const { data, error } = await sb.storage.from('materiais').upload(fileName, file, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: 'application/pdf'
+  });
+
+  if (error) {
+    if (progressStatus) progressStatus.textContent = 'Erro no upload: ' + error.message;
+    if (progressFill) { progressFill.style.width = '100%'; progressFill.style.background = 'var(--red)'; }
+    throw error;
+  }
+
+  if (progressFill) progressFill.style.width = '80%';
+  if (progressStatus) progressStatus.textContent = 'Gerando link público...';
+
+  const { data: urlData } = sb.storage.from('materiais').getPublicUrl(fileName);
+
+  if (progressFill) progressFill.style.width = '100%';
+  if (progressStatus) progressStatus.textContent = 'Upload concluído!';
+
+  return urlData.publicUrl;
+}
+
 async function addLink() {
-  const title = document.getElementById('lf_title').value.trim();
-  const url = document.getElementById('lf_url').value.trim();
-  const desc = document.getElementById('lf_desc').value.trim();
-  const type = document.getElementById('lf_type').value;
-  if (!title || !url) { showToast('Preencha título e URL', 'error'); return; }
+  const title = document.getElementById('lf_title')?.value.trim();
+  const desc = document.getElementById('lf_desc')?.value.trim();
+  const type = document.getElementById('lf_type')?.value;
+  if (!title) { showToast('Preencha o título', 'error'); return; }
+
+  let url = '';
+
+  if (_useUploadMode) {
+    const file = document.getElementById('lf_file')?.files?.[0];
+    if (!file) { showToast('Selecione um arquivo PDF', 'error'); return; }
+    const addBtn = document.getElementById('lf_add_btn');
+    if (addBtn) { addBtn.disabled = true; addBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...'; }
+    try {
+      url = await uploadPdfToSupabase(file);
+    } catch(e) {
+      showToast('Erro no upload: ' + e.message, 'error');
+      if (addBtn) { addBtn.disabled = false; addBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Adicionar'; }
+      return;
+    }
+    if (addBtn) { addBtn.disabled = false; addBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Adicionar'; }
+  } else {
+    url = document.getElementById('lf_url')?.value.trim();
+    if (!url) { showToast('Preencha a URL', 'error'); return; }
+    if (!url.startsWith('http')) url = 'https://' + url;
+  }
+
   const { error } = await sb.from('links').insert({ title, url, description: desc, type });
-  if (error) { showToast('Erro ao adicionar link', 'error'); return; }
+  if (error) { showToast('Erro ao adicionar link: ' + error.message, 'error'); return; }
   await loadLinksFromDB();
-  showToast('Link adicionado!');
+  _useUploadMode = false;
+  _uploadedFileUrl = null;
+  showToast('Material adicionado com sucesso!', 'success');
   renderAdminPanel();
   if (activeCategory === 'links') { renderScriptsFilters(); renderScriptsGrid(); }
 }
@@ -4207,31 +3862,12 @@ async function deleteLink(id) {
 }
 
 // ═══════════════════════════════════════════
-// SCRIPTS: Supabase-backed
-// ═══════════════════════════════════════════
-async function loadScriptsFromDB() {
-  const { data } = await sb.from('scripts').select('*').order('id');
-  if (data && data.length > 0) {
-    scriptsState.scripts = data.map(s => ({
-      id: s.id,
-      title: s.title,
-      category: s.category,
-      note: s.note || '',
-      sections: s.sections || []
-    }));
-  }
-}
-
-// Override saveScriptsState to sync to Supabase
-async function saveScriptsState() {
-  // Scripts are saved individually via upsert — no batch needed
-}
-
-// ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
 async function init() {
-  checkDayReset();
+  // Hide mode toggle on non-home pages by default
+  document.getElementById('modeToggle').style.display = 'flex';
+
   await loadAllData();
   await loadAlignmentsFromDB();
   await loadLinksFromDB();
