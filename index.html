@@ -4531,6 +4531,7 @@ function renderSuppAdminPanel() {
     <div class="admin-tabs">
       <button class="admin-tab active" onclick="switchSuppAdminTab('list',this)">📋 Lista</button>
       <button class="admin-tab" onclick="switchSuppAdminTab('new',this)">➕ Nova</button>
+      <button class="admin-tab" onclick="openGeneralInfoAdmin()">ℹ️ Info Gerais</button>
     </div>
     <div class="admin-tab-panel active" id="supp-tab-list">${renderSuppAdminList()}</div>
     <div class="admin-tab-panel" id="supp-tab-new">${renderSuppAdminForm(null)}</div>`;
@@ -5112,6 +5113,7 @@ async function saveSchedModal() {
   if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
 
   closeSchedModal();
+  await loadGeneralInfoFromDB();
   await loadSchedulesFromDB();
   renderSchedulesPage();
   showToast('Agendamento registrado com sucesso!', 'success');
@@ -5482,76 +5484,294 @@ function extractLinks(text) {
   });
 }
 
-function renderGeneralInfoPanel() {
-  const contacts = [
-    { name: 'Suporte ao Cliente',       num: '34 9 9727-8247', tag: 'WhatsApp',          tagClass: 'whatsapp' },
-    { name: 'Suporte ao Licenciado',    num: '34 9 9677-5654', tag: 'Telefone',           tagClass: 'phone'    },
-    { name: 'Conexão Placas / Solar',   num: '34 9 9678-5654', tag: 'Telefone',           tagClass: 'phone'    },
-    { name: 'Suporte Telecom',          num: '0800 183 0080',  tag: 'WhatsApp / Gratuito',tagClass: 'free'     },
-  ];
 
-  const systemLinks = [
-    { name: 'Ticket',               desc: 'Abertura de chamados',       url: 'https://igreen-ticket-manager.web.app/create-ticket', icon: 'fa-solid fa-ticket',         bg: '#eff6ff', color: '#1d4ed8' },
-    { name: 'Experip',              desc: 'Relatórios e indicadores',   url: 'https://igreen.experip.com.br/#!/reportsList',         icon: 'fa-solid fa-chart-bar',      bg: '#fef3c7', color: '#b45309' },
-    { name: 'Backoffice',           desc: 'Gestão de clientes',         url: 'https://office.igreenenergy.com.br/clientes-green',    icon: 'fa-solid fa-users',          bg: '#f0fdf4', color: '#15803d' },
-    { name: 'Factorial',            desc: 'RH e jornada',               url: 'https://app.factorialhr.com/dashboard',                icon: 'fa-solid fa-calendar-check', bg: '#fdf4ff', color: '#7e22ce' },
-    { name: 'Chatwoot',             desc: 'Atendimento / chat',         url: 'https://igreenchat.app/app/accounts/1/dashboard',      icon: 'fa-solid fa-comments',       bg: '#fff7ed', color: '#c2410c' },
-    { name: 'Reporte Licenciados',  desc: 'Formulário de reporte',      url: 'https://forms.office.com/Pages/ResponsePage.aspx?id=m6i72ldzyEmIQDJiFJTYODoAkCL5l51ImwzJOicFhetUOTlTTTE4SlZVNE42MjRFQUpZRjMxSTJNMC4u', icon: 'fa-solid fa-file-alt', bg: '#fef2f2', color: '#b91c1c' },
-    { name: 'TOTVS',                desc: 'ERP / financeiro',           url: 'https://erp.dmcview.com.br:1230/webapp/',              icon: 'fa-solid fa-database',       bg: '#f0f9ff', color: '#0369a1' },
-  ];
+// ═══════════════════════════════════════════
+// INFORMAÇÕES GERAIS — Supabase-backed
+// ═══════════════════════════════════════════
+let _generalInfoCache = {
+  contacts: [],
+  links: [],
+  credentials: []
+};
+
+const GENERAL_INFO_DEFAULTS = {
+  contacts: [
+    { name: 'Suporte ao Cliente',     num: '34 9 9727-8247', tag: 'WhatsApp',           tagClass: 'whatsapp' },
+    { name: 'Suporte ao Licenciado',  num: '34 9 9677-5654', tag: 'Telefone',            tagClass: 'phone'    },
+    { name: 'Conexão Placas / Solar', num: '34 9 9678-5654', tag: 'Telefone',            tagClass: 'phone'    },
+    { name: 'Suporte Telecom',        num: '0800 183 0080',  tag: 'WhatsApp / Gratuito', tagClass: 'free'     },
+  ],
+  links: [
+    { name: 'Ticket',              desc: 'Abertura de chamados',       url: 'https://igreen-ticket-manager.web.app/create-ticket', icon: 'fa-solid fa-ticket',         bg: '#eff6ff', color: '#1d4ed8' },
+    { name: 'Experip',             desc: 'Relatórios e indicadores',   url: 'https://igreen.experip.com.br/#!/reportsList',         icon: 'fa-solid fa-chart-bar',      bg: '#fef3c7', color: '#b45309' },
+    { name: 'Backoffice',          desc: 'Gestão de clientes',         url: 'https://office.igreenenergy.com.br/clientes-green',    icon: 'fa-solid fa-users',          bg: '#f0fdf4', color: '#15803d' },
+    { name: 'Factorial',           desc: 'RH e jornada',               url: 'https://app.factorialhr.com/dashboard',                icon: 'fa-solid fa-calendar-check', bg: '#fdf4ff', color: '#7e22ce' },
+    { name: 'Chatwoot',            desc: 'Atendimento / chat',         url: 'https://igreenchat.app/app/accounts/1/dashboard',      icon: 'fa-solid fa-comments',       bg: '#fff7ed', color: '#c2410c' },
+    { name: 'Reporte Licenciados', desc: 'Formulário de reporte',      url: 'https://forms.office.com/Pages/ResponsePage.aspx?id=m6i72ldzyEmIQDJiFJTYODoAkCL5l51ImwzJOicFhetUOTlTTTE4SlZVNE42MjRFQUpZRjMxSTJNMC4u', icon: 'fa-solid fa-file-alt', bg: '#fef2f2', color: '#b91c1c' },
+    { name: 'TOTVS',               desc: 'ERP / financeiro',           url: 'https://erp.dmcview.com.br:1230/webapp/',              icon: 'fa-solid fa-database',       bg: '#f0f9ff', color: '#0369a1' },
+  ],
+  credentials: [
+    { name: 'Clicksign', url: 'https://app.clicksign.com/accounts', login: 'rafaela.medeiros@igreenenergy.com.br', password: 'Conect@25', icon: 'fa-solid fa-signature', bg: '#f5f3ff', color: '#7c3aed' },
+  ]
+};
+
+async function loadGeneralInfoFromDB() {
+  const { data, error } = await sb.from('general_info').select('*');
+  if (error || !data || !data.length) {
+    // First run: populate with defaults
+    await saveGeneralInfoToDB('contacts',     GENERAL_INFO_DEFAULTS.contacts);
+    await saveGeneralInfoToDB('links',        GENERAL_INFO_DEFAULTS.links);
+    await saveGeneralInfoToDB('credentials',  GENERAL_INFO_DEFAULTS.credentials);
+    _generalInfoCache = { ...GENERAL_INFO_DEFAULTS };
+    return;
+  }
+  data.forEach(row => {
+    if (_generalInfoCache[row.section] !== undefined) {
+      _generalInfoCache[row.section] = row.data;
+    }
+  });
+}
+
+async function saveGeneralInfoToDB(section, data) {
+  // Upsert by section name
+  const existing = await sb.from('general_info').select('id').eq('section', section).single();
+  if (existing.data) {
+    await sb.from('general_info').update({ data, updated_at: new Date().toISOString() }).eq('section', section);
+  } else {
+    await sb.from('general_info').insert({ section, data });
+  }
+}
+
+function getGeneralInfo() { return _generalInfoCache; }
+
+function renderGeneralInfoPanel() {
+  const info = getGeneralInfo();
+  const contacts    = info.contacts    || [];
+  const links       = info.links       || [];
+  const credentials = info.credentials || [];
+
+  const editBtn = suppAdminUnlocked
+    ? '<button onclick="openGeneralInfoAdmin()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid var(--gray-200);background:var(--white);font-size:12px;font-weight:500;color:var(--gray-600);cursor:pointer;transition:all 0.15s" onmouseover="this.style.borderColor=\'var(--green)\';this.style.color=\'var(--green-dark)\'" onmouseout="this.style.borderColor=\'var(--gray-200)\';this.style.color=\'var(--gray-600)\'"><i class=\"fa-solid fa-pen\"></i> Editar</button>'
+    : '';
 
   const contactsHtml = contacts.map(c =>
     '<div class="sup-contact-card">'
     + '<div class="sup-contact-name">' + c.name + '</div>'
     + '<div class="sup-contact-num">' + c.num + '</div>'
-    + '<span class="sup-contact-tag ' + c.tagClass + '">' + c.tag + '</span>'
+    + '<span class="sup-contact-tag ' + (c.tagClass||'phone') + '">' + (c.tag||'') + '</span>'
     + '</div>'
   ).join('');
 
-  const linksHtml = systemLinks.map(l =>
+  const linksHtml = links.map(l =>
     '<a class="sup-sys-link" href="' + l.url + '" target="_blank" rel="noopener">'
-    + '<div class="sup-sys-link-icon" style="background:' + l.bg + ';color:' + l.color + '"><i class="' + l.icon + '"></i></div>'
+    + '<div class="sup-sys-link-icon" style="background:' + (l.bg||'#f3f4f6') + ';color:' + (l.color||'#374151') + '"><i class="' + (l.icon||'fa-solid fa-link') + '"></i></div>'
     + '<div class="sup-sys-link-info">'
     + '<div class="sup-sys-link-name">' + l.name + '</div>'
-    + '<div class="sup-sys-link-desc">' + l.desc + '</div>'
+    + '<div class="sup-sys-link-desc">' + (l.desc||'') + '</div>'
     + '</div></a>'
+  ).join('');
+
+  const credsHtml = credentials.map(c =>
+    '<div class="sup-clicksign-block">'
+    + '<i class="' + (c.icon||'fa-solid fa-key') + '" style="color:' + (c.color||'#374151') + ';font-size:18px;flex-shrink:0;margin-top:2px"></i>'
+    + '<div>'
+    + '<div class="sup-clicksign-name">' + c.name + '</div>'
+    + '<div class="sup-clicksign-cred">'
+    + (c.url ? '🔗 <a href="' + c.url + '" target="_blank" style="color:' + (c.color||'#374151') + '">' + c.url + '</a><br>' : '')
+    + (c.login    ? '👤 Login: ' + c.login + '<br>'    : '')
+    + (c.password ? '🔑 Senha: ' + c.password          : '')
+    + '</div></div></div>'
   ).join('');
 
   return '<div class="sup-general-section">'
     + '<div class="sup-general-header">'
     + '<div style="width:36px;height:36px;border-radius:10px;background:var(--green);display:flex;align-items:center;justify-content:center;color:white;font-size:16px"><i class="fa-solid fa-circle-info"></i></div>'
     + '<div class="sup-general-title">Informações Gerais iGreen</div>'
+    + editBtn
     + '</div>'
     + '<div class="sup-general-body">'
 
     + '<div>'
     + '<div class="sup-general-group-title"><i class="fa-solid fa-phone" style="margin-right:6px"></i>Contatos de Suporte</div>'
-    + '<div class="sup-contacts-grid">' + contactsHtml + '</div>'
+    + '<div class="sup-contacts-grid">' + (contactsHtml || '<div style="font-size:13px;color:var(--gray-400)">Nenhum contato cadastrado.</div>') + '</div>'
     + '</div>'
 
     + '<div style="height:1px;background:var(--gray-100)"></div>'
 
     + '<div>'
     + '<div class="sup-general-group-title"><i class="fa-solid fa-link" style="margin-right:6px"></i>Sistemas e Links Úteis</div>'
-    + '<div class="sup-links-section-grid">' + linksHtml + '</div>'
+    + '<div class="sup-links-section-grid">' + (linksHtml || '<div style="font-size:13px;color:var(--gray-400)">Nenhum link cadastrado.</div>') + '</div>'
     + '</div>'
 
-    + '<div style="height:1px;background:var(--gray-100)"></div>'
-
+    + (credsHtml ? '<div style="height:1px;background:var(--gray-100)"></div>'
     + '<div>'
-    + '<div class="sup-general-group-title"><i class="fa-solid fa-pen-to-square" style="margin-right:6px"></i>Clicksign — Assinatura Digital</div>'
-    + '<div class="sup-clicksign-block">'
-    + '<i class="fa-solid fa-signature"></i>'
-    + '<div>'
-    + '<div class="sup-clicksign-name">Clicksign</div>'
-    + '<div class="sup-clicksign-cred">'
-    + '🔗 <a href="https://app.clicksign.com/accounts" target="_blank" style="color:#7c3aed">app.clicksign.com/accounts</a><br>'
-    + '👤 Login: rafaela.medeiros@igreenenergy.com.br<br>'
-    + '🔑 Senha: Conect@25'
-    + '</div></div></div>'
-    + '</div>'
+    + '<div class="sup-general-group-title"><i class="fa-solid fa-key" style="margin-right:6px"></i>Credenciais e Acessos</div>'
+    + '<div style="display:flex;flex-direction:column;gap:8px">' + credsHtml + '</div>'
+    + '</div>' : '')
 
     + '</div></div>';
+}
+
+// ── GENERAL INFO ADMIN ──
+function openGeneralInfoAdmin() {
+  document.getElementById('suppAdminTitle').textContent = 'Editar Informações Gerais';
+  renderGeneralInfoAdminBody();
+  document.getElementById('suppAdminOverlay').classList.add('open');
+}
+
+function renderGeneralInfoAdminBody() {
+  const info = getGeneralInfo();
+
+  document.getElementById('suppAdminBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchSuppAdminTab('gi-contacts',this)">📞 Contatos</button>
+      <button class="admin-tab" onclick="switchSuppAdminTab('gi-links',this)">🔗 Links</button>
+      <button class="admin-tab" onclick="switchSuppAdminTab('gi-creds',this)">🔑 Credenciais</button>
+    </div>
+    <div class="admin-tab-panel active" id="supp-tab-gi-contacts">${renderGIContactsTab()}</div>
+    <div class="admin-tab-panel" id="supp-tab-gi-links">${renderGILinksTab()}</div>
+    <div class="admin-tab-panel" id="supp-tab-gi-creds">${renderGICredsTab()}</div>`;
+
+  document.getElementById('suppAdminFooter').innerHTML = `
+    <button class="btn-secondary" onclick="closeSuppAdminModal()">Fechar</button>`;
+}
+
+// ── CONTACTS TAB ──
+function renderGIContactsTab() {
+  const contacts = getGeneralInfo().contacts || [];
+  const rows = contacts.map((c, i) => `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:end;padding:10px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:6px">
+      <div><label class="admin-label">Nome</label><input class="admin-input" value="${c.name}" onchange="updateGIContact(${i},'name',this.value)"></div>
+      <div><label class="admin-label">Número</label><input class="admin-input" value="${c.num}" onchange="updateGIContact(${i},'num',this.value)"></div>
+      <div><label class="admin-label">Tag (ex: WhatsApp)</label><input class="admin-input" value="${c.tag||''}" onchange="updateGIContact(${i},'tag',this.value)">
+        <select class="admin-select" style="margin-top:4px;height:30px;font-size:11px" onchange="updateGIContact(${i},'tagClass',this.value)">
+          <option value="whatsapp" ${c.tagClass==='whatsapp'?'selected':''}>WhatsApp (verde)</option>
+          <option value="phone"    ${c.tagClass==='phone'   ?'selected':''}>Telefone (azul)</option>
+          <option value="free"     ${c.tagClass==='free'    ?'selected':''}>Gratuito (roxo)</option>
+        </select>
+      </div>
+      <button class="btn-del-row" onclick="removeGIContact(${i})"><i class="fa-solid fa-trash"></i></button>
+    </div>`).join('');
+
+  return `${rows}
+    <button class="btn-add" style="width:100%;margin-top:4px" onclick="addGIContact()">
+      <i class="fa-solid fa-plus" style="margin-right:5px"></i>Adicionar Contato
+    </button>
+    <div style="margin-top:12px;display:flex;justify-content:flex-end">
+      <button class="btn-primary" onclick="saveGISection('contacts')"><i class="fa-solid fa-floppy-disk"></i> Salvar Contatos</button>
+    </div>`;
+}
+
+function updateGIContact(i, field, val) {
+  _generalInfoCache.contacts[i][field] = val;
+}
+function removeGIContact(i) {
+  _generalInfoCache.contacts.splice(i, 1);
+  document.getElementById('supp-tab-gi-contacts').innerHTML = renderGIContactsTab();
+}
+function addGIContact() {
+  _generalInfoCache.contacts.push({ name: '', num: '', tag: 'WhatsApp', tagClass: 'whatsapp' });
+  document.getElementById('supp-tab-gi-contacts').innerHTML = renderGIContactsTab();
+}
+
+// ── LINKS TAB ──
+function renderGILinksTab() {
+  const links = getGeneralInfo().links || [];
+  const iconOptions = [
+    'fa-solid fa-link','fa-solid fa-ticket','fa-solid fa-chart-bar','fa-solid fa-users',
+    'fa-solid fa-calendar-check','fa-solid fa-comments','fa-solid fa-file-alt',
+    'fa-solid fa-database','fa-solid fa-gear','fa-solid fa-file-invoice',
+  ].map(ic => `<option value="${ic}">${ic.replace('fa-solid fa-','')}</option>`).join('');
+
+  const rows = links.map((l, i) => `
+    <div style="padding:10px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:6px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
+        <div><label class="admin-label">Nome</label><input class="admin-input" value="${l.name}" onchange="updateGILink(${i},'name',this.value)"></div>
+        <div><label class="admin-label">Descrição</label><input class="admin-input" value="${l.desc||''}" onchange="updateGILink(${i},'desc',this.value)"></div>
+      </div>
+      <div style="margin-bottom:6px"><label class="admin-label">URL *</label><input class="admin-input" value="${l.url}" onchange="updateGILink(${i},'url',this.value)" placeholder="https://..."></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end">
+        <div><label class="admin-label">Ícone</label>
+          <select class="admin-select" onchange="updateGILink(${i},'icon',this.value)">
+            ${iconOptions.replace(`value="${l.icon||''}"`, `value="${l.icon||''}" selected`)}
+          </select>
+        </div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1"><label class="admin-label">Bg</label><input type="color" value="${l.bg||'#f3f4f6'}" style="width:100%;height:34px;border-radius:6px;border:1px solid var(--gray-200);cursor:pointer" onchange="updateGILink(${i},'bg',this.value)"></div>
+          <div style="flex:1"><label class="admin-label">Cor</label><input type="color" value="${l.color||'#374151'}" style="width:100%;height:34px;border-radius:6px;border:1px solid var(--gray-200);cursor:pointer" onchange="updateGILink(${i},'color',this.value)"></div>
+        </div>
+        <button class="btn-del-row" style="align-self:flex-end" onclick="removeGILink(${i})"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>`).join('');
+
+  return `${rows}
+    <button class="btn-add" style="width:100%;margin-top:4px" onclick="addGILink()">
+      <i class="fa-solid fa-plus" style="margin-right:5px"></i>Adicionar Link
+    </button>
+    <div style="margin-top:12px;display:flex;justify-content:flex-end">
+      <button class="btn-primary" onclick="saveGISection('links')"><i class="fa-solid fa-floppy-disk"></i> Salvar Links</button>
+    </div>`;
+}
+
+function updateGILink(i, field, val) { _generalInfoCache.links[i][field] = val; }
+function removeGILink(i) {
+  _generalInfoCache.links.splice(i, 1);
+  document.getElementById('supp-tab-gi-links').innerHTML = renderGILinksTab();
+}
+function addGILink() {
+  _generalInfoCache.links.push({ name: '', desc: '', url: '', icon: 'fa-solid fa-link', bg: '#f3f4f6', color: '#374151' });
+  document.getElementById('supp-tab-gi-links').innerHTML = renderGILinksTab();
+}
+
+// ── CREDENTIALS TAB ──
+function renderGICredsTab() {
+  const creds = getGeneralInfo().credentials || [];
+  const rows = creds.map((c, i) => `
+    <div style="padding:10px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:6px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
+        <div><label class="admin-label">Nome do Sistema *</label><input class="admin-input" value="${c.name||''}" onchange="updateGICred(${i},'name',this.value)"></div>
+        <div><label class="admin-label">URL de Acesso</label><input class="admin-input" value="${c.url||''}" onchange="updateGICred(${i},'url',this.value)" placeholder="https://..."></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px">
+        <div><label class="admin-label">Login / Usuário</label><input class="admin-input" value="${c.login||''}" onchange="updateGICred(${i},'login',this.value)"></div>
+        <div><label class="admin-label">Senha</label><input class="admin-input" value="${c.password||''}" onchange="updateGICred(${i},'password',this.value)"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <div style="flex:1"><label class="admin-label">Observação</label><input class="admin-input" value="${c.obs||''}" onchange="updateGICred(${i},'obs',this.value)" placeholder="Ex: Usar apenas para contratos"></div>
+        <button class="btn-del-row" onclick="removeGICred(${i})"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    </div>`).join('');
+
+  return `${rows}
+    <button class="btn-add" style="width:100%;margin-top:4px" onclick="addGICred()">
+      <i class="fa-solid fa-plus" style="margin-right:5px"></i>Adicionar Credencial
+    </button>
+    <div style="margin-top:12px;display:flex;justify-content:flex-end">
+      <button class="btn-primary" onclick="saveGISection('credentials')"><i class="fa-solid fa-floppy-disk"></i> Salvar Credenciais</button>
+    </div>`;
+}
+
+function updateGICred(i, field, val) { _generalInfoCache.credentials[i][field] = val; }
+function removeGICred(i) {
+  _generalInfoCache.credentials.splice(i, 1);
+  document.getElementById('supp-tab-gi-creds').innerHTML = renderGICredsTab();
+}
+function addGICred() {
+  _generalInfoCache.credentials.push({ name: '', url: '', login: '', password: '', obs: '' });
+  document.getElementById('supp-tab-gi-creds').innerHTML = renderGICredsTab();
+}
+
+async function saveGISection(section) {
+  const btn = document.querySelector('#supp-tab-gi-' + (section === 'contacts' ? 'contacts' : section === 'links' ? 'links' : 'creds') + ' .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...'; }
+
+  await saveGeneralInfoToDB(section, _generalInfoCache[section]);
+
+  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvo!'; }
+  showToast('Informações Gerais atualizadas!', 'success');
+
+  // Refresh panel if visible
+  if (activeSuppFilter === '__general__') renderSuppContent();
 }
 
 
