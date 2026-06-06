@@ -2299,6 +2299,198 @@
   .sup-clicksign-name { font-size: 13px; font-weight: 600; color: #4c1d95; margin-bottom: 6px; }
   .sup-clicksign-cred { font-size: 12px; color: #6d28d9; font-family: var(--mono); line-height: 1.8; }
 
+
+  /* ══════════════════════════════════════════
+     AGENDAMENTOS PAGE
+  ══════════════════════════════════════════ */
+  #page-schedules { flex-direction: column; overflow: hidden; height: 100%; }
+
+  .sched-layout { display: flex; height: 100%; overflow: hidden; }
+
+  .sched-sidebar {
+    width: 260px; flex-shrink: 0;
+    background: var(--white); border-right: 1px solid var(--gray-200);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .sched-sidebar-header {
+    padding: 16px 14px 12px; border-bottom: 1px solid var(--gray-100);
+  }
+  .sched-sidebar-title {
+    font-size: 11px; font-weight: 600; color: var(--gray-400);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .sched-filter-list { flex: 1; overflow-y: auto; padding: 10px 8px; }
+  .sched-filter-list::-webkit-scrollbar { width: 3px; }
+  .sched-filter-list::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 3px; }
+
+  .sched-main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; min-width: 0; }
+  .sched-main::-webkit-scrollbar { width: 4px; }
+  .sched-main::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+
+  .sched-topbar {
+    padding: 20px 24px 16px; border-bottom: 1px solid var(--gray-100);
+    background: var(--white); flex-shrink: 0;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sched-topbar-title { font-size: 17px; font-weight: 600; color: var(--gray-900); flex: 1; }
+
+  .sched-content { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  /* Dashboard cards */
+  .sched-dash { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; }
+  .sched-dash-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius); padding: 14px 16px;
+    transition: box-shadow 0.2s;
+  }
+  .sched-dash-card:hover { box-shadow: var(--shadow); }
+  .sched-dash-label { font-size: 11px; font-weight: 500; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .sched-dash-value { font-size: 26px; font-weight: 700; color: var(--gray-900); font-family: var(--mono); }
+  .sched-dash-value.green { color: var(--green-dark); }
+  .sched-dash-value.orange { color: var(--orange); }
+  .sched-dash-value.red { color: var(--red); }
+  .sched-dash-value.blue { color: var(--blue); }
+  .sched-dash-value.purple { color: var(--purple); }
+
+  /* Today alert */
+  .sched-today-alert {
+    background: linear-gradient(135deg,#fef3c7,#fde68a);
+    border: 1px solid #fcd34d; border-radius: var(--radius);
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 500; color: #92400e;
+  }
+  .sched-today-alert i { color: var(--gold); font-size: 16px; }
+
+  /* Schedule card */
+  .sched-card {
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg); overflow: hidden;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .sched-card:hover { box-shadow: var(--shadow); }
+  .sched-card.overdue { border-color: #fca5a5; }
+  .sched-card.today  { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(245,158,11,0.15); }
+  .sched-card.done   { opacity: 0.65; }
+
+  .sched-card-header {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 18px; cursor: pointer; user-select: none;
+  }
+  .sched-card-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex-shrink: 0;
+  }
+  .sched-card-info { flex: 1; min-width: 0; }
+  .sched-card-name { font-size: 14px; font-weight: 600; color: var(--gray-900); margin-bottom: 2px; }
+  .sched-card-meta { font-size: 12px; color: var(--gray-400); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+  .sched-status-badge {
+    font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px;
+    white-space: nowrap;
+  }
+  .sched-status-badge.pending  { background: #fef3c7; color: #92400e; }
+  .sched-status-badge.overdue  { background: #fee2e2; color: #b91c1c; }
+  .sched-status-badge.today    { background: #fef3c7; color: #b45309; }
+  .sched-status-badge.done     { background: var(--green-light); color: var(--green-dark); }
+  .sched-status-badge.forwarded    { background: #eff6ff; color: #1d4ed8; }
+  .sched-status-badge.negotiating  { background: #f5f3ff; color: #6d28d9; }
+  .sched-status-badge.waiting      { background: #fef3c7; color: #92400e; }
+  .sched-status-badge.sold         { background: var(--green-light); color: var(--green-dark); }
+  .sched-status-badge.lost         { background: var(--gray-100); color: var(--gray-500); }
+
+  .sched-expand-btn {
+    width: 28px; height: 28px; border-radius: 8px; border: none;
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; color: var(--gray-400); transition: all 0.2s;
+  }
+  .sched-card.expanded .sched-expand-btn { transform: rotate(180deg); color: var(--green-dark); }
+
+  .sched-card-body { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1); }
+  .sched-card.expanded .sched-card-body { max-height: 1200px; }
+
+  .sched-card-content { border-top: 1px solid var(--gray-100); padding: 16px 20px; }
+
+  .sched-detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); gap: 8px; margin-bottom: 12px; }
+  .sched-detail-item { background: var(--gray-50); border-radius: 8px; padding: 8px 12px; }
+  .sched-detail-label { font-size: 10px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .sched-detail-value { font-size: 12px; font-weight: 500; color: var(--gray-700); line-height: 1.4; }
+
+  .sched-obs-block {
+    background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;
+    padding: 9px 13px; font-size: 12px; color: #92400e; line-height: 1.6;
+    display: flex; gap: 8px; margin-bottom: 10px;
+  }
+  .sched-obs-block i { color: var(--gold); flex-shrink: 0; margin-top: 2px; }
+
+  /* Interactions history */
+  .sched-interactions { margin-bottom: 12px; }
+  .sched-interactions-title {
+    font-size: 11px; font-weight: 600; color: var(--gray-400);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .sched-interaction-item {
+    display: flex; gap: 10px; padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100); font-size: 12px; color: var(--gray-600);
+  }
+  .sched-interaction-item:last-child { border-bottom: none; }
+  .sched-interaction-time { color: var(--gray-400); font-family: var(--mono); font-size: 11px; flex-shrink: 0; }
+
+  /* Action buttons row */
+  .sched-actions { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 10px; border-top: 1px solid var(--gray-100); margin-top: 4px; }
+
+  /* Add note form */
+  .sched-note-form { display: flex; gap: 8px; margin-bottom: 10px; }
+  .sched-note-form input {
+    flex: 1; padding: 8px 12px; border: 1px solid var(--gray-200);
+    border-radius: 8px; font-size: 13px; font-family: var(--font);
+    outline: none; transition: border-color 0.2s;
+  }
+  .sched-note-form input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(34,197,94,0.1); }
+
+  /* Empty state */
+  .sched-empty { text-align: center; padding: 60px 20px; color: var(--gray-400); }
+  .sched-empty i { font-size: 40px; display: block; margin-bottom: 12px; }
+  .sched-empty p { font-size: 14px; }
+
+  /* New schedule modal */
+  .sched-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+    z-index: 9100; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .sched-modal-overlay.open { opacity: 1; pointer-events: all; }
+  .sched-modal {
+    background: var(--white); border-radius: var(--radius-xl);
+    width: 600px; max-width: 95vw; max-height: 92vh;
+    display: flex; flex-direction: column; box-shadow: var(--shadow-xl);
+    transform: translateY(12px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    overflow: hidden;
+  }
+  .sched-modal-overlay.open .sched-modal { transform: translateY(0) scale(1); }
+  .sched-modal-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 22px; border-bottom: 1px solid var(--gray-100); flex-shrink: 0;
+  }
+  .sched-modal-title { font-size: 15px; font-weight: 600; color: var(--gray-900); flex: 1; }
+  .sched-modal-body { flex: 1; overflow-y: auto; padding: 20px 22px; }
+  .sched-modal-body::-webkit-scrollbar { width: 4px; }
+  .sched-modal-body::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+  .sched-modal-footer {
+    display: flex; align-items: center; gap: 8px;
+    padding: 14px 22px; border-top: 1px solid var(--gray-100); flex-shrink: 0;
+  }
+
+  /* Notification dot on sidebar nav */
+  .nav-badge {
+    position: absolute; top: 6px; right: 6px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--red); border: 2px solid var(--white);
+  }
+
 </style>
 </head>
 <body>
@@ -2329,6 +2521,11 @@
   <button class="nav-item" data-page="suppliers" onclick="switchPage('suppliers', this)">
     <i class="fa-solid fa-building"></i>
     <span class="nav-tooltip">Regras das Fornecedoras</span>
+  </button>
+
+  <button class="nav-item" data-page="schedules" onclick="switchPage('schedules', this)" id="navSchedules">
+    <i class="fa-solid fa-calendar-check"></i>
+    <span class="nav-tooltip">Agendamentos</span>
   </button>
 
   <button class="nav-item" data-page="settings" onclick="switchPage('settings', this)">
@@ -2515,6 +2712,12 @@
           <div class="suppliers-filter-list" id="suppFilterList">
             <!-- rendered by JS -->
           </div>
+          <div style="padding:12px 8px;border-top:1px solid var(--gray-100)">
+            <button class="btn-admin" onclick="openSuppAdminModal()">
+              <i class="fa-solid fa-shield-halved"></i>
+              Modo Administrador
+            </button>
+          </div>
         </div>
         <!-- Main -->
         <div class="suppliers-main">
@@ -2529,6 +2732,80 @@
             <!-- rendered by JS -->
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- AGENDAMENTOS PAGE -->
+    <div class="page" id="page-schedules">
+      <div class="sched-layout">
+        <!-- Sidebar -->
+        <div class="sched-sidebar">
+          <div class="sched-sidebar-header">
+            <div class="sched-sidebar-title">Filtros</div>
+            <div class="form-group" style="margin-bottom:8px">
+              <label class="form-label">Operador</label>
+              <select class="form-input" id="schedFilterOp" style="height:34px;font-size:12px" onchange="renderSchedulesPage()">
+                <option value="">Todos</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo</label>
+              <select class="form-input" id="schedFilterType" style="height:34px;font-size:12px" onchange="renderSchedulesPage()">
+                <option value="">Todos</option>
+                <option value="address_change">Mudança de Endereço</option>
+                <option value="solar">Placas Solares</option>
+              </select>
+            </div>
+          </div>
+          <div class="sched-filter-list">
+            <div class="sup-filter-label">Status</div>
+            <button class="filter-chip active" id="schedFilterStatus" data-status="" onclick="setSchedStatus('',this)">
+              <i class="fa-solid fa-layer-group"></i>Todos<span class="count" id="schedCountAll">0</span>
+            </button>
+            <button class="filter-chip" data-status="pending" onclick="setSchedStatus('pending',this)">
+              <i class="fa-solid fa-clock"></i>Pendentes<span class="count" id="schedCountPending">0</span>
+            </button>
+            <button class="filter-chip" data-status="overdue" onclick="setSchedStatus('overdue',this)">
+              <i class="fa-solid fa-triangle-exclamation"></i>Vencidos<span class="count" id="schedCountOverdue">0</span>
+            </button>
+            <button class="filter-chip" data-status="today" onclick="setSchedStatus('today',this)">
+              <i class="fa-solid fa-star"></i>Hoje<span class="count" id="schedCountToday">0</span>
+            </button>
+            <button class="filter-chip" data-status="done" onclick="setSchedStatus('done',this)">
+              <i class="fa-solid fa-circle-check"></i>Concluídos<span class="count" id="schedCountDone">0</span>
+            </button>
+          </div>
+        </div>
+        <!-- Main -->
+        <div class="sched-main">
+          <div class="sched-topbar">
+            <div class="sched-topbar-title">Agendamentos e Acompanhamentos</div>
+            <button class="btn-register" style="height:36px;font-size:13px" onclick="openSchedModal('address_change')">
+              <i class="fa-solid fa-calendar-plus"></i> Mudança de Endereço
+            </button>
+            <button class="btn-register" style="height:36px;font-size:13px;background:var(--purple);box-shadow:0 2px 8px rgba(139,92,246,0.3)" onclick="openSchedModal('solar')">
+              <i class="fa-solid fa-solar-panel"></i> Placas Solares
+            </button>
+          </div>
+          <div class="sched-content">
+            <div class="sched-dash" id="schedDash"></div>
+            <div id="schedTodayAlert" style="display:none"></div>
+            <div id="schedList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW SCHEDULE MODAL -->
+    <div class="sched-modal-overlay" id="schedModalOverlay">
+      <div class="sched-modal">
+        <div class="sched-modal-header">
+          <div id="schedModalIcon" style="width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px"></div>
+          <div class="sched-modal-title" id="schedModalTitle">Novo Agendamento</div>
+          <button onclick="closeSchedModal()" style="width:28px;height:28px;border-radius:8px;border:none;background:var(--gray-100);cursor:pointer;color:var(--gray-500);font-size:13px;display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="sched-modal-body" id="schedModalBody"></div>
+        <div class="sched-modal-footer" id="schedModalFooter"></div>
       </div>
     </div>
 
@@ -2615,7 +2892,7 @@
           <div class="settings-row">
             <div>
               <div class="settings-row-label">Som ao registrar</div>
-              <div class="settings-row-sub">Feedback sonoro (em breve)</div>
+              <div class="settings-row-sub">Feedback sonoro ao registrar retenção</div>
             </div>
             <button class="toggle" id="toggleSound" onclick="this.classList.toggle('on')"></button>
           </div>
@@ -2650,6 +2927,23 @@
 
   </div><!-- /content -->
 </main>
+
+<!-- SUPPLIER ADMIN MODAL -->
+<div class="admin-modal-overlay" id="suppAdminOverlay">
+  <div class="admin-modal" style="width:720px">
+    <div class="admin-modal-header">
+      <div style="width:32px;height:32px;border-radius:8px;background:var(--green-xlight);display:flex;align-items:center;justify-content:center;color:var(--green-dark);font-size:14px;">
+        <i class="fa-solid fa-building"></i>
+      </div>
+      <div class="admin-modal-title" id="suppAdminTitle">Gerenciar Fornecedoras</div>
+      <button onclick="closeSuppAdminModal()" style="width:28px;height:28px;border-radius:8px;border:none;background:var(--gray-100);cursor:pointer;color:var(--gray-500);font-size:13px;display:flex;align-items:center;justify-content:center;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body" id="suppAdminBody"></div>
+    <div class="admin-modal-footer" id="suppAdminFooter"></div>
+  </div>
+</div>
 
 <!-- TOAST CONTAINER -->
 <div class="toast-container" id="toastContainer"></div>
@@ -2847,6 +3141,7 @@ function switchPage(page, btn) {
   if (page === 'settings') renderSettingsPage();
   if (page === 'scripts') initScriptsPage();
   if (page === 'suppliers') renderSuppliersPage();
+  if (page === 'schedules') renderSchedulesPage();
   if (page === 'alignments') renderAlignmentsPage();
 }
 
@@ -4185,6 +4480,803 @@ async function deleteLink(id) {
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
+// ═══════════════════════════════════════════
+// SUPPLIER ADMIN
+// ═══════════════════════════════════════════
+let suppAdminUnlocked = false;
+
+function openSuppAdminModal() {
+  suppAdminUnlocked = false;
+  document.getElementById('suppAdminOverlay').classList.add('open');
+  renderSuppAdminPwdGate();
+}
+
+function closeSuppAdminModal() {
+  document.getElementById('suppAdminOverlay').classList.remove('open');
+  suppAdminUnlocked = false;
+}
+
+function renderSuppAdminPwdGate() {
+  document.getElementById('suppAdminTitle').textContent = 'Modo Administrador — Fornecedoras';
+  document.getElementById('suppAdminBody').innerHTML = `
+    <div class="pwd-gate">
+      <i class="fa-solid fa-lock"></i>
+      <p>Digite a senha de administrador para editar as fornecedoras.</p>
+      <input type="password" id="suppAdminPwdInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkSuppAdminPwd()">
+      <div class="pwd-gate-err" id="suppAdminPwdErr">Senha incorreta. Tente novamente.</div>
+      <div style="margin-top:16px"><button class="btn-primary" onclick="checkSuppAdminPwd()"><i class="fa-solid fa-unlock"></i> Entrar</button></div>
+    </div>`;
+  document.getElementById('suppAdminFooter').innerHTML = `<button class="btn-secondary" onclick="closeSuppAdminModal()">Cancelar</button>`;
+  setTimeout(() => { const i = document.getElementById('suppAdminPwdInput'); if(i) i.focus(); }, 100);
+}
+
+function checkSuppAdminPwd() {
+  const val = document.getElementById('suppAdminPwdInput')?.value;
+  if (val === ADMIN_PASSWORD) {
+    suppAdminUnlocked = true;
+    renderSuppAdminPanel();
+  } else {
+    document.getElementById('suppAdminPwdErr').style.display = 'block';
+    const inp = document.getElementById('suppAdminPwdInput');
+    if (inp) { inp.value = ''; inp.focus(); }
+  }
+}
+
+function renderSuppAdminPanel() {
+  document.getElementById('suppAdminTitle').textContent = 'Gerenciar Fornecedoras';
+  const data = getSuppliersData();
+  const parceiros = [...new Set(data.map(d => d.parceiro))];
+
+  document.getElementById('suppAdminBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchSuppAdminTab('list',this)">📋 Lista</button>
+      <button class="admin-tab" onclick="switchSuppAdminTab('new',this)">➕ Nova</button>
+    </div>
+    <div class="admin-tab-panel active" id="supp-tab-list">${renderSuppAdminList()}</div>
+    <div class="admin-tab-panel" id="supp-tab-new">${renderSuppAdminForm(null)}</div>`;
+
+  document.getElementById('suppAdminFooter').innerHTML = `<button class="btn-secondary" onclick="closeSuppAdminModal()">Fechar</button>`;
+}
+
+function switchSuppAdminTab(tab, btn) {
+  document.querySelectorAll('#suppAdminBody .admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#suppAdminBody .admin-tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('supp-tab-' + tab).classList.add('active');
+}
+
+function renderSuppAdminList() {
+  const data = getSuppliersData();
+  const parceiros = [...new Set(data.map(d => d.parceiro))];
+
+  const filterOptions = parceiros.map(p => `<option value="${p}">${p} (${data.filter(d=>d.parceiro===p).length})</option>`).join('');
+
+  const rowsHtml = data.map((row, i) => {
+    const color = getSupColor(row.parceiro);
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:4px" id="supp-row-${i}">
+      <span style="width:8px;height:8px;border-radius:50%;background:${color};flex-shrink:0"></span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:600;color:var(--gray-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${row.parceiro} — ${row.distribuidora}</div>
+        <div style="font-size:11px;color:var(--gray-400)">${row.boletos || ''} ${row.entrada_saida ? '· '+row.entrada_saida : ''}</div>
+      </div>
+      <button class="btn-edit-row" onclick="openEditSuppEntry(${i})" title="Editar"><i class="fa-solid fa-pen"></i></button>
+      <button class="btn-del-row" onclick="deleteSuppEntry(${i})" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+    </div>`;
+  }).join('');
+
+  return `<div style="margin-bottom:10px">
+    <select id="suppListFilter" class="admin-select" onchange="filterSuppAdminList()" style="width:100%">
+      <option value="">Todas as fornecedoras (${data.length})</option>
+      ${filterOptions}
+    </select>
+  </div>
+  <div id="suppAdminRows" style="max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:0">
+    ${rowsHtml}
+  </div>`;
+}
+
+function filterSuppAdminList() {
+  const filter = document.getElementById('suppListFilter')?.value || '';
+  const data = getSuppliersData();
+  const rows = document.querySelectorAll('#suppAdminRows > div[id^="supp-row-"]');
+  rows.forEach((el, i) => {
+    const row = data[i];
+    el.style.display = (!filter || row.parceiro === filter) ? 'flex' : 'none';
+  });
+}
+
+function renderSuppAdminForm(entry) {
+  const isEdit = entry !== null;
+  const v = entry || {};
+  const parceiros = [...new Set(getSuppliersData().map(d => d.parceiro))];
+  const parceiroOptions = parceiros.map(p => `<option value="${p}">${p}</option>`).join('');
+
+  const field = (id, label, value, placeholder, type='input') => {
+    if (type === 'textarea') {
+      return `<div class="admin-field"><label class="admin-label">${label}</label><textarea class="admin-textarea" id="${id}" style="min-height:60px">${value||''}</textarea></div>`;
+    }
+    return `<div class="admin-field"><label class="admin-label">${label}</label><input class="admin-input" id="${id}" value="${(value||'').replace(/"/g,'&quot;')}" placeholder="${placeholder}"></div>`;
+  };
+
+  return `<div id="suppFormWrap" data-idx="${isEdit ? v._idx : ''}">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="admin-field">
+        <label class="admin-label">Fornecedora (Parceiro) *</label>
+        <input class="admin-input" id="sf_parceiro" list="sf_parc_list" value="${v.parceiro||''}" placeholder="Ex: Comerc">
+        <datalist id="sf_parc_list">${parceiroOptions}</datalist>
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Distribuidora / Região *</label>
+        <input class="admin-input" id="sf_distribuidora" value="${(v.distribuidora||'').replace(/"/g,'&quot;')}" placeholder="Ex: Cemig MG">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${field('sf_entrada_saida','Entrada e Saída', v.entrada_saida, 'Ex: 90 dias')}
+      ${field('sf_boletos','Quantidade de Boletos', v.boletos, 'Ex: DOIS BOLETOS')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${field('sf_regra_boleto_unico','Regra Boleto Único', v.regra_boleto_unico, 'Ex: Vencimento antecipado 5 dias')}
+      ${field('sf_troca_tt','Troca de TT', v.troca_tt, 'Ex: NÃO')}
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      ${field('sf_debito_automatico','Débito Automático', v.debito_automatico, 'Ex: SICOOB, SANTANDER')}
+      ${field('sf_data_vencimento','Vencimento', v.data_vencimento, 'Ex: 05, 15 ou 25')}
+    </div>
+    ${field('sf_parcelamento','Parcelamento', v.parcelamento, 'Ex: Entrada mínima 30% | Até 5x...', 'textarea')}
+    ${field('sf_regra_desconto','Regra de Desconto', v.regra_desconto, 'Ex: Analisar KWH mínimo')}
+    ${field('sf_acesso_boleto_dist','Acesso Boleto Distribuidora', v.acesso_boleto_dist, 'Ex: SIM, na auditoria da UC')}
+    ${field('sf_acesso_boletos','Onde Localizar os Boletos (col N)', v.acesso_boletos, 'Ex: Backoffice e https://...', 'textarea')}
+    ${field('sf_sistema','Sistema da Fornecedora (URL)', v.sistema, 'https://...')}
+    ${field('sf_status_sistema','Status do Cliente (URL)', v.status_sistema, 'https://...')}
+    ${field('sf_login','Login da Fornecedora', v.login, 'LOGIN: ... SENHA: ...')}
+    ${field('sf_obs','Observações', v.obs, 'Observações internas...', 'textarea')}
+    <div style="display:flex;gap:8px;margin-top:4px">
+      ${isEdit ? `<button class="btn-danger" onclick="deleteSuppEntry(${v._idx})"><i class="fa-solid fa-trash"></i> Excluir</button>` : ''}
+      <button class="btn-secondary" onclick="renderSuppAdminPanel()">Cancelar</button>
+      <button class="btn-primary" onclick="saveSuppEntry()"><i class="fa-solid fa-floppy-disk"></i> ${isEdit ? 'Salvar' : 'Adicionar'}</button>
+    </div>
+  </div>`;
+}
+
+function openEditSuppEntry(idx) {
+  const data = getSuppliersData();
+  const entry = { ...data[idx], _idx: idx };
+  document.getElementById('suppAdminTitle').textContent = 'Editar: ' + entry.distribuidora;
+  document.getElementById('suppAdminBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab" onclick="switchSuppAdminTab('list',this)">← Voltar à Lista</button>
+      <button class="admin-tab active" onclick="switchSuppAdminTab('new',this)">✏️ Editando</button>
+    </div>
+    <div class="admin-tab-panel" id="supp-tab-list">${renderSuppAdminList()}</div>
+    <div class="admin-tab-panel active" id="supp-tab-new">${renderSuppAdminForm(entry)}</div>`;
+  document.getElementById('suppAdminFooter').innerHTML = `<button class="btn-secondary" onclick="closeSuppAdminModal()">Fechar</button>`;
+}
+
+function saveSuppEntry() {
+  const wrap = document.getElementById('suppFormWrap');
+  const editIdx = wrap ? parseInt(wrap.getAttribute('data-idx')) : NaN;
+  const isEdit = !isNaN(editIdx) && editIdx >= 0;
+
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  const parceiro = g('sf_parceiro');
+  const distribuidora = g('sf_distribuidora');
+  if (!parceiro || !distribuidora) { showToast('Preencha Fornecedora e Distribuidora', 'error'); return; }
+
+  const newEntry = {
+    parceiro, distribuidora,
+    sistema: g('sf_sistema'),
+    entrada_saida: g('sf_entrada_saida'),
+    troca_tt: g('sf_troca_tt'),
+    boletos: g('sf_boletos'),
+    regra_boleto_unico: g('sf_regra_boleto_unico'),
+    parcelamento: g('sf_parcelamento'),
+    debito_automatico: g('sf_debito_automatico'),
+    data_vencimento: g('sf_data_vencimento'),
+    aumento_desconto: '',
+    regra_desconto: g('sf_regra_desconto'),
+    acesso_boleto_dist: g('sf_acesso_boleto_dist'),
+    acesso_boletos: g('sf_acesso_boletos'),
+    obs: g('sf_obs'),
+    login: g('sf_login'),
+    status_sistema: g('sf_status_sistema'),
+  };
+
+  if (isEdit) {
+    SUPPLIERS_DATA[editIdx] = newEntry;
+    showToast('Distribuidora atualizada!', 'success');
+  } else {
+    SUPPLIERS_DATA.push(newEntry);
+    showToast('Distribuidora adicionada!', 'success');
+  }
+
+  renderSuppAdminPanel();
+  renderSuppliersPage();
+}
+
+function deleteSuppEntry(idx) {
+  const row = getSuppliersData()[idx];
+  if (!confirm('Remover ' + row.distribuidora + ' (' + row.parceiro + ')?')) return;
+  SUPPLIERS_DATA.splice(idx, 1);
+  showToast('Removido com sucesso.', 'success');
+  renderSuppAdminPanel();
+  renderSuppliersPage();
+}
+
+
+// ═══════════════════════════════════════════
+// AGENDAMENTOS E ACOMPANHAMENTOS
+// ═══════════════════════════════════════════
+let _schedulesCache = [];
+let _solarLeadsCache = [];
+let schedActiveStatus = '';
+
+async function loadSchedulesFromDB() {
+  const [schedRes, solarRes] = await Promise.all([
+    sb.from('schedules').select('*').order('scheduled_at'),
+    sb.from('solar_leads').select('*').order('created_at', { ascending: false })
+  ]);
+  _schedulesCache = schedRes.data || [];
+  _solarLeadsCache = solarRes.data || [];
+}
+
+function getSchedStatus(item) {
+  if (item.status === 'done' || item.retention_registered) return 'done';
+  const now = new Date();
+  const d = new Date(item.scheduled_at || item.forwarded_at);
+  const todayStr = now.toISOString().slice(0,10);
+  const itemStr = d.toISOString().slice(0,10);
+  if (itemStr < todayStr) return 'overdue';
+  if (itemStr === todayStr) return 'today';
+  return 'pending';
+}
+
+function setSchedStatus(status, btn) {
+  schedActiveStatus = status;
+  document.querySelectorAll('#page-schedules .filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSchedulesPage();
+}
+
+async function renderSchedulesPage() {
+  // Populate operator filter
+  const opSel = document.getElementById('schedFilterOp');
+  if (opSel && opSel.options.length <= 1) {
+    state.collaborators.forEach(c => {
+      const o = document.createElement('option');
+      o.value = c.name; o.textContent = c.name;
+      opSel.appendChild(o);
+    });
+  }
+
+  const filterOp   = document.getElementById('schedFilterOp')?.value || '';
+  const filterType = document.getElementById('schedFilterType')?.value || '';
+
+  // Merge both lists with type tag
+  let allItems = [
+    ..._schedulesCache.map(s => ({ ...s, _type: 'address_change' })),
+    ..._solarLeadsCache.map(s => ({ ...s, _type: 'solar' }))
+  ];
+
+  // Apply filters
+  if (filterOp)   allItems = allItems.filter(i => i.operator_name === filterOp);
+  if (filterType) allItems = allItems.filter(i => i._type === filterType);
+
+  // Count by status
+  const counts = { pending:0, overdue:0, today:0, done:0 };
+  allItems.forEach(i => {
+    const s = getSchedStatus(i);
+    if (counts[s] !== undefined) counts[s]++;
+  });
+
+  // Update badges
+  const el = id => document.getElementById(id);
+  if (el('schedCountAll'))     el('schedCountAll').textContent     = allItems.length;
+  if (el('schedCountPending')) el('schedCountPending').textContent = counts.pending;
+  if (el('schedCountOverdue')) el('schedCountOverdue').textContent = counts.overdue;
+  if (el('schedCountToday'))   el('schedCountToday').textContent   = counts.today;
+  if (el('schedCountDone'))    el('schedCountDone').textContent    = counts.done;
+
+  // Update nav badge
+  const navBtn = document.getElementById('navSchedules');
+  const urgentCount = counts.overdue + counts.today;
+  let existingBadge = navBtn?.querySelector('.nav-badge');
+  if (urgentCount > 0 && navBtn) {
+    if (!existingBadge) {
+      const badge = document.createElement('span');
+      badge.className = 'nav-badge';
+      navBtn.appendChild(badge);
+    }
+  } else if (existingBadge) {
+    existingBadge.remove();
+  }
+
+  // Dashboard
+  const addrItems  = allItems.filter(i => i._type === 'address_change');
+  const solarItems = allItems.filter(i => i._type === 'solar');
+  const retFromAddr  = addrItems.filter(i => i.retention_registered).length;
+  const retFromSolar = solarItems.filter(i => i.retention_registered).length;
+  const soldSolar    = solarItems.filter(i => i.status === 'sold').length;
+  const totalRet     = retFromAddr + retFromSolar;
+
+  // Conversion rate per operator
+  const opMap = {};
+  allItems.forEach(i => {
+    if (!opMap[i.operator_name]) opMap[i.operator_name] = { total:0, converted:0 };
+    opMap[i.operator_name].total++;
+    if (i.retention_registered) opMap[i.operator_name].converted++;
+  });
+
+  const dashEl = document.getElementById('schedDash');
+  if (dashEl) dashEl.innerHTML = [
+    { label: 'Pendentes',           value: counts.pending,   cls: 'orange' },
+    { label: 'Vencidos',            value: counts.overdue,   cls: 'red'    },
+    { label: 'Hoje',                value: counts.today,     cls: 'orange' },
+    { label: 'Concluídos',          value: counts.done,      cls: 'green'  },
+    { label: 'Ret. Mudança End.',   value: retFromAddr,      cls: 'green'  },
+    { label: 'Leads Solar',         value: solarItems.length,cls: 'purple' },
+    { label: 'Vendas Solar',        value: soldSolar,        cls: 'green'  },
+    { label: 'Retenções Geradas',   value: totalRet,         cls: 'blue'   },
+  ].map(d => `<div class="sched-dash-card">
+    <div class="sched-dash-label">${d.label}</div>
+    <div class="sched-dash-value ${d.cls}">${d.value}</div>
+  </div>`).join('');
+
+  // Today alert
+  const alertEl = document.getElementById('schedTodayAlert');
+  if (alertEl) {
+    if (counts.today > 0 || counts.overdue > 0) {
+      alertEl.style.display = 'flex';
+      alertEl.className = 'sched-today-alert';
+      alertEl.innerHTML = `<i class="fa-solid fa-bell"></i>
+        <span>Você tem <strong>${counts.today} agendamento${counts.today!==1?'s':''} para hoje</strong>
+        ${counts.overdue > 0 ? ` e <strong>${counts.overdue} vencido${counts.overdue!==1?'s':''}</strong>` : ''}.
+        Verifique os itens destacados abaixo.</span>`;
+    } else {
+      alertEl.style.display = 'none';
+    }
+  }
+
+  // Filter by active status
+  let filtered = allItems;
+  if (schedActiveStatus === 'overdue') filtered = allItems.filter(i => getSchedStatus(i) === 'overdue');
+  else if (schedActiveStatus === 'today') filtered = allItems.filter(i => getSchedStatus(i) === 'today');
+  else if (schedActiveStatus === 'pending') filtered = allItems.filter(i => getSchedStatus(i) === 'pending');
+  else if (schedActiveStatus === 'done') filtered = allItems.filter(i => getSchedStatus(i) === 'done');
+
+  // Sort: overdue first, then today, then pending by date, then done
+  const order = { overdue:0, today:1, pending:2, done:3 };
+  filtered.sort((a,b) => {
+    const sa = order[getSchedStatus(a)] ?? 4;
+    const sb = order[getSchedStatus(b)] ?? 4;
+    if (sa !== sb) return sa - sb;
+    const da = new Date(a.scheduled_at || a.forwarded_at || a.created_at);
+    const db = new Date(b.scheduled_at || b.forwarded_at || b.created_at);
+    return da - db;
+  });
+
+  const listEl = document.getElementById('schedList');
+  if (!listEl) return;
+
+  if (!filtered.length) {
+    listEl.innerHTML = `<div class="sched-empty">
+      <i class="fa-solid fa-calendar-check"></i>
+      <p>Nenhum agendamento encontrado.</p>
+    </div>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(item => renderSchedCard(item)).join('');
+}
+
+function renderSchedCard(item) {
+  const status = getSchedStatus(item);
+  const isAddr  = item._type === 'address_change';
+  const isSolar = item._type === 'solar';
+
+  const statusLabels = {
+    pending: 'Pendente', overdue: 'Vencido', today: 'Hoje', done: 'Concluído',
+    forwarded:'Encaminhado ao Setor Solar', negotiating:'Em Negociação',
+    waiting:'Aguardando Retorno', sold:'Venda Realizada', lost:'Não Convertido'
+  };
+
+  const displayStatus = isSolar && item.status !== 'done' ? item.status : status;
+  const badgeLabel = statusLabels[displayStatus] || displayStatus;
+
+  const iconBg    = isAddr ? '#eff6ff' : '#f5f3ff';
+  const iconColor = isAddr ? '#1d4ed8' : '#7c3aed';
+  const iconClass = isAddr ? 'fa-solid fa-location-dot' : 'fa-solid fa-solar-panel';
+  const typeLabel = isAddr ? 'Mudança de Endereço' : 'Placas Solares';
+
+  // Date display
+  const dateVal = item.scheduled_at || item.forwarded_at || item.created_at;
+  const dateObj = dateVal ? new Date(dateVal) : null;
+  const dateStr = dateObj ? dateObj.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' }) + (item.scheduled_at ? ' ' + dateObj.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) : '') : '—';
+
+  const collab = state.collaborators.find(c => c.name === item.operator_name);
+  const collabColor = collab ? collab.color : '#6b7280';
+  const initials = item.operator_name.split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase();
+
+  const interactions = Array.isArray(item.interactions) ? item.interactions : (typeof item.interactions === 'string' ? JSON.parse(item.interactions||'[]') : []);
+
+  const detailItems = [
+    { label: 'Cód. Cliente',      value: item.client_code },
+    { label: 'Instalação',        value: item.installation },
+    { label: 'Telefone',          value: item.phone },
+    isAddr
+      ? { label: 'Data/Hora Retorno', value: dateStr }
+      : { label: 'Encaminhado em',    value: dateStr },
+  ].filter(d => d.value);
+
+  const interactionsHtml = interactions.length
+    ? `<div class="sched-interactions">
+        <div class="sched-interactions-title"><i class="fa-solid fa-clock-rotate-left" style="margin-right:5px"></i>Histórico</div>
+        ${interactions.map(i => `<div class="sched-interaction-item">
+          <span class="sched-interaction-time">${i.time}</span>
+          <span>${i.text}</span>
+        </div>`).join('')}
+      </div>` : '';
+
+  const obsHtml = item.obs
+    ? `<div class="sched-obs-block"><i class="fa-solid fa-circle-info"></i><span>${item.obs}</span></div>` : '';
+
+  // Solar status selector
+  const solarStatusHtml = isSolar && status !== 'done' ? `
+    <div style="margin-bottom:10px">
+      <label class="form-label" style="font-size:11px">Atualizar Status</label>
+      <select class="form-input" style="height:34px;font-size:12px;margin-top:4px" onchange="updateSolarStatus(${item.id}, this.value)">
+        <option value="forwarded"  ${item.status==='forwarded'  ?'selected':''}>Encaminhado ao Setor Solar</option>
+        <option value="negotiating"${item.status==='negotiating'?'selected':''}>Em Negociação</option>
+        <option value="waiting"    ${item.status==='waiting'    ?'selected':''}>Aguardando Retorno</option>
+        <option value="sold"       ${item.status==='sold'       ?'selected':''}>Venda Realizada</option>
+        <option value="lost"       ${item.status==='lost'       ?'selected':''}>Não Convertido</option>
+      </select>
+    </div>` : '';
+
+  const canRegisterRet = !item.retention_registered && (status === 'done' || (isSolar && item.status === 'sold'));
+  const actionsHtml = `
+    <div class="sched-note-form">
+      <input type="text" placeholder="Adicionar nota / interação..." id="note-${item._type}-${item.id}">
+      <button class="btn-primary" style="padding:7px 14px;font-size:12px" onclick="addSchedNote('${item._type}',${item.id},'note-${item._type}-${item.id}')">
+        <i class="fa-solid fa-plus"></i> Nota
+      </button>
+    </div>
+    <div class="sched-actions">
+      ${status !== 'done' ? `<button class="btn-primary" style="font-size:12px;padding:7px 14px" onclick="markSchedDone('${item._type}',${item.id})">
+        <i class="fa-solid fa-check"></i> Marcar Concluído
+      </button>` : ''}
+      ${canRegisterRet ? `<button class="btn-primary" style="font-size:12px;padding:7px 14px;background:var(--green-dark)" onclick="registerSchedRetention('${item._type}',${item.id},'${item.operator_name}')">
+        <i class="fa-solid fa-rocket"></i> Registrar Retenção
+      </button>` : ''}
+      ${item.retention_registered ? `<span style="font-size:12px;color:var(--green-dark);font-weight:600"><i class="fa-solid fa-check-circle"></i> Retenção registrada</span>` : ''}
+      <button class="btn-edit-script" style="font-size:12px;color:var(--red);margin-left:auto" onclick="deleteSchedItem('${item._type}',${item.id})">
+        <i class="fa-solid fa-trash"></i>
+      </button>
+    </div>`;
+
+  return `<div class="sched-card ${status}" id="scard-${item._type}-${item.id}">
+    <div class="sched-card-header" onclick="toggleSchedCard('scard-${item._type}-${item.id}')">
+      <div class="sched-card-icon" style="background:${iconBg};color:${iconColor}"><i class="${iconClass}"></i></div>
+      <div class="sched-card-info">
+        <div class="sched-card-name">${item.client_name}</div>
+        <div class="sched-card-meta">
+          <span>${typeLabel}</span>
+          <span>·</span>
+          <span>${item.client_code}</span>
+          <span>·</span>
+          <span style="display:flex;align-items:center;gap:4px">
+            <span style="width:16px;height:16px;border-radius:50%;background:${collabColor};display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:white">${initials}</span>
+            ${item.operator_name.split(' ')[0]}
+          </span>
+          <span>·</span>
+          <span>${dateStr}</span>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="sched-status-badge ${displayStatus}">${badgeLabel}</span>
+        <button class="sched-expand-btn"><i class="fa-solid fa-chevron-down"></i></button>
+      </div>
+    </div>
+    <div class="sched-card-body">
+      <div class="sched-card-content">
+        <div class="sched-detail-grid">
+          ${detailItems.map(d => `<div class="sched-detail-item"><div class="sched-detail-label">${d.label}</div><div class="sched-detail-value">${d.value}</div></div>`).join('')}
+        </div>
+        ${obsHtml}
+        ${solarStatusHtml}
+        ${interactionsHtml}
+        ${actionsHtml}
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleSchedCard(id) {
+  const card = document.getElementById(id);
+  if (card) card.classList.toggle('expanded');
+}
+
+// ── Modal ──
+let _schedModalType = 'address_change';
+
+function openSchedModal(type) {
+  _schedModalType = type;
+  const isAddr = type === 'address_change';
+  const overlay = document.getElementById('schedModalOverlay');
+  const title   = document.getElementById('schedModalTitle');
+  const icon    = document.getElementById('schedModalIcon');
+  const body    = document.getElementById('schedModalBody');
+  const footer  = document.getElementById('schedModalFooter');
+
+  title.textContent = isAddr ? 'Novo Agendamento — Mudança de Endereço' : 'Novo Acompanhamento — Placas Solares';
+  icon.style.background = isAddr ? '#eff6ff' : '#f5f3ff';
+  icon.style.color      = isAddr ? '#1d4ed8' : '#7c3aed';
+  icon.innerHTML = isAddr ? '<i class="fa-solid fa-location-dot"></i>' : '<i class="fa-solid fa-solar-panel"></i>';
+
+  const collabOptions = state.collaborators.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+  const dateLabel = isAddr ? 'Data e Hora do Retorno' : 'Data do Encaminhamento';
+  const now = new Date();
+  const defaultDate = now.toISOString().slice(0,16);
+  const defaultDateOnly = now.toISOString().slice(0,10);
+
+  body.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="admin-field"><label class="admin-label">Código do Cliente *</label><input class="admin-input" id="sm_client_code" placeholder="Ex: CLI-00234"></div>
+      <div class="admin-field"><label class="admin-label">Número da Instalação *</label><input class="admin-input" id="sm_installation" placeholder="Ex: 7001234567"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="admin-field"><label class="admin-label">Nome do Cliente *</label><input class="admin-input" id="sm_client_name" placeholder="Nome completo"></div>
+      <div class="admin-field"><label class="admin-label">Telefone / Celular *</label><input class="admin-input" id="sm_phone" placeholder="(34) 9 9999-9999"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div class="admin-field"><label class="admin-label">Operador *</label>
+        <select class="admin-select" id="sm_operator"><option value="">Selecione...</option>${collabOptions}</select>
+      </div>
+      <div class="admin-field"><label class="admin-label">${dateLabel} *</label>
+        <input class="admin-input" id="sm_date" type="${isAddr ? 'datetime-local' : 'date'}" value="${isAddr ? defaultDate : defaultDateOnly}">
+      </div>
+    </div>
+    ${!isAddr ? `<div class="admin-field"><label class="admin-label">Status Inicial</label>
+      <select class="admin-select" id="sm_solar_status">
+        <option value="forwarded">Encaminhado ao Setor Solar</option>
+        <option value="negotiating">Em Negociação</option>
+        <option value="waiting">Aguardando Retorno</option>
+      </select>
+    </div>` : ''}
+    <div class="admin-field"><label class="admin-label">Observações</label>
+      <textarea class="admin-textarea" id="sm_obs" placeholder="Descreva o motivo, contexto ou próximos passos..." style="min-height:80px"></textarea>
+    </div>`;
+
+  footer.innerHTML = `
+    <button class="btn-secondary" onclick="closeSchedModal()">Cancelar</button>
+    <button class="btn-primary" onclick="saveSchedModal()"><i class="fa-solid fa-floppy-disk"></i> Salvar Agendamento</button>`;
+
+  overlay.classList.add('open');
+  setTimeout(() => document.getElementById('sm_client_code')?.focus(), 150);
+}
+
+function closeSchedModal() {
+  document.getElementById('schedModalOverlay').classList.remove('open');
+}
+
+async function saveSchedModal() {
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  const clientCode   = g('sm_client_code');
+  const installation = g('sm_installation');
+  const clientName   = g('sm_client_name');
+  const phone        = g('sm_phone');
+  const operatorName = g('sm_operator');
+  const dateVal      = g('sm_date');
+  const obs          = g('sm_obs');
+
+  if (!clientCode || !installation || !clientName || !phone || !operatorName || !dateVal) {
+    showToast('Preencha todos os campos obrigatórios', 'error'); return;
+  }
+
+  const collab = state.collaborators.find(c => c.name === operatorName);
+  const btn = document.querySelector('#schedModalFooter .btn-primary');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...'; }
+
+  let error;
+  if (_schedModalType === 'address_change') {
+    ({ error } = await sb.from('schedules').insert({
+      type: 'address_change',
+      client_code: clientCode,
+      installation,
+      client_name: clientName,
+      phone,
+      operator_id: collab?.id || null,
+      operator_name: operatorName,
+      scheduled_at: new Date(dateVal).toISOString(),
+      status: 'pending',
+      obs,
+      interactions: [],
+      retention_registered: false
+    }));
+  } else {
+    const solarStatus = g('sm_solar_status') || 'forwarded';
+    ({ error } = await sb.from('solar_leads').insert({
+      client_code: clientCode,
+      installation,
+      client_name: clientName,
+      phone,
+      operator_id: collab?.id || null,
+      operator_name: operatorName,
+      forwarded_at: dateVal,
+      status: solarStatus,
+      obs,
+      retention_registered: false
+    }));
+  }
+
+  if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Agendamento'; }
+  if (error) { showToast('Erro ao salvar: ' + error.message, 'error'); return; }
+
+  closeSchedModal();
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  showToast('Agendamento registrado com sucesso!', 'success');
+}
+
+async function markSchedDone(type, id) {
+  let error;
+  if (type === 'address_change') {
+    ({ error } = await sb.from('schedules').update({ status: 'done' }).eq('id', id));
+  } else {
+    ({ error } = await sb.from('solar_leads').update({ status: 'done' }).eq('id', id));
+  }
+  if (error) { showToast('Erro ao atualizar', 'error'); return; }
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  showToast('Marcado como concluído!', 'success');
+}
+
+async function updateSolarStatus(id, newStatus) {
+  const { error } = await sb.from('solar_leads').update({ status: newStatus }).eq('id', id);
+  if (error) { showToast('Erro ao atualizar status', 'error'); return; }
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  showToast('Status atualizado!', 'success');
+}
+
+async function addSchedNote(type, id, inputId) {
+  const inp = document.getElementById(inputId);
+  const text = inp?.value.trim();
+  if (!text) return;
+
+  const table = type === 'address_change' ? 'schedules' : 'solar_leads';
+  const item = type === 'address_change'
+    ? _schedulesCache.find(s => s.id === id)
+    : _solarLeadsCache.find(s => s.id === id);
+  if (!item) return;
+
+  const interactions = Array.isArray(item.interactions) ? [...item.interactions] : [];
+  const now = new Date();
+  interactions.push({
+    time: now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }),
+    text
+  });
+
+  const { error } = await sb.from(table).update({ interactions }).eq('id', id);
+  if (error) { showToast('Erro ao salvar nota', 'error'); return; }
+  if (inp) inp.value = '';
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  showToast('Nota adicionada!', 'success');
+}
+
+async function registerSchedRetention(type, id, operatorName) {
+  const clientCodeInput = document.getElementById('inputClient');
+  const collabSelect    = document.getElementById('inputCollab');
+  const collab = state.collaborators.find(c => c.name === operatorName);
+
+  if (collab && collabSelect) collabSelect.value = collab.id;
+
+  // Mark retention_registered
+  const table = type === 'address_change' ? 'schedules' : 'solar_leads';
+  const { error } = await sb.from(table).update({ retention_registered: true }).eq('id', id);
+  if (error) { showToast('Erro ao registrar', 'error'); return; }
+
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  switchPage('home', document.querySelector('[data-page="home"]'));
+
+  if (clientCodeInput) clientCodeInput.focus();
+  showToast(`Operador ${operatorName} selecionado. Informe o código do cliente e registre a retenção.`, 'success');
+}
+
+async function deleteSchedItem(type, id) {
+  if (!confirm('Remover este agendamento?')) return;
+  const table = type === 'address_change' ? 'schedules' : 'solar_leads';
+  const { error } = await sb.from(table).delete().eq('id', id);
+  if (error) { showToast('Erro ao remover', 'error'); return; }
+  await loadSchedulesFromDB();
+  renderSchedulesPage();
+  showToast('Removido com sucesso.', 'success');
+}
+
+
+// ═══════════════════════════════════════════
+// SONS DE FEEDBACK
+// ═══════════════════════════════════════════
+let _audioCtx = null;
+
+function getAudioCtx() {
+  if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return _audioCtx;
+}
+
+function isSoundEnabled() {
+  return document.getElementById('toggleSound')?.classList.contains('on');
+}
+
+function playDing() {
+  if (!isSoundEnabled()) return;
+  try {
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+
+    // Crisp notification ding — two quick tones
+    [[880, 0, 0.08], [1108, 0.09, 0.12]].forEach(([freq, start, dur]) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + start);
+      gain.gain.setValueAtTime(0, now + start);
+      gain.gain.linearRampToValueAtTime(0.25, now + start + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + start + dur);
+      osc.start(now + start);
+      osc.stop(now + start + dur + 0.05);
+    });
+  } catch(e) { console.warn('Som não disponível:', e); }
+}
+
+function playCelebration() {
+  if (!isSoundEnabled()) return;
+  try {
+    const ctx = getAudioCtx();
+    const now = ctx.currentTime;
+
+    // Upward fanfare — 5 ascending notes
+    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5 E5 G5 C6 E6
+    notes.forEach((freq, i) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + i * 0.1);
+      gain.gain.setValueAtTime(0, now + i * 0.1);
+      gain.gain.linearRampToValueAtTime(0.2, now + i * 0.1 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.25);
+      osc.start(now + i * 0.1);
+      osc.stop(now + i * 0.1 + 0.3);
+    });
+
+    // Add a sparkle layer on top
+    setTimeout(() => {
+      try {
+        const ctx2 = getAudioCtx();
+        const n = ctx2.currentTime;
+        [2093, 2637, 3136].forEach((freq, i) => {
+          const osc  = ctx2.createOscillator();
+          const gain = ctx2.createGain();
+          osc.connect(gain);
+          gain.connect(ctx2.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, n + i * 0.07);
+          gain.gain.setValueAtTime(0.08, n + i * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, n + i * 0.07 + 0.15);
+          osc.start(n + i * 0.07);
+          osc.stop(n + i * 0.07 + 0.2);
+        });
+      } catch(e) {}
+    }, 400);
+  } catch(e) { console.warn('Som não disponível:', e); }
+}
+
+
 async function init() {
   // Hide mode toggle on non-home pages by default
   document.getElementById('modeToggle').style.display = 'flex';
