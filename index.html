@@ -5305,6 +5305,8 @@ async function init() {
   await loadAlignmentsFromDB();
   await loadLinksFromDB();
   await loadScriptsFromDB();
+  await loadSuppliersFromDB();
+  await loadGeneralInfoFromDB();
   renderAll();
   renderCollabSelect();
   renderHomeAlignIndicator();
@@ -5339,8 +5341,14 @@ function getSupColor(name) {
 let _suppRulesCache = [];
 
 async function loadSuppliersFromDB() {
-  const { data, error } = await sb.from('supplier_rules').select('*').order('parceiro').order('id');
-  if (error) { console.error('Erro ao carregar fornecedoras:', error); return; }
+  const { data, error } = await sb.from('supplier_rules').select('*').order('parceiro', { ascending: true });
+  if (error) {
+    console.error('Erro ao carregar fornecedoras:', JSON.stringify(error));
+    showToast('Erro ao carregar fornecedoras: ' + (error.message || error.code || JSON.stringify(error)), 'error');
+    // Fallback to static data
+    _suppRulesCache = [];
+    return;
+  }
   if (data && data.length > 0) {
     _suppRulesCache = data;
   } else {
@@ -5359,7 +5367,7 @@ async function loadSuppliersFromDB() {
     for (let i = 0; i < inserts.length; i += 50) {
       await sb.from('supplier_rules').insert(inserts.slice(i, i+50));
     }
-    const { data: d2 } = await sb.from('supplier_rules').select('*').order('parceiro').order('id');
+    const { data: d2 } = await sb.from('supplier_rules').select('*').order('parceiro', { ascending: true });
     _suppRulesCache = d2 || [];
     showToast('Fornecedoras importadas com sucesso!', 'success');
   }
