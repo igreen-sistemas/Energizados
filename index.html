@@ -2959,7 +2959,7 @@
 // ═══════════════════════════════════════════
 const SUPABASE_URL = 'https://taaeehhdxqtkgymcpaiu.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRhYWVlaGhkeHF0a2d5bWNwYWl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1NTIwMDYsImV4cCI6MjA5NTEyODAwNn0.ZSSdkS2HKk8i2w6OGOlmifF--9EfKtck-ttnio-8uvA';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { db: { schema: 'public' }, global: { headers: {} } });
 
 const COLORS = ['#22c55e','#3b82f6','#8b5cf6','#f59e0b','#ef4444','#06b6d4','#ec4899','#f97316'];
 const ADMIN_PASSWORD = 'igreen2026';
@@ -2976,7 +2976,7 @@ async function loadAllData() {
   try {
     const [collabs, rets, sett] = await Promise.all([
       sb.from('collaborators').select('*').order('id'),
-      sb.from('retentions').select('*').order('timestamp').range(0, 9999),
+      sb.from('retentions').select('*').order('timestamp').limit(5000),
       sb.from('settings').select('*').eq('id', 1).single()
     ]);
     if (collabs.data) state.collaborators = collabs.data.map(c => ({ id: c.id, name: c.name, color: c.color }));
@@ -3008,7 +3008,7 @@ function showLoadingOverlay(show) {
 function setupRealtime() {
   sb.channel('db-changes')
     .on('postgres_changes', { event: '*', schema: 'public', table: 'retentions' }, async () => {
-      const { data } = await sb.from('retentions').select('*').order('timestamp').range(0, 9999).range(0, 9999);
+      const { data } = await sb.from('retentions').select('*').order('timestamp').limit(5000).limit(5000);
       if (data) state.retentions = data.map(r => ({ id: r.id, collabId: r.collab_id, collabName: r.collab_name, clientCode: r.client_code, date: r.date, timestamp: r.timestamp }));
       renderAll();
     })
