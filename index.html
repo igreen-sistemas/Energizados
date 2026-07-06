@@ -3006,6 +3006,8 @@ function showLoadingOverlay(show) {
 
 // ── REALTIME ──
 function setupRealtime() {
+  // Remove any existing channels before creating new ones
+  sb.getChannels().forEach(c => sb.removeChannel(c));
   sb.channel('db-changes-' + Date.now())
     .on('postgres_changes', { event: '*', schema: 'public', table: 'retentions' }, async () => {
       const { data } = await sb.from('retentions').select('*').order('timestamp').limit(5000);
@@ -5297,6 +5299,48 @@ function playCelebration() {
 }
 
 
+// ═══════════════════════════════════════════
+// POLLING FALLBACK (garante atualização mesmo sem realtime)
+// ═══════════════════════════════════════════
+let _lastRetentionId = 0;
+let _lastCollabCount = 0;
+
+async function pollForUpdates() {
+  try {
+    // Check for new retentions
+    const { data } = await sb.from('retentions').select('id').order('id', { ascending: false }).limit(1);
+    if (data && data.length > 0) {
+      const latestId = data[0].id;
+      if (_lastRetentionId === 0) {
+        _lastRetentionId = latestId;
+      } else if (latestId !== _lastRetentionId) {
+        _lastRetentionId = latestId;
+        // New retention detected — reload
+        const { data: rets } = await sb.from('retentions').select('*').order('timestamp');
+        if (rets) {
+          state.retentions = rets.map(r => ({ id: r.id, collabId: r.collab_id, collabName: r.collab_name, clientCode: r.client_code, date: r.date, timestamp: r.timestamp }));
+          renderAll();
+        }
+      }
+    }
+    // Check for collaborator changes
+    if (state.collaborators.length !== _lastCollabCount) {
+      _lastCollabCount = state.collaborators.length;
+    }
+  } catch(e) {
+    // Silent fail — polling is just a fallback
+  }
+}
+
+function startPolling() {
+  _lastRetentionId = state.retentions.length > 0 
+    ? Math.max(...state.retentions.map(r => r.id)) 
+    : 0;
+  _lastCollabCount = state.collaborators.length;
+  setInterval(pollForUpdates, 5000);
+}
+
+
 async function init() {
   // Hide mode toggle on non-home pages by default
   document.getElementById('modeToggle').style.display = 'flex';
@@ -5312,6 +5356,7 @@ async function init() {
   renderHomeAlignIndicator();
   renderSettingsPage();
   setupRealtime();
+  startPolling();
 }
 
 init();
