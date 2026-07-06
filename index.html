@@ -2976,7 +2976,7 @@ async function loadAllData() {
   try {
     const [collabs, rets, sett] = await Promise.all([
       sb.from('collaborators').select('*').order('id'),
-      sb.from('retentions').select('*').gte('date', new Date(Date.now()-7*86400000).toISOString().slice(0,10)).order('timestamp'),
+      sb.from('retentions').select('*').order('timestamp'),
       sb.from('settings').select('*').eq('id', 1).single()
     ]);
     if (collabs.data) state.collaborators = collabs.data.map(c => ({ id: c.id, name: c.name, color: c.color }));
@@ -3008,7 +3008,7 @@ function showLoadingOverlay(show) {
 function setupRealtime() {
   sb.channel('db-changes-' + Date.now())
     .on('postgres_changes', { event: '*', schema: 'public', table: 'retentions' }, async () => {
-      const { data } = await sb.from('retentions').select('*').gte('date', new Date(Date.now()-7*86400000).toISOString().slice(0,10)).order('timestamp').limit(5000);
+      const { data } = await sb.from('retentions').select('*').order('timestamp').limit(5000);
       if (data) state.retentions = data.map(r => ({ id: r.id, collabId: r.collab_id, collabName: r.collab_name, clientCode: r.client_code, date: r.date, timestamp: r.timestamp }));
       renderAll();
     })
